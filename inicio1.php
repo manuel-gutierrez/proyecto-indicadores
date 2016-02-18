@@ -26,8 +26,8 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             <!-- Ionicons -->
             <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
             <!-- Theme style -->
-            <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-            <link href="dist/css/skins/skin-blue.min.css" rel="stylesheet" type="text/css" />
+            <link href="php/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+            <link href="php/dist/css/skins/skin-blue.min.css" rel="stylesheet" type="text/css" />
 
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -84,14 +84,14 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     <!-- Menu Toggle Button -->
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <!-- The user image in the navbar-->
-                                        <img src="dist/img/unknown.gif" class="user-image" alt="User Image" />
+                                        <img src="php/dist/img/unknown.gif" class="user-image" alt="User Image" />
                                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                         <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- The user image in the menu -->
                                         <li class="user-header">
-                                            <img src="dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                                            <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
                                             <p>
                                                 <?php echo $login_fn . " " . $login_ln; ?>
                                                 <br>Cargo: <?php echo "$login_occupation"; ?>
@@ -129,7 +129,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         <!-- Sidebar user panel (optional) -->
                         <div class="user-panel">
                             <div class="pull-left image">
-                                <img src="dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                                <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
                             </div>
                             <div class="pull-left info">
                                 <p><?php echo $login_fn; ?></p>
@@ -176,7 +176,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     </div><!-- /.box-header -->
                                     <div class="box-body" align="middle">
                                         <a href="procesos.php">
-                                            <img src="dist/img/Planeacion.png" height="220" alt="Process Map"/>
+                                            <img src="php/dist/img/Planeacion.png" height="220" alt="Process Map"/>
                                         </a>
                                     </div><!-- /.box-body -->
                                     <div class="box-footer" align="center">
@@ -194,7 +194,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     </div><!-- /.box-header -->
                                     <div class="box-body" align="middle">
                                         <a href="#">
-                                            <img  src="dist/img/tablero.png" height="220" alt="Indicators report"/>
+                                            <img  src="php/dist/img/tablero.png" height="220" alt="Indicators report"/>
                                         </a>
                                     </div><!-- /.box-body -->
                                     <div class="box-footer" align="center">
@@ -226,7 +226,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             <!-- Bootstrap 3.3.2 JS -->
             <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
             <!-- AdminLTE App -->
-            <script src="dist/js/app.min.js" type="text/javascript"></script>
+            <script src="php/dist/js/app.min.js" type="text/javascript"></script>
 
             <!-- Optionally, you can add Slimscroll and FastClick plugins.
                   Both of these plugins are recommended to enhance the

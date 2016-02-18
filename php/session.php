@@ -24,7 +24,7 @@ $_SESSION['LAST_ACTIVITY'];
 /**
  * el tiempo se especifica en segundos.
  */
-$timeout_duration = 300;
+$timeout_duration = 900;
 
 if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) {
     session_unset();
