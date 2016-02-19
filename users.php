@@ -184,9 +184,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         <td><a target="_blank" class="btn btn-block btn-primary" href="showUser.php?id=
                         	<?php echo $valor['id_usuario']; ?>">Ver</a></td>
                         <td><?php echo $valor['area_id']; ?></td>
-                        <td><?php echo $valor['first_name']; ?></td>
-                        <td><?php echo $valor['last_name']; ?></td>
-                        <td><?php echo $valor['occupation']; ?></td>
+                        <td><?php echo strtoupper($valor['first_name']); ?></td>
+                        <td><?php echo strtoupper($valor['last_name']);?></td>
+                        <td><?php echo strtoupper($valor['occupation']); ?></td>
                         <td><?php echo $valor['email']; ?></td>
                       </tr> <?php } ?>
                     </tbody>
