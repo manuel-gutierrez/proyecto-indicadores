@@ -5,7 +5,6 @@ include ('php/session.php');
 if( $_GET["id"] ) {
 
     $query_id = $_GET["id"];
-//	echo "$query_id";
 }
 else {
     echo "error en el get_id";
@@ -173,6 +172,8 @@ else {
                     <li class="header"><b>MENÚ PRINCIPAL</b></li>
                     <!-- Optionally, you can add icons to the links -->
                     <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
+
+
                     <?php if ($login_usertype==0) {?>
                         <li>
                             <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -186,6 +187,12 @@ else {
                     <?php if ($login_usertype==0) {?>
                         <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
                     <?php } ?>
+
+                    <?php if ($login_usertype !=0) {?>
+                        <li><a href="showUser.php?id=
+                    <?php echo $id_user?>"><i class="fa fa-user"></i> <span>Mi Perfil</span></a></li>
+                    <?php }?>
+
                 </ul><!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
@@ -268,13 +275,16 @@ else {
 
                     <div class="box-footer">
 
-                        <a  class="btn btn-primary pull-left" onclick="self.close()">Volver</a>
+                        <a  class="btn btn-primary pull-left" onclick="javascript:history.go(-1)">Volver</a>
 
                         <span class="margin-2 pull-right">
-                            <a class="btn btn-primary " href="popup1.php?id=
-	                        <?php echo $query_id ?>" onclick="return popitup('popup1.php?id=<?php echo $query_id ?>')"><i class="fa fa-fw fa-pencil"></i> Editar</a>
+                            <a class="btn btn-primary " href="./editUser.php?id=
+	                        <?php echo $query_id ?>"><i class="fa fa-fw fa-pencil"></i> Editar</a>
                         </span>
-
+                        <span class="margin-2 pull-right">
+                            <a class="btn btn-info " href="./changePassword.php?id=
+	                        <?php echo $query_id ?>"><i class="fa fa-fw fa-key"></i> Cambiar Clave </a>
+                        </span>
                         <?php if ($login_usertype == 0){ ?>
                         <span class="margin-2 pull-right">
                             <a class="btn btn-warning" href="popup2.php?id=

@@ -25,11 +25,11 @@ if (isset($_POST['submit'])) {
 
         if ($rows == 1) {
             $registro = mysql_fetch_object($query);
-            $usertype = $registro->user_type;
+            $GLOBALS ['usertype'] = $registro->user_type;
             $_SESSION['login_user'] = $username;
             $_SESSION["uid"] = "$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}";
             // Initializing Session
-            if ($usertype == 0) {
+            if ($GLOBALS ['usertype'] == 0) {
                 header("location: ../inicio.php");
                 reportes_action([0 => 'login', 1 => 'acceso', 2 => 'El usuario accedio correctamente al sistema.']);
             } else {

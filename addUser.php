@@ -178,7 +178,125 @@ Begining of the HTML Document.
                 <section class="content">
                     <div class="box">
                         <div class="box-header with-border">
+                            <div class="row">
+                                <?php
+                                if($_SERVER['REQUEST_METHOD']=='POST'){
+
+                                    //Data Validation
+                                    if(
+                                        !empty($_POST['fn'])
+                                        && !empty($_POST['ln'])
+                                        && !empty($_POST['email'])
+                                        && !empty($_POST['password'])
+                                        && !empty($_POST['academic_field'])
+                                        && !empty($_POST['areaId'])
+                                        && ($_POST['user_type']!= "blank")
+                                    )
+                                    {
+
+                                        $new_email = $_POST['email'];
+                                        $new_fn = $_POST['fn'];
+                                        $new_ln = $_POST['ln'];
+                                        $new_occup = $_POST['occupation'];
+                                        $new_area = $_POST['areaId'];
+                                        $new_ut = $_POST['user_type'];
+                                        $new_pw = $_POST['password'];
+                                        $new_academic_field = $_POST['academic_field'];
+                                        $new_cycle = $_POST['cycle'];
+                                        $new_labour_time  = $_POST['labour_time'];
+                                        $new_document_number  = $_POST['document_number'];
+
+                                        $q = mysql_query("SELECT * FROM usuarios WHERE email='$new_email'",$link);
+                                        $rows = mysql_num_rows($q);
+
+                                        if ($rows == 0) {
+
+                                            $q = mysql_query("
+                                          INSERT INTO usuarios (
+                                              `first_name`,
+                                              `last_name`,
+                                              `email`,
+                                              `contrasena`,
+                                              `occupation`,
+                                              `area_id`,
+                                              `user_type`,
+                                              `academic_field`,
+                                              `cycle`,
+                                              `labour_time`,
+                                              `document_number`
+                                          )
+                                          VALUES (
+                                              '$new_fn',
+                                              '$new_ln',
+                                              '$new_email',
+                                              SHA1('$new_pw'),
+                                              '$new_occup',
+                                              '$new_area',
+                                              '$new_ut',
+                                              '$new_academic_field',
+                                              '$new_cycle',
+                                              '$new_labour_time',
+                                              '$new_document_number'
+                                          )",
+                                                $link
+                                            );
+
+                                            if ($q) {
+                                                reportes_action(
+                                                    [0 => 'registrar usuario', 1 => 'addUser', 2 => 'Se creó el usuario '.$new_email.', en el sistema.']);
+                                                ?>
+                                                <!-- Success Message            -->
+                                                <div class="message-pading col-lg-12">
+                                                    <div class="box box-solid box-success">
+                                                        <div class="box-header">
+                                                            <h3 class="box-title"> Processo exitoso. </h3>
+                                                        </div><!-- /.box-header -->
+                                                        <div class="box-body">
+                                                            El usuario ha sido creado.
+                                                        </div><!-- /.box-body -->
+                                                    </div>
+                                                </div>
+
+                                            <?php 	}
+                                        } else {
+                                            ?>
+                                            <div class="message-pading col-md-12 ">
+                                                <div class="box box-solid box-warning">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Error.  </h3>
+                                                    </div><!-- /.box-header -->
+                                                    <div class="box-body">
+                                                        El usuario ya existe.
+                                                    </div><!-- /.box-body -->
+                                                </div>
+                                            </div>
+                                        <?php 	}
+
+                                    } else {?>
+                                        <div class="message-pading col-lg-12">
+                                            <div class="box box-solid box-warning">
+                                                <div class="box-header">
+                                                    <h3 class="box-title"> Revise el formulario </h3>
+                                                </div><!-- /.box-header -->
+                                                <div class="box-body">
+                                                    Algún campo obligatorio no fue ingresado correctamente, verifique el formulario e intente nuevamente.
+                                                </div><!-- /.box-body -->
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $new_email = NULL;
+                                        $new_fn = NULL;
+                                        $new_ln = NULL;
+                                        $new_occup = NULL;
+                                        $new_area = NULL;
+                                        $new_ut = NULL;
+                                    }
+                                }
+                                ?>
+                                <!-- /.row-->
+                            </div><!-- /.box -->
                         <h3 class="box-title">Crear un nuevo usuario</h3>
+
                         </div><!-- /.box-header -->
 
                         <!-- form start -->
@@ -313,129 +431,7 @@ Begining of the HTML Document.
                                     <button type="submit" class="btn btn-info pull-right">Agregar</button>
                                 </div><!-- /.box-footer -->
                              </form>
-                        <div class="row">
-                            <?php
-                            if($_SERVER['REQUEST_METHOD']=='POST'){
 
-                                //Data Validation
-                                if(
-                                    !empty($_POST['fn'])
-                                    && !empty($_POST['ln'])
-                                    && !empty($_POST['email'])
-                                    && !empty($_POST['password'])
-                                    && !empty($_POST['academic_field'])
-                                    && !empty($_POST['areaId'])
-                                    && ($_POST['user_type']!= "blank")
-                                )
-                                {
-
-                                        $new_email = $_POST['email'];
-                                        $new_fn = $_POST['fn'];
-                                        $new_ln = $_POST['ln'];
-                                        $new_occup = $_POST['occupation'];
-                                        $new_area = $_POST['areaId'];
-                                        $new_ut = $_POST['user_type'];
-                                        $new_pw = $_POST['password'];
-                                        $new_academic_field = $_POST['academic_field'];
-                                        $new_cycle = $_POST['cycle'];
-                                        $new_labour_time  = $_POST['labour_time'];
-                                        $new_document_number  = $_POST['document_number'];
-
-                                    $q = mysql_query("SELECT * FROM usuarios WHERE email='$new_email'",$link);
-                                    $rows = mysql_num_rows($q);
-
-                                    if ($rows == 0) {
-
-                                        $q = mysql_query("
-                                          INSERT INTO usuarios (
-                                              `first_name`,
-                                              `last_name`,
-                                              `email`,
-                                              `contrasena`,
-                                              `occupation`,
-                                              `area_id`,
-                                              `user_type`,
-                                              `academic_field`,
-                                              `cycle`,
-                                              `labour_time`,
-                                              `document_number`
-                                          )
-                                          VALUES (
-                                              '$new_fn',
-                                              '$new_ln',
-                                              '$new_email',
-                                              SHA1('$new_pw'),
-                                              '$new_occup',
-                                              '$new_area',
-                                              '$new_ut',
-                                              '$new_academic_field',
-                                              '$new_cycle',
-                                              '$new_labour_time',
-                                              '$new_document_number'
-                                          )",
-                                          $link
-                                        );
-
-                                        if ($q) {
-                                            reportes_action(
-                                                [0 => 'registrar usuario', 1 => 'addUser', 2 => 'Se creó el usuario '.$new_email.', en el sistema.']);
-                                            ?>
-                                            <!-- Success Message            -->
-                                            <div class="message-pading col-lg-12">
-                                                <div class="box box-solid box-success">
-                                                    <div class="box-header">
-                                                        <h3 class="box-title"> Processo exitoso. </h3>
-                                                    </div><!-- /.box-header -->
-                                                    <div class="box-body">
-                                                        El usuario ha sido creado.
-                                                    </div><!-- /.box-body -->
-                                                </div>
-                                            </div>
-
-                                        <?php 	}
-                                    } else {
-                                        ?>
-                                        <div class="message-pading col-md-12 ">
-                                            <div class="box box-solid box-warning">
-                                                <div class="box-header">
-                                                    <h3 class="box-title">Error.  </h3>
-                                                </div><!-- /.box-header -->
-                                                <div class="box-body">
-                                                    El usuario ya existe.
-                                                </div><!-- /.box-body -->
-                                            </div>
-                                        </div>
-                                    <?php 	}
-
-                                } else {?>
-                                    <div class="message-pading col-lg-12">
-                                        <div class="box box-solid box-warning">
-                                            <div class="box-header">
-                                                <h3 class="box-title"> Revise el formulario </h3>
-                                            </div><!-- /.box-header -->
-                                            <div class="box-body">
-                                                Algún campo obligatorio no fue ingresado correctamente, verifique el formulario e intente nuevamente.
-                                            </div><!-- /.box-body -->
-                                        </div>
-                                    </div>
-                                    <?php
-                                    $new_email = NULL;
-                                    $new_fn = NULL;
-                                    $new_ln = NULL;
-                                    $new_occup = NULL;
-                                    $new_area = NULL;
-                                    $new_ut = NULL;
-                                }
-                            }
-                            ?>
-
-
-
-
-
-
-                        <!-- /.row-->
-                    </div><!-- /.box -->
                 </section>
             <!-- /.content -->
         </div>
@@ -454,7 +450,7 @@ Begining of the HTML Document.
 
 
     </div>
-        <!--  End of wrapper -->
+    <!--  End of wrapper -->
 
     <!--  SCRIPTS -->
 
