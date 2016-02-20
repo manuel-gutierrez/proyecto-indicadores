@@ -80,8 +80,11 @@ else {
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
+        <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+        <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
         <![endif]-->
     </head>
     <body class="skin-blue sidebar-mini">
@@ -287,12 +290,64 @@ else {
                         </span>
                         <?php if ($login_usertype == 0){ ?>
                         <span class="margin-2 pull-right">
-                            <a class="btn btn-warning" href="popup2.php?id=
-	                        <?php echo $query_id ?>" onclick="return popitup('popup2.php?id=<?php echo $query_id ?>')"
-                                ><i class="fa fa-fw fa-trash"></i> Eliminar</a>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteModal">
+                                <i class="fa fa-fw fa-trash"></i> Eliminar
+                            </button>
                         </span>
                         <?php } ?>
+                            <!--   Delete User Modal -->
+                            <!-- Delete user confirmation Modal -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteusermodal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Eliminar Usuario</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3> El usuario : <?php echo $nombre." ".$apellido ?> será borrado del sistema </h2>
+                                            <h4 class="center-text"> ¿ Desea Continuar ?</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default pull-right margin-2" data-dismiss="modal">Cancelar</button>
+                                            <form action="deleteUser.php" method="POST" id="delete-user-form">
+                                                <input type="text" name="id" value="<?php echo $query_id ?>" hidden="hidden"/>
+                                                <button type="submit" class="btn btn-warning pull-right margin-2">confirmar</button>
+                                            </form>
 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Message Delete User Modal  -->
+                        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="message delete user modal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Eliminar Usuario</h4>
+                                    </div>
+                                    <div class="modal-body" id="success-message" hidden>
+                                        <div class="alert alert-success alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            <h4><i class="icon fa fa-check"></i> </h4>
+                                            El usuario se ha borrado correctamente
+                                        </div>
+                                    </div>
+                                    <div class="modal-body" id="error-message" hidden>
+                                        <div class="alert alert-warning alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                                            Hubo un problema al borrar el usuario. Por favor comuniquese con el equipo de TI.
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-right margin-2" onclick="javascript:window.close();" >Aceptar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div><!-- /.box-footer -->
                 </div><!-- /.box -->
@@ -327,11 +382,58 @@ else {
     <!-- AdminLTE for demo purposes -->
     <script src="php/dist/js/demo.js" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
-        function popitup(url) {
-            newwindow=window.open(url,'name','height=150,width=300');
-            if (window.focus) {newwindow.focus()}
-            return false;
-        }
+        $(document).ready(function() {
+
+            // process the form
+            $('form').submit(function(event) {
+
+                // get the form data
+                // there are many ways to get this data using jQuery (you can use the class or id also)
+                var formData = {
+                    'id'              : $('input[name=id]').val(),
+                };
+
+                // process the form
+                $.ajax({
+                    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                    url         : 'deleteUser.php', // the url where we want to POST
+                    data        : formData, // our data object
+                    dataType    : 'json', // what type of data do we expect back from the server
+                    encode          : true
+                })
+                    // using the done promise callback
+                    .done(function(data) {
+
+                        // log data to the console so we can see
+                        console.log(data);
+
+                        // here we will handle errors and validation messages
+                        if ( ! data.success) {
+
+
+                            if (data.errors.id) {
+                                $('#deleteModal').modal('hide');
+                                $('#messageModal').modal('show');
+                                $('#error-message').show();
+                            }
+
+                        } else {
+
+                            //all good.
+
+                            $('#deleteModal').modal('hide');
+                            $('#messageModal').modal('show');
+                            $('#success-message').show();
+
+                        }
+
+                    });
+
+                // stop the form from submitting the normal way and refreshing the page
+                event.preventDefault();
+            });
+
+        });
     </script>
     </body>
     </html>
