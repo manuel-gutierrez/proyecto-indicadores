@@ -27,14 +27,12 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- daterange picker -->
     <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link href="plugins/iCheck/all.css" rel="stylesheet" type="text/css" />
     <!-- Select2 -->
     <link href="plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="php/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- jvectormap -->
-    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+<!--    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />-->
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="php/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
@@ -48,108 +46,109 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
 
-      <!-- Main Header -->
-      <header class="main-header">
+        <!-- Main Header -->
+        <header class="main-header">
 
-        <!-- Logo -->
-        <a href="inicio.html" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>C</b>GC</span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Indicadores</b>CGC</span>
-        </a>
+            <!-- Logo -->
+            <a href="<?php
+            if ($login_usertype == 0) {echo "inicio.php";
+            } else {echo "inicio1.php";
+            }
+            ?>" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><img src="pics/logo.png" height="50px" alt="Grancolombiano"/> /></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><img src="pics/logo2.png" height="50px" alt="Grancolombiano"/></span>
+            </a>
 
-        <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-          </a>
-          <!-- Navbar Right Menu -->
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              <!-- User Account Menu -->
-              <li class="dropdown user user-menu">
-                <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <!-- The user image in the navbar-->
-                  <img src="php/dist/img/unknown.gif" class="user-image" alt="User Image" />
-                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
                 </a>
-                <ul class="dropdown-menu">
-                  <!-- The user image in the menu -->
-                  <li class="user-header">
-                    <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
-                    <p>
-                      <?php echo $login_fn . " " . $login_ln; ?>
-                      Cargo: <?php echo "$login_occupation"; ?>
-                      <small><?php
-						if ($login_usertype == 0) {echo "Administrador";
-						} else {echo "";
-						}
-					?></small>
-                    </p>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="php/dist/img/unknown.gif" class="user-image" alt="User Image" />
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                                    <p>
+                                        <?php echo $login_fn . " " . $login_ln; ?>
+                                        Cargo: <?php echo "$login_occupation"; ?>
+                                        <small><?php
+                                            if ($login_usertype == 0) {echo "Administrador";
+                                            } else {echo "";
+                                            }
+                                            ?></small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="php/logout.php" class="btn btn-default btn-flat">Salir</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
                     </div>
-                    <div class="pull-right">
-                      <a href="php/logout.php" class="btn btn-default btn-flat">Salir</a>
+                    <div class="pull-left info">
+                        <p><?php echo $login_fn; ?></p>
+                        <!-- Status -->
+                        <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
                     </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-      
-      <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+                </div>
 
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-
-          <!-- Sidebar user panel (optional) -->
-          <div class="user-panel">
-            <div class="pull-left image">
-              <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
-            </div>
-            <div class="pull-left info">
-              <p><?php echo $login_fn; ?></p>
-              <!-- Status -->
-              <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
-            </div>
-          </div>
-
-          <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
-            <li class="header"><b>MENÚ PRINCIPAL</b></li>
-            <!-- Optionally, you can add icons to the links -->
-            <li><a href="procesos.html"><i class="fa fa-link"></i> <span>Planeación Estratégica</span></a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                 <li><a href="#">Área 1</a></li>
-                <li><a href="#">Área 2</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
-              <ul class="treeview-menu">
-                <li><a href="#">Objetivo 1</a></li>
-                <li><a href="#">Objetivo 2</a></li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Tablero de Indicadores</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Reportes de actividad</span></a></li>            
-          </ul><!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
-      </aside>
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu">
+                    <li class="header"><b>MENÚ PRINCIPAL</b></li>
+                    <!-- Optionally, you can add icons to the links -->
+                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
+                    <?php if ($login_usertype==0) {?>
+                        <li>
+                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
+                        </li>
+                        <li>
+                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
+                        </li>
+                        <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                    <?php } ?>
+                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
+                    <?php if ($login_usertype==0) {?>
+                        <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
+                    <?php } ?>
+                </ul><!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -185,12 +184,34 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Tendencia del indicador</h3>
+                        <row>
+                            <h3 class=" col-lg-9 box-title" style="padding-top:2%;text-align: center; ">Tendencia del indicador</h3>
+                            <div class="col-lg-3 ">
+                                <div class="info-box" style="min-height: 50px;">
+                            <span class="info-box-icon bg-green" style="
+                                  height: 55px;
+                                  width: 55px;
+                                  font-size: 2em;
+                                  line-height: 55px;
+                            "><i class="fa fa-flag-o"></i></span>
+                                    <div class="info-box-content" style="margin-left: 50px;">
+                                        <span class="info-box-text">Meta del Indicador</span>
+                                        <span class="info-box-number"><?php echo$_GET['indicatorGoal'];?></span>
+                                    </div><!-- /.info-box-content -->
+                                </div><!-- /.info-box -->
+                            </div>
+                        </row>
+
+
+
+
+
                 </div><!-- /.box-header -->
                 <div class="box-body">
+
                 	<div class="row">
 					<div class="chart">
-                    	<canvas id="canvas" height="250" width="500"></canvas>
+                    	<canvas id="canvas" height="250" width="400"></canvas>
                   	</div>
                   	</div>
                   </div><!-- /.box-body -->
@@ -278,8 +299,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- SlimScroll 1.3.0 -->
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <!-- iCheck 1.0.1 -->
-    <script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
     <script src="php/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
@@ -288,186 +307,34 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
     <script src="plugins/chartjs/Chart.js" type="text/javascript"></script>
     <!-- Page script -->
-	<script>
-		<?php 
-		$q = mysql_query("SELECT DATE(value_date) AS value_date, value_ind FROM indicatorvalues WHERE indicator_id=$query_id LIMIT 6", $link); 
-		$num_v=mysql_numrows($q);
-		?>
-		var rows= <?php echo $num_v;?>;
-		var myData= [
-		<?php
-		while ($info = mysql_fetch_assoc($q)) { echo $info['value_ind'] . ','; }
-   		?>];
-    	<?php 
-    	$q = mysql_query("SELECT DATE(value_date) AS value_date, value_ind FROM indicatorvalues WHERE indicator_id=$query_id LIMIT 6", $link); 
-    	?>
- 	   	var myLabels= 
- 	   	[<?php
-		while ($info = mysql_fetch_assoc($q)) { echo '"' . $info['value_date'] . '",'; }
-		?>];
-		var myBase=[0,0];
-		for (i=0; i<rows; i++) {
-			myBase[i]=0;
-		}
-		var myGoal=[0,0];
-		for (i=0; i<rows; i++) {
-			myGoal[i]=<?php echo $meta;?>;
-		}
+    <script src="js/renderChart.js" type="text/javascript"></script>
 
-		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-		var lineChartData = {
-			labels : myLabels,
-			datasets : [
-								{
-	              label: "Meta",
-				  fillColor: "rgba(249,206,13,0.01)",
-	              strokeColor: "rgba(249,206,13,0.8)",
-	              pointColor: "rgba(249,206,13,0.01)",
-	              pointStrokeColor: "rgba(249,206,13,0.01)",
-	              pointHighlightFill: "rgba(249,206,13,0.8)",
-	              pointHighlightStroke: "rgba(249,206,13,0.8)",              	
-	              data: myGoal
-				},
-				{
-	              label: "Indicador",
-				  fillColor: "rgba(60,141,188,0.01)",
-	              strokeColor: "rgba(60,141,188,0.8)",
-	              pointColor: "#3b8bba",
-	              pointStrokeColor: "rgba(60,141,188,1)",
-	              pointHighlightFill: "#fff",
-	              pointHighlightStroke: "rgba(60,141,188,1)",              
-	              data: myData
-				}
+    <script>
 
-			]
+        $(document).ready(function() {
+            var param = {
+                'indicatorId' : "<?php echo $_GET['id']; ?>",
+                'indicatorType' : "<?php  echo $_GET['indicatorType'];?>",
+                'chartType' :"<?php echo $_GET['chartType'];?>" };
+            var chart_data;
 
-		}
+            $.ajax({
+                type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url         : 'processChart.php', //
+                data        : param, // our data object
+                dataType    : 'json', // what type of data do we expect back from the server
+                encode      : true
+            })
+            .done(function(data) {
+                    console.log(data.message);
+                    renderChart(data.message);
+            });
 
-	var barChartData = {
-		labels : myLabels,
-		datasets : [
-			{
-				fillColor : "rgba(75,204,38,0.7)",
-				strokeColor : "rgba(75,204,38,0.9)",
-				highlightFill: "rgba(60,102,76,0.75)",
-				highlightStroke: "rgba(60,102,76,1)",
-				data : myData
-			}
+        });
 
-		]
 
-	}
+    </script>
 
-			var doughnutData = [
-				{
-					value: 90,
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "Red"
-				},
-				{
-					value: 50,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "Green"
-				}
-/*				{
-					value: 100,
-					color: "#FDB45C",
-					highlight: "#FFC870",
-					label: "Yellow"
-				},
-				{
-					value: 40,
-					color: "#949FB1",
-					highlight: "#A8B3C5",
-					label: "Grey"
-				},
-				{
-					value: 120,
-					color: "#4D5360",
-					highlight: "#616774",
-					label: "Dark Grey"
-				} */
-
-			];
-
-        var areaChartData = {
-          labels: myLabels,
-          datasets: [
-            {
-              label: "Indicador",
-			  fillColor: "rgba(60,141,188,0.9)",
-              strokeColor: "rgba(60,141,188,0.8)",
-              pointColor: "#3b8bba",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",              
-              data: myData
-            },
-          ] };
-
-        var areaChartOptions = {
-          //Boolean - If we should show the scale at all
-          showScale: true,
-          //Boolean - Whether grid lines are shown across the chart
-          scaleShowGridLines: false,
-          //String - Colour of the grid lines
-          scaleGridLineColor: "rgba(0,0,0,.05)",
-          //Number - Width of the grid lines
-          scaleGridLineWidth: 1,
-          //Boolean - Whether to show horizontal lines (except X axis)
-          scaleShowHorizontalLines: true,
-          //Boolean - Whether to show vertical lines (except Y axis)
-          scaleShowVerticalLines: true,
-          //Boolean - Whether the line is curved between points
-          bezierCurve: true,
-          //Number - Tension of the bezier curve between points
-          bezierCurveTension: 0.3,
-          //Boolean - Whether to show a dot for each point
-          pointDot: false,
-          //Number - Radius of each point dot in pixels
-          pointDotRadius: 4,
-          //Number - Pixel width of point dot stroke
-          pointDotStrokeWidth: 1,
-          //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-          pointHitDetectionRadius: 20,
-          //Boolean - Whether to show a stroke for datasets
-          datasetStroke: true,
-          //Number - Pixel width of dataset stroke
-          datasetStrokeWidth: 2,
-          //Boolean - Whether to fill the dataset with a color
-          datasetFill: true,
-          //String - A legend template
-          legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-          //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-          maintainAspectRatio: false,
-          //Boolean - whether to make the chart responsive to window resizing
-          responsive: true
-        };
-
-	window.onload = function(){
-		var variable = <?php echo $grafico; ?>;
-		var ctx;
-		switch (variable) {
-			case(3):
-			ctx = document.getElementById("canvas").getContext("2d");
-			window.myBar = new Chart(ctx).Bar(barChartData, {
-			responsive : true });
-			break;
-			case(2):
-			ctx = document.getElementById("canvas").getContext("2d");
-			window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
-			break;
-			case(4):
-			ctx = document.getElementById("canvas").getContext("2d");
-			window.myLine = new Chart(ctx).Line(lineChartData, {
-			responsive: true });
-			break;
-			}
-	}
-
-	</script>
   </body>
 </html>
 <?php } ?>

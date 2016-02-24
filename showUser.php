@@ -305,7 +305,7 @@ else {
                                             <h4 class="modal-title" id="myModalLabel">Eliminar Usuario</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <h3> El usuario : <?php echo $nombre." ".$apellido ?> será borrado del sistema </h2>
+                                            <h2> El usuario : <?php echo $nombre." ".$apellido ?> será borrado del sistema </h2>
                                             <h4 class="center-text"> ¿ Desea Continuar ?</h4>
                                         </div>
                                         <div class="modal-footer">
@@ -390,7 +390,7 @@ else {
                 // get the form data
                 // there are many ways to get this data using jQuery (you can use the class or id also)
                 var formData = {
-                    'id'              : $('input[name=id]').val(),
+                    'id': $('input[name=id]').val()
                 };
 
                 // process the form

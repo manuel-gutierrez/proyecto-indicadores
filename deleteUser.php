@@ -14,7 +14,7 @@ include ('php/functions.php');
 $errors         = array();      // array to hold validation errors
 $data           = array();      // array to pass back data
 
-// validate the variables
+    // validate the variables
     // if any of these variables don't exist, add an error to our $errors array
 
     if (empty($_POST['id'])){

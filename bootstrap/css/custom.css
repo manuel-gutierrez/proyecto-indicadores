@@ -8,3 +8,10 @@
 .center-text{
     text-align: center;
 }
+
+.custom-info-box-icon{
+    height: 55px;
+    width: 55px;
+    font-size: 2em;
+    line-height: 55px;
+}

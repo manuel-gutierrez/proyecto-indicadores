@@ -5,7 +5,6 @@ include ('php/importInd.php');
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
     header("Location: index.php"); //Redirige al login.php
 } else {
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -179,8 +178,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <tbody>
 					<?php while($valor = mysql_fetch_assoc($q)){?>
                       <tr>
-                        <td><a target="_blank" class="btn btn-block btn-primary" href="showInd.php?id=
-                        	<?php echo $valor['indicator_id']; ?>">Ver</a></td>
+                        <td><a target="_blank" class="btn btn-block btn-primary" href="showInd.php?id=<?php echo trim($valor['indicator_id']," "); ?>&&indicatorType=<?php echo trim($valor['indicator_type']," ");?>&&chartType=<?php echo trim($valor['chart_type']," ");?>&&indicatorGoal=<?php echo trim($valor['indicator_goal']," ");?>">Ver</a></td>
                         <td><?php echo $valor['indicator_cod']; ?></td>
                         <td><?php echo $valor['area_id']; ?></td>
                         <td><?php echo $valor['objective_id']; ?></td>
@@ -201,8 +199,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                   </table>
                       <?php } else { ?>
             				<h3 class="box-title">No hay indicadores creados en el momento.</h3>
-                      	
-                      <?php } ?>   
+                  <?php } ?>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
         </section><!-- /.content -->
@@ -237,14 +234,27 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- page script -->
     <script type="text/javascript">
 		$(function() {
-			$("#example1").DataTable();
-			$('#example2').DataTable({
+
+			$('#example1').DataTable({
 				"paging" : true,
-				"lengthChange" : false,
+				"lengthChange" : true,
 				"searching" : false,
 				"ordering" : true,
 				"info" : true,
-				"autoWidth" : false
+				"autoWidth" : false,
+                "searching" : true,
+                "language": {
+                    "search": "Buscar :",
+                    "lengthMenu": "Mostrar  _MENU_  registros",
+                    "paginate": {
+                        "first": "Primera Página",
+                        "last": "Última Página",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+
+                    }
+                }
+
 			});
 		});
     </script>
