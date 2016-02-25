@@ -28,15 +28,18 @@
 // [65, 59, 80, 81, 56, 55, 40]
 //--------------------------------------
 
-//Render Charts with dummy data
+//-------------------------------------------------------------------------------------
+// Render Charts with dummy data
 //var data;
-data_line = {
-    pointLabels: ["January", "February", "March", "April", "May", "June", "July"],
-    values: [65, 59, 80, 81, 56, 55, 40],
-    yLabel: "TestData",
-    chartType: "3"
-    // With dummy data all passed.
-};
+//data = {
+//    pointLabels: ["January", "February", "March", "April", "May", "June", "July"],
+//    values: [65, 59, 80, 81, 56, 55, 40],
+//    yLabel: "TestData",
+//    chartType: "3"
+//    // With dummy data all passed.
+//};
+//--------------------------------------------------------------------------------------
+
 // Load Data from php.
 
 function renderChart(data) {

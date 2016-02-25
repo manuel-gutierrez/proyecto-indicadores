@@ -39,7 +39,7 @@ require ('php/connDB.php');
             $last_year = date("Y")-1;
             // Query.
 
-            $q='SELECT DATE(value_date) AS value_date, value_ind FROM indicatorvalues WHERE `indicator_id`= '.$indicator_id.' LIMIT 4' ;
+            $q='SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id`= '.$indicator_id.' ORDER BY value_id DESC LIMIT 4' ;
             $result = mysql_query($q ,$link);
 
 

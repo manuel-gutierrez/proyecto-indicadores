@@ -178,12 +178,13 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <tbody>
 					<?php while($valor = mysql_fetch_assoc($q)){?>
                       <tr>
-                        <td><a target="_blank" class="btn btn-block btn-primary" href="showInd.php?id=<?php echo trim($valor['indicator_id']," "); ?>&&indicatorType=<?php echo trim($valor['indicator_type']," ");?>&&chartType=<?php echo trim($valor['chart_type']," ");?>&&indicatorGoal=<?php echo trim($valor['indicator_goal']," ");?>">Ver</a></td>
+                        <td><a target="_blank" class="btn btn-block btn-primary" href="showInd.php?id=<?php echo trim($valor['indicator_id']," "); ?>&&indicatorType=<?php echo trim($valor['indicator_type']," ");?>&&chartType=<?php echo trim($valor['chart_type']," ");?>&indicatorGoal=<?php echo trim($valor['indicator_goal']," ");?>&formulaId=<?php echo trim($valor['equation_id']," ");?>">Ver</a></td>
                         <td><?php echo $valor['indicator_cod']; ?></td>
                         <td><?php echo $valor['area_id']; ?></td>
                         <td><?php echo $valor['objective_id']; ?></td>
                         <td><?php echo $valor['indicator_name']; ?></td>
                         <td><?php echo $valor['indicator_goal']; ?></td>
+
                       </tr> <?php } ?>
                     </tbody>
                     <tfoot>

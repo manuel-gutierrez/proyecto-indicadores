@@ -196,15 +196,17 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             "><i class="fa fa-flag-o"></i></span>
                                     <div class="info-box-content" style="margin-left: 50px;">
                                         <span class="info-box-text">Meta del Indicador</span>
-                                        <span class="info-box-number"><?php echo$_GET['indicatorGoal'];?></span>
+                                        <span class="info-box-number"><?php
+                                            if (isset($_GET['indicatorGoal'])){
+                                             echo $_GET['indicatorGoal'];
+                                            } else{
+                                                echo "No hay meta definida para este indicador";
+                                            }
+                                            ?></span>
                                     </div><!-- /.info-box-content -->
                                 </div><!-- /.info-box -->
                             </div>
                         </row>
-
-
-
-
 
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -218,7 +220,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 			  </div>
               <div class="box">
                 <div class="box-header">
-                    <a href="addValue.php?id=<?php echo $query_id; ?>" class="btn btn-info pull-right">Agregar</a>
+                    <a href="addValue.php?id=<?php echo $_GET['id']; ?>&indicatorType=<?php echo $_GET['indicatorType']; ?>&formulaId=<?php echo $_GET['formulaId']; ?>" class="btn btn-info pull-right">Agregar</a>
                 </div> <!-- /.box-header -->
                 <div class="box-body">
                   <?php if($num>0) {?>
@@ -239,8 +241,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         <td><?php echo $v['value_date']; ?></td>
                         <td><?php echo $v['value_ind']; ?></td>
 <?php	if ($login_usertype == 0) {?>
-	                    <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?id=
-                        	<?php echo $v['value_id']; ?>" style="width: 100px">Editar</a></td>
+	                    <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?valueId=<?php echo $v['value_id']; ?>&indicatorType=<?php echo $_GET['indicatorType']; ?>&indicatorId=<?php echo $_GET['id']; ?>&formulaId=<?php echo $_GET['id']; ?>" style="width: 100px">Editar</a></td>
 						<?php } $i++;
 						?>
                       </tr>
