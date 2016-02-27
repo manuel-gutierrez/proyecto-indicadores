@@ -602,10 +602,12 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             $('#totalValueSection').submit(function(event) {
 
                 event.preventDefault();
+
                 var formData = {
                     'id': '<?php echo $_GET['id']?>',
                     'date': $('input[name=date]').val(),
                     'value': $('input[name=value]').val(),
+                    'userId' : <?php echo $_GET['userId']?>,
                     'action': 'add'
                 };
                 storeValueRequest(formData);
@@ -638,8 +640,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                 })
                     // using the done promise callback
                     .done(function(data) {
-                        // log data to the console so we can see
-                        console.log(data);
+
                         // Handle Error
 
                         if ( ! data.success) {
@@ -693,6 +694,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                 'id': '<?php echo $_GET['id']?>',
                                 'date': data.message[0]['date'],
                                 'value': data.message[0]['value'],
+                                'userId' : <?php echo $_GET['userId']?>,
                                 'action': 'add'
                             };
                             storeValueRequest(formData);

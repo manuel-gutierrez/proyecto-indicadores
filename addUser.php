@@ -8,15 +8,15 @@ Query's
 */
 $ses_sql=mysql_query("SELECT * FROM areas", $link);
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
-header("Location: index.php"); //Redirige al login.php
+    header("Location: index.php"); //Redirige al login.php
 } else {
-?>
+    ?>
 
-<!--
-Begining of the HTML Document.
--->
-<!DOCTYPE html>
-<html>
+    <!--
+    Begining of the HTML Document.
+    -->
+    <!DOCTYPE html>
+    <html>
     <head>
         <meta charset="UTF-8">
         <title>Agregar Usuarios</title>
@@ -58,105 +58,105 @@ Begining of the HTML Document.
         <!-- Main Header -->
         <header class="main-header">
 
-    <!-- Logo -->
-    <a href="<?php
-    if ($login_usertype == 0) {echo "inicio.php";
-    } else {echo "inicio1.php";
-    }
-    ?>" class="logo">
-    <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><img src="pics/logo.png" height="50px" alt="Grancolombiano"/> /></span>
-    <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="pics/logo2.png" height="50px" alt="Grancolombiano"/></span>
-    </a>
+            <!-- Logo -->
+            <a href="<?php
+            if ($login_usertype == 0) {echo "inicio.php";
+            } else {echo "inicio1.php";
+            }
+            ?>" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><img src="pics/logo.png" height="50px" alt="Grancolombiano"/> /></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><img src="pics/logo2.png" height="50px" alt="Grancolombiano"/></span>
+            </a>
 
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-    <!-- Sidebar toggle button-->
-    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-    <span class="sr-only">Toggle navigation</span>
-    </a>
-    <!-- Navbar Right Menu -->
-    <div class="navbar-custom-menu">
-    <ul class="nav navbar-nav">
-    <!-- User Account Menu -->
-    <li class="dropdown user user-menu">
-    <!-- Menu Toggle Button -->
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    <!-- The user image in the navbar-->
-    <img src="php/dist/img/unknown.gif" class="user-image" alt="User Image" />
-    <!-- hidden-xs hides the username on small devices so only the image appears. -->
-    <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
-    </a>
-    <ul class="dropdown-menu">
-    <!-- The user image in the menu -->
-    <li class="user-header">
-    <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
-    <p>
-    <?php echo $login_fn . " " . $login_ln; ?>
-    Cargo: <?php echo "$login_occupation"; ?>
-    <small><?php
-    if ($login_usertype == 0) {echo "Administrador";
-    } else {echo "";
-    }
-    ?></small>
-    </p>
-    </li>
-    <!-- Menu Footer-->
-    <li class="user-footer">
-    <div class="pull-left">
-    <a href="#" class="btn btn-default btn-flat">Perfil</a>
-    </div>
-    <div class="pull-right">
-    <a href="php/logout.php" class="btn btn-default btn-flat">Salir</a>
-    </div>
-    </li>
-    </ul>
-    </li>
-    </ul>
-    </div>
-    </nav>
-    </header>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="php/dist/img/unknown.gif" class="user-image" alt="User Image" />
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                                    <p>
+                                        <?php echo $login_fn . " " . $login_ln; ?>
+                                        Cargo: <?php echo "$login_occupation"; ?>
+                                        <small><?php
+                                            if ($login_usertype == 0) {echo "Administrador";
+                                            } else {echo "";
+                                            }
+                                            ?></small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="php/logout.php" class="btn btn-default btn-flat">Salir</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
 
         <!-- Left side column. -->
         <aside class="main-sidebar">
 
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
 
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
-        <div class="pull-left image">
-        <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
-        </div>
-        <div class="pull-left info">
-        <p><?php echo $login_fn; ?></p>
-        <!-- Status -->
-        <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
-        </div>
-        </div>
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p><?php echo $login_fn; ?></p>
+                        <!-- Status -->
+                        <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
+                    </div>
+                </div>
 
-        <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
-        <li class="header"><b>MENÚ PRINCIPAL</b></li>
-        <!-- Optionally, you can add icons to the links -->
-        <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-        <?php if ($login_usertype==0) {?>
-        <li>
-        <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
-        </li>
-        <li>
-        <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
-        </li>
-        <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
-        <?php } ?>
-        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-        <?php if ($login_usertype==0) {?>
-        <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
-        <?php } ?>
-        </ul><!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu">
+                    <li class="header"><b>MENÚ PRINCIPAL</b></li>
+                    <!-- Optionally, you can add icons to the links -->
+                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
+                    <?php if ($login_usertype==0) {?>
+                        <li>
+                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
+                        </li>
+                        <li>
+                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
+                        </li>
+                        <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                    <?php } ?>
+                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
+                    <?php if ($login_usertype==0) {?>
+                        <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
+                    <?php } ?>
+                </ul><!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
         </aside>
         <!-- Content Wrapper -->
         <div class="wrapper">
@@ -165,12 +165,12 @@ Begining of the HTML Document.
 
                 <section class="content-header">
                     <h1>
-                    Usuarios registrados
+                        Usuarios registrados
                     </h1>
                     <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-home"></i> Inicio</a></li>
-                    <li >Usuarios</li>
-                    <li class="active">Nuevo Usuario</li>
+                        <li><a href="#"><i class="fa fa-home"></i> Inicio</a></li>
+                        <li >Usuarios</li>
+                        <li class="active">Nuevo Usuario</li>
                     </ol>
                 </section>
 
@@ -205,6 +205,7 @@ Begining of the HTML Document.
                                         $new_cycle = $_POST['cycle'];
                                         $new_labour_time  = $_POST['labour_time'];
                                         $new_document_number  = $_POST['document_number'];
+                                        $new_linked_indicators  = $_POST['indicators'];
 
                                         $q = mysql_query("SELECT * FROM usuarios WHERE email='$new_email'",$link);
                                         $rows = mysql_num_rows($q);
@@ -223,7 +224,8 @@ Begining of the HTML Document.
                                               `academic_field`,
                                               `cycle`,
                                               `labour_time`,
-                                              `document_number`
+                                              `document_number`,
+                                              `linked_indicators`
                                           )
                                           VALUES (
                                               '$new_fn',
@@ -236,7 +238,8 @@ Begining of the HTML Document.
                                               '$new_academic_field',
                                               '$new_cycle',
                                               '$new_labour_time',
-                                              '$new_document_number'
+                                              '$new_document_number',
+                                              '$new_linked_indicators'
                                           )",
                                                 $link
                                             );
@@ -295,7 +298,7 @@ Begining of the HTML Document.
                                 ?>
                                 <!-- /.row-->
                             </div><!-- /.box -->
-                        <h3 class="box-title">Crear un nuevo usuario</h3>
+                            <h3 class="box-title">Crear un nuevo usuario</h3>
 
                         </div><!-- /.box-header -->
 
@@ -308,8 +311,8 @@ Begining of the HTML Document.
                                     <div class="col-md-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                         <label>Nombres:</label>
-                                         <input type="text" name="fn" class="form-control" placeholder="" required/>
+                                            <label>Nombres:</label>
+                                            <input type="text" name="fn" class="form-control" placeholder="" required/>
                                         </div>
 
                                         <div class="form-group">
@@ -331,7 +334,17 @@ Begining of the HTML Document.
                                             <label>Contraseña:</label>
                                             <input type="password" name="password" class="form-control" placeholder="" required/>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
+                                            <input type="text" name="indicators" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
+                                            <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
+                                            <script>
+                                                function openHelpTable(){
+                                                    event.preventDefault();
+                                                    window.open("/granC/tablero.php", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=900, left=500, width=600, height=800");
+                                                }
+                                            </script>
+                                        </div>
                                     </div>
 
 
@@ -344,13 +357,13 @@ Begining of the HTML Document.
                                                 <option value="0">No aplica</option>
                                                 <!--  Fetch Areas    -->
                                                 <?php
-                                                 while($row = mysql_fetch_assoc($ses_sql)){
-                                                // $id=$row["id_expense"];
-                                                $idArea = $row["area_id"];
-                                                $nameArea = $row["area_name"];
-                                                ?>
-                                                <!--  / Fetch Areas   -->
-                                                <option value= "<?php echo $idArea ?>" > <?php echo $nameArea ?> </option>
+                                                while($row = mysql_fetch_assoc($ses_sql)){
+                                                    // $id=$row["id_expense"];
+                                                    $idArea = $row["area_id"];
+                                                    $nameArea = $row["area_name"];
+                                                    ?>
+                                                    <!--  / Fetch Areas   -->
+                                                    <option value= "<?php echo $idArea ?>" > <?php echo $nameArea ?> </option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -403,9 +416,6 @@ Begining of the HTML Document.
                                                 <option value="SDL">SDL</option>
                                                 <option value="SDC">SDC</option>
                                                 <option value="Inicial">Inicial</option>
-
-
-
                                             </select>
                                         </div>
 
@@ -424,41 +434,41 @@ Begining of the HTML Document.
                                     </div>
 
                                 </div>
-                            </div><!-- /.box-body -->
+                        </div><!-- /.box-body -->
 
-                                <div class="box-footer">
-                                    <a href="javascript:javascript:history.go(-1)"class="btn btn-default">Cancelar</a>
-                                    <button type="submit" class="btn btn-info pull-right">Agregar</button>
-                                </div><!-- /.box-footer -->
-                             </form>
+                        <div class="box-footer">
+                            <a href="javascript:javascript:history.go(-1)"class="btn btn-default">Cancelar</a>
+                            <button type="submit" class="btn btn-info pull-right">Agregar</button>
+                        </div><!-- /.box-footer -->
+                        </form>
 
                 </section>
-            <!-- /.content -->
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+
+            <!-- Main Footer -->
+            <footer class="main-footer">
+                <!-- To the right
+                <div class="pull-right hidden-xs">
+                Anything you want
+                </div> -->
+                <!-- Default to the left -->
+                <strong>Copyright &copy; 2015 <a href="http://www.gygsistemas.org/gc/gc_j/index.php" target="_blank">Colegio Grancolombiano</a>.</strong> Todos los derechos reservados.
+            </footer>
+
+
         </div>
-        <!-- /.content-wrapper -->
+        <!--  End of wrapper -->
 
-
-        <!-- Main Footer -->
-        <footer class="main-footer">
-        <!-- To the right
-        <div class="pull-right hidden-xs">
-        Anything you want
-        </div> -->
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="http://www.gygsistemas.org/gc/gc_j/index.php" target="_blank">Colegio Grancolombiano</a>.</strong> Todos los derechos reservados.
-        </footer>
-
-
-    </div>
-    <!--  End of wrapper -->
-
-    <!--  SCRIPTS -->
+        <!--  SCRIPTS -->
 
         <script>
-        function alerta_datos() {
-        alert("I am an alert box!");
-        }
+            function alerta_datos() {
+                alert("I am an alert box!");
+            }
         </script>
     </body>
-</html>
+    </html>
 <?php } ?>

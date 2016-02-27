@@ -38,7 +38,7 @@
 //    chartType: "3"
 //    // With dummy data all passed.
 //};
-//--------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
 // Load Data from php.
 
@@ -226,14 +226,16 @@ barChart = {
         case("2"):
             new Chart(ctx).Doughnut(doughnutChart, doughnutChartOptions);
             break;
-        // Line Chart
-        case("3"):
-            new Chart(ctx).Line(lineChart, lineChartOptions);
-            break;
         // Bar Chart.
-        case("4"):
+        case("3"):
+
             var myBarChart = new Chart(ctx).Bar(barChart,barChartOptions);
             break;
+        // Line Chart
+        case("4"):
+            new Chart(ctx).Line(lineChart, lineChartOptions);
+            break;
+
 
 
     }

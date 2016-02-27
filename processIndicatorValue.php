@@ -33,12 +33,14 @@ if ( ! empty($errors)) {
     $date   = $_POST['date'];
     $value  = $_POST['value'];
     $action   = $_POST['action'];
+
+
     if (isset($_POST['userId'])){
         $userId   = $_POST['userId'];
         $q = "INSERT INTO indicatorvalues (`value_id`, `indicator_id`, `value_date`, `value_ind`, `user_id`)
-           VALUES (NULL, '$indicator_id', '$date', '$value','$value','$userId')";
-    }else{
+           VALUES (NULL, '$indicator_id', '$date', '$value','$userId')";
 
+    }else{
         $q = "INSERT INTO indicatorvalues (`value_id`, `indicator_id`, `value_date`, `value_ind`, `user_id`)
            VALUES (NULL, '$indicator_id', '$date', '$value',NULL)";
     }

@@ -7,43 +7,53 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     header("Location: index.php"); //Redirige al login.php
 } else {
 
-?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Colegio Grancolombiano | Indicadores</title>
-    <link rel="shortcut icon" href="pics/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="pics/apple-touch-icon.png" />
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.4 -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
-    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- DATA TABLES -->
-    <link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-    <!-- daterange picker -->
-    <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-    <!-- Select2 -->
-    <link href="plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
-    <link href="php/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-    <!-- jvectormap -->
-<!--    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />-->
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link href="php/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    if (isset($_GET['userId'])){
+        $userId = $_GET['userId'];
+        $indicator_type= $_GET['indicatorType'];
+        $users_chart_data = ['user_id' => 0 ,'cycle'  => 0 ,'jornada' => 0];
+
+    }else{
+        $userId = "";
+        $indicator_type= $_GET['indicatorType'];
+        $users_chart_data = ['user_id' => 0 ,'cycle'  => 0 ,'jornada' => 0];
+    }?>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Colegio Grancolombiano | Indicadores</title>
+        <link rel="shortcut icon" href="pics/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="pics/apple-touch-icon.png" />
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Bootstrap 3.3.4 -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- Font Awesome Icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <!-- Ionicons -->
+        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <!-- DATA TABLES -->
+        <link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <!-- daterange picker -->
+        <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+        <!-- Select2 -->
+        <link href="plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+        <!-- Theme style -->
+        <link href="php/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <!-- jvectormap -->
+        <!--    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />-->
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+             folder instead of downloading all of them to reduce the load. -->
+        <link href="php/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body class="skin-blue sidebar-mini">
+        <![endif]-->
+    </head>
+    <body class="skin-blue sidebar-mini">
     <div class="wrapper">
 
         <!-- Main Header -->
@@ -150,131 +160,314 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             <!-- /.sidebar -->
         </aside>
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            Indicador <?php echo $codigo; ?>: <?php echo $nombre; ?>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li><a href="#">Tablero</a></li>
-            <li class="active"><a href="#"><?php echo $codigo; ?></a></li>
-          </ol>
-        </section>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    <?php
+                    if (!empty($userId)){
+                        $nq = "select `first_name`, `last_name` from usuarios where id_usuario=".$userId;
+                        $r = mysql_fetch_assoc(mysql_query($nq,$link));
+                        echo "Indicador ".$codigo." :".$r['first_name']." ".$r['last_name'];
+                    } else {
+                        echo "Indicador".$codigo.":".$nombre;
+                    }
+                    ?>
 
-        <!-- Main content -->
-        <section class="content">
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                    <li><a href="#">Tablero</a></li>
+                    <li class="active"><a href="#"><?php echo $codigo; ?></a></li>
+                </ol>
+            </section>
 
-          <div class="row">
-            <div class="col-md-12">
-			<div class="box box-default color-palette-box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Descripción</h3>
-                </div><!-- /.box-header -->
-					<div class="box-body">
-						<?php echo $descrip; ?>					
-					</div><!-- /.box-body -->
-				</div><!-- /.box -->
-              </div><!-- /.column -->
-              </div><!-- /.row -->
+            <!-- Main content -->
+            <section class="content">
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="box">
-                <div class="box-header with-border">
-                        <row>
-                            <h3 class=" col-lg-9 box-title" style="padding-top:2%;text-align: center; ">Tendencia del indicador</h3>
-                            <div class="col-lg-3 ">
-                                <div class="info-box" style="min-height: 50px;">
-                            <span class="info-box-icon bg-green" style="
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-default color-palette-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Descripción</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+                                <?php echo $descrip; ?>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div><!-- /.column -->
+                </div><!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <row>
+                                    <h3 class=" col-lg-9 box-title" style="padding-top:2%;text-align: center; ">Tendencia del indicador</h3>
+                                    <div class="col-lg-3 ">
+                                        <div class="info-box" style="min-height: 50px;">
+                                            <span class="info-box-icon bg-green" style="
                                   height: 55px;
                                   width: 55px;
                                   font-size: 2em;
                                   line-height: 55px;
                             "><i class="fa fa-flag-o"></i></span>
-                                    <div class="info-box-content" style="margin-left: 50px;">
-                                        <span class="info-box-text">Meta del Indicador</span>
-                                        <span class="info-box-number"><?php
-                                            if (isset($_GET['indicatorGoal'])){
-                                             echo $_GET['indicatorGoal'];
-                                            } else{
-                                                echo "No hay meta definida para este indicador";
-                                            }
-                                            ?></span>
-                                    </div><!-- /.info-box-content -->
-                                </div><!-- /.info-box -->
-                            </div>
-                        </row>
+                                            <div class="info-box-content" style="margin-left: 50px;">
+                                                <span class="info-box-text">Meta del Indicador</span>
+                                            <span class="info-box-number"><?php
+                                                if (isset($_GET['indicatorGoal'])){
+                                                    echo $_GET['indicatorGoal'];
+                                                } else{
+                                                    echo "No hay meta definida para este indicador";
+                                                }
+                                                ?>
+                                            </span>
+                                            </div><!-- /.info-box-content -->
+                                        </div><!-- /.info-box -->
+                                    </div>
+                                </row>
+                                <row>
+                                    <span class="info-box col-sm-12-offset-2 "><?php
+                                        if ($indicator_type == '1' and !isset($_GET['userId'])){?>
+                                           <div class="pull-right">
+                                               <label for="chartSummaryType"> Calcular por: </label>
+                                               <select id="chartSummaryType" onchange="loadChart()">
+                                                   <option value="global" selected>Global</option>
+                                                   <option value="ciclo">Ciclo</option>
+                                                   <option value="jornada">Jornada</option>
+                                               </select>
+                                           </div>
 
-                </div><!-- /.box-header -->
-                <div class="box-body">
+                                        <?php }
+                                        ?>
+                                    </span>
+                                </row>
 
-                	<div class="row">
-					<div class="chart">
-                    	<canvas id="canvas" height="250" width="400"></canvas>
-                  	</div>
-                  	</div>
-                  </div><!-- /.box-body -->
-			  </div>
-              <div class="box">
-                <div class="box-header">
-                    <a href="addValue.php?id=<?php echo $_GET['id']; ?>&indicatorType=<?php echo $_GET['indicatorType']; ?>&formulaId=<?php echo $_GET['formulaId']; ?>" class="btn btn-info pull-right">Agregar</a>
-                </div> <!-- /.box-header -->
-                <div class="box-body">
-                  <?php if($num>0) {?>
-                  <table id="tablaInd" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>No.</th>
-                        <th>Fecha</th>
-                        <th>Valor</th>
-<?php	if ($login_usertype == 0) {?>
-			          <th>Editar valor</th> <?php } ?>
-                      </tr>
-                    </thead>
-                    <tbody>
-					<?php $i = 1; while($v = mysql_fetch_assoc($q)){?>
-                      <tr>
-                        <td><?php echo $i; ?></td>
-                        <td><?php echo $v['value_date']; ?></td>
-                        <td><?php echo $v['value_ind']; ?></td>
-<?php	if ($login_usertype == 0) {?>
-	                    <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?valueId=<?php echo $v['value_id']; ?>&indicatorType=<?php echo $_GET['indicatorType']; ?>&indicatorId=<?php echo $_GET['id']; ?>&formulaId=<?php echo $_GET['id']; ?>" style="width: 100px">Editar</a></td>
-						<?php } $i++;
-						?>
-                      </tr>
-                      <?php } ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>No.</th>
-                        <th>Fecha</th>
-                        <th>Valor</th>
-<?php	if ($login_usertype == 0) {?>
-                        <th>Editar valor</th> <?php } ?>
-                      </tr>
-                    </tfoot>
-                  </table>
-                      <?php } else { ?>
-            				<h3 class="box-title">No hay valores para este indicador.</h3>
-                      <?php } ?>   
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-              </div><!-- /.column -->
-              </div><!-- /.row -->
-        </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-      <!-- Main Footer -->
-      <footer class="main-footer">
-        <!-- To the right 
-        <div class="pull-right hidden-xs">
-          Anything you want
-        </div> -->
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="http://www.gygsistemas.org/gc/gc_j/index.php" target="_blank">Colegio Grancolombiano</a>.</strong> Todos los derechos reservados.
-      </footer>
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+
+                                <div class="row">
+                                    <div class="chart">
+                                        <canvas id="canvas" height="250" width="400"></canvas>
+                                    </div>
+                                </div>
+                                <div id = "warning-message-user" class="message-pading col-lg-12 " hidden>
+                                    <div class="box box-solid box-warning" >
+                                        <div class="box-header" >
+                                            <h3 class="box-title" > Datos Insuficientes </h3 >
+                                        </div ><!-- /.box - header-->
+                                        <div class="box-body" >
+                                            Aún no hay datos asociados a este usuario.
+                                        </div ><!-- /.box - body-->
+                                    </div >
+                                </div >
+                                <div id = "warning-message-global" class="message-pading col-lg-12 " hidden>
+                                    <div class="box box-solid box-warning" >
+                                        <div class="box-header" >
+                                            <h3 class="box-title" > Datos Insuficientes </h3 >
+                                        </div ><!-- /.box - header-->
+                                        <div class="box-body" >
+                                            Aún no hay datos asociados a este indicador.
+                                        </div ><!-- /.box - body-->
+                                    </div >
+                                </div >
+                                <div id = "warning-message-db" class="message-pading col-lg-12 " hidden>
+                                    <div class="box box-solid box-danger" >
+                                        <div class="box-header" >
+                                            <h3 class="box-title" > Error </h3 >
+                                        </div ><!-- /.box - header-->
+                                        <div class="box-body" >
+                                            No hay accesso a la base de datos.
+                                            Por favor, intente de nuevo ingresando desde la tabla de indicadores.
+                                        </div ><!-- /.box - body-->
+                                    </div >
+                                </div >
+                            </div><!-- /.box-body -->
+                        </div>
+                        <div class="box">
+                            <?php if ($indicator_type == 0){?>
+                            <div class="box-header">
+                                <a href="addValue.php?id=<?php echo $_GET['id']; ?>&indicatorType=<?php echo $indicator_type; ?>&formulaId=<?php echo $_GET['formulaId']; ?>" class="btn btn-info pull-right">Agregar</a>
+                            </div> <!-- /.box-header -->
+                            <?php } ?>
+                            <?php if ($indicator_type == "1" and !empty($userId) ){?>
+                                <div class="box-header">
+                                    <a href="addValue.php?id=<?php echo $_GET['id']; ?>&indicatorType=<?php echo $indicator_type; ?>&formulaId=<?php echo $_GET['formulaId']; ?>&userId=<?php echo $userId; ?>" class="btn btn-info pull-right">Agregar</a>
+                                </div> <!-- /.box-header -->
+                            <?php } ?>
+
+                            <div class="box-body">
+                                <?php if($num>0) {
+                                    if($indicator_type == "1"){
+                                     // Indicator type 1, general view
+                                    // fetch all the users for this indicator and show them in a table.
+                                        if(!isset($_GET['userId'])){
+                                            $query = 'SELECT * FROM usuarios WHERE linked_indicators like "'.$valores['indicator_cod'].'%"';
+                                            $result = mysql_query($query , $link);
+                                            if ($result) { ?>
+                                                <table id="tablaInd" class="table table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Nombre</th>
+                                                        <th>Cargo</th>
+
+                                                        <?php	if ($login_usertype == 0) {?>
+                                                            <th>Ver Indicador del usuario</th> <?php } ?>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $i = 1; while($linked_users = mysql_fetch_array($result)){
+
+
+                                                        if ( empty($users_chart_data['user_id']) and empty($users_chart_data['cycle'])  and empty($users_chart_data['jornada'])){
+                                                            if(empty($linked_users['id_usuario'])){$linked_users['id_usuario'] = "NULL";}
+                                                            if(empty($linked_users['cycle'])){$linked_users['cycle'] = "NULL";}
+                                                            if(empty($linked_users['labour_time'])){$linked_users['labour_time'] = "NULL";}
+
+                                                            $users_chart_data ['user_id'] = $linked_users['id_usuario'];
+                                                            $users_chart_data ['cycle'] = $linked_users ['cycle'];
+                                                            $users_chart_data ['jornada'] = $linked_users ['labour_time'];
+                                                        }else{
+                                                            if(empty($linked_users['id_usuario'])){$linked_users['id_usuario'] = "NULL";}
+                                                            if(empty($linked_users['cycle'])){$linked_users['cycle'] = "NULL";}
+                                                            if(empty($linked_users['labour_time'])){$linked_users['labour_time'] = "NULL";}
+
+                                                            $users_chart_data ['user_id'] = $users_chart_data ['user_id'].", ".$linked_users['id_usuario'];
+                                                            $users_chart_data ['cycle'] = $users_chart_data ['cycle'].", ".$linked_users['cycle'];
+                                                            $users_chart_data ['jornada'] =$users_chart_data ['jornada'].", ".$linked_users ['labour_time'];
+                                                        }
+
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo $i; ?></td>
+                                                            <td><?php echo $linked_users['first_name']." ".$linked_users['last_name']; ?></td>
+                                                            <td><?php echo $linked_users['occupation']; ?></td>
+                                                            <?php	if ($login_usertype == 0)
+                                                                $qs=$_SERVER['QUERY_STRING'];
+                                                            $qs =  $qs.'&userId='.$linked_users['id_usuario'];
+                                                            {?>
+
+                                                                <td><a target="_blank" class="btn  btn-primary" href="./showInd.php?<?php echo $qs; ?>"> Ver Usuario</a></td>
+                                                            <?php } $i++;
+                                                            ?>
+                                                        </tr>
+                                                    <?php } ?>
+
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Nombre</th>
+                                                        <th>Cargo</th>
+                                                        <?php	if ($login_usertype == 0) {?>
+                                                            <th>Ver Indicador del usuario</th> <?php } ?>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            <?php } else { ?>
+                                                <h3 class="box-title">No hay Usuarios asociados a este indicador.</h3>
+                                           <?php } ?>
+                                        <?php
+                                        }else {
+                                            // Indicator type 1, individual view
+                                            $query = 'select * from indicatorvalues where  indicator_id ="'.$_GET['id'].'" and user_id="'.$userId.'"';
+                                            $result = mysql_query($query , $link);
+                                        ?>
+                                            <table id="tablaInd" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Fecha</th>
+                                                    <th>Valor</th>
+                                                    <?php	if ($login_usertype == 0) {?>
+                                                        <th>Editar valor</th> <?php } ?>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php $i = 1; while($v = mysql_fetch_assoc($result)){
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $i; ?></td>
+                                                        <td><?php echo $v['value_date']; ?></td>
+                                                        <td><?php echo $v['value_ind']; ?></td>
+                                                        <?php	if ($login_usertype == 0) {?>
+                                                            <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?valueId=<?php echo $v['value_id']; ?>&indicatorType=<?php echo $indicator_type ; ?>&indicatorId=<?php echo $_GET['id']; ?>&formulaId=<?php echo $_GET['id']; ?>" style="width: 100px">Editar</a></td>
+                                                        <?php } $i++;
+                                                        ?>
+                                                    </tr>
+                                                <?php } ?>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Fecha</th>
+                                                    <th>Valor</th>
+                                                    <?php	if ($login_usertype == 0) {?>
+                                                        <th>Editar valor</th> <?php } ?>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+
+                                    <?php }
+                                    } else{
+                                        //Indicator type 0, general view
+                                        ?>
+                                        <table id="tablaInd" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Fecha</th>
+                                                <th>Valor</th>
+                                                <?php	if ($login_usertype == 0) {?>
+                                                    <th>Editar valor</th> <?php } ?>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $i = 1; while($v = mysql_fetch_assoc($q)){?>
+                                                <tr>
+                                                    <td><?php echo $i; ?></td>
+                                                    <td><?php echo $v['value_date']; ?></td>
+                                                    <td><?php echo $v['value_ind']; ?></td>
+                                                    <?php	if ($login_usertype == 0) {?>
+                                                        <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?valueId=<?php echo $v['value_id']; ?>&indicatorType=<?php echo $indicator_type; ?>&indicatorId=<?php echo $_GET['id']; ?>&formulaId=<?php echo $_GET['id']; ?>" style="width: 100px">Editar</a></td>
+                                                    <?php } $i++;
+                                                    ?>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Fecha</th>
+                                                <th>Valor</th>
+                                                <?php	if ($login_usertype == 0) {?>
+                                                    <th>Editar valor</th> <?php } ?>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                   <?php }
+                                }else { ?>
+                                    <h3 class="box-title">No hay valores para este indicador.</h3>
+                                <?php } ?>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div><!-- /.column -->
+                </div><!-- /.row -->
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+
+
+            <!-- To the right
+            <div class="pull-right hidden-xs">
+              Anything you want
+            </div> -->
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2015 <a href="http://www.gygsistemas.org/gc/gc_j/index.php" target="_blank">Colegio Grancolombiano</a>.</strong> Todos los derechos reservados.
+        </footer>
 
     </div><!-- ./wrapper -->
 
@@ -310,14 +503,39 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- Page script -->
     <script src="js/renderChart.js" type="text/javascript"></script>
 
-    <script>
+
+        <script>
 
         $(document).ready(function() {
-            var param = {
-                'indicatorId' : "<?php echo $_GET['id']; ?>",
-                'indicatorType' : "<?php  echo $_GET['indicatorType'];?>",
-                'chartType' :"<?php echo $_GET['chartType'];?>" };
-            var chart_data;
+
+            loadChart();
+
+
+
+        });
+        function loadChart(){
+            var indicatorType = <?php  echo $indicator_type;?>;
+
+            if (indicatorType == 0){
+                var param = {
+                    'indicatorId' : "<?php echo $_GET['id']; ?>",
+                    'indicatorType' : indicatorType,
+                    'chartType' :"<?php echo $_GET['chartType'];?>",
+                    'userId' :"<?php echo $userId;?>"
+                };
+            } else {
+                var param = {
+
+                    'indicatorId' : "<?php echo $_GET['id']; ?>",
+                    'indicatorType' : indicatorType,
+                    'chartType' :"<?php echo $_GET['chartType'];?>",
+                    'userId' :"<?php echo $userId;?>",
+                    'summaryType': $("#chartSummaryType").val(),
+                    'chartData_users':"<?php echo $users_chart_data['user_id'] ;?>",
+                    'chartData_cycle':"<?php echo $users_chart_data['cycle'] ;?>",
+                    'chartData_jornada':"<?php echo  $users_chart_data['jornada'] ;?>"
+                };
+            }
 
             $.ajax({
                 type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
@@ -326,16 +544,35 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                 dataType    : 'json', // what type of data do we expect back from the server
                 encode      : true
             })
-            .done(function(data) {
-                    console.log(data.message);
-                    renderChart(data.message);
-            });
+                .done(function(data) {
 
-        });
+                    if(data.success){
 
+                        renderChart(data.message);
+                    }
+                    if (data.errors){
+
+                        if (data.errors.empty_result_user){
+                            $("#canvas").hide();
+                            $("#warning-message-user").show();
+                        }
+                        if(data.errors.empty_result) {
+                            $("#canvas").hide();
+                            $("#warning-message-user").show();
+                        }
+                        if(data.errors.db) {
+                            $("#canvas").hide();
+                            console.log(data.errors.db);
+                            $("#warning-message-db").show();
+                        }
+                    }
+
+
+                });
+        }
 
     </script>
 
-  </body>
-</html>
+    </body>
+    </html>
 <?php } ?>

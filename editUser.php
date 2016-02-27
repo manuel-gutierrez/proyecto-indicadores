@@ -36,6 +36,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $jornada = $valores['labour_time'];
         $documento = $valores['document_number'];
         $tipo_de_usuario = $valores['user_type'];
+        $indicators = $valores['linked_indicators'];
 
         //  academic field data
         $academic_field_id = $valores['academic_field'];
@@ -263,6 +264,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     $updated_cycle = $_POST['cycle'];
                                     $updated_labour_time  = $_POST['labour_time'];
                                     $updated_document_number  = $_POST['document_number'];
+                                    $updated_indicators  = $_POST['indicators'];
 
                                     $sql = "
                             SELECT id_usuario, email FROM usuarios WHERE email='$updated_email';
@@ -280,18 +282,19 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     if (!$mail_errror) {
                                         $sql = "";
                                         $sql = "UPDATE `usuarios`
-                            SET
-                            `first_name` = '$updated_fn',
-                            `last_name` = '$updated_ln',
-                            `email` = '$updated_email',
-                            `occupation` = '$updated_occup',
-                            `area_id` = '$updated_area',
-                            `user_type` = '$updated_ut',
-                            `cycle` = '$updated_cycle',
-                            `labour_time` = '$updated_labour_time',
-                            `document_number` = '$updated_document_number',
-                            `academic_field` = '$updated_academic_field'
-                            WHERE `id_usuario` = '$userId'";
+                                                SET
+                                                `first_name` = '$updated_fn',
+                                                `last_name` = '$updated_ln',
+                                                `email` = '$updated_email',
+                                                `occupation` = '$updated_occup',
+                                                `area_id` = '$updated_area',
+                                                `user_type` = '$updated_ut',
+                                                `cycle` = '$updated_cycle',
+                                                `labour_time` = '$updated_labour_time',
+                                                `document_number` = '$updated_document_number',
+                                                `academic_field` = '$updated_academic_field',
+                                                `linked_indicators` = '$updated_indicators'
+                                                WHERE `id_usuario` = '$userId'";
 
                                         if (mysql_query($sql)) {
                                             // Success Message
@@ -406,7 +409,18 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         <label>Correo electrónico:</label>
                                         <input type="email" name="email" value="<?php echo $correo ?>" class="form-control" placeholder="" required/>
                                     </div>
+                                    <div class="form-group">
 
+                                        <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
+                                        <input type="text" name="indicators" value="<?php echo $indicators; ?>" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
+                                        <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
+                                        <script>
+                                            function openHelpTable(){
+                                                event.preventDefault();
+                                                window.open("/granC/tablero.php", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=900, left=500, width=600, height=800");
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
 
 
