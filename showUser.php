@@ -20,6 +20,7 @@ else {
     $ciclo = $valores['cycle'];
     $jornada = $valores['labour_time'];
     $documento = $valores['document_number'];
+    $indicadores = $valores['linked_indicators'];
     $tipo_de_usuario = $valores['user_type'];
 
     //  academic field data
@@ -252,6 +253,10 @@ else {
                                     <p><?php echo $correo;?> </p>
                                     <h3>Documento de identidad:</h3>
                                     <p> <?php echo "cc:".$documento; ?> </p>
+                                    <h3>Indicadores Asociados :</h3>
+                                    <p> <?php
+                                        if (empty ($indicadores)){echo 'Este usuario no tiene indicadores asociados';}else {echo $indicadores;}
+                                         ?> </p>
 
                                 </section>
                             </div>
@@ -278,7 +283,7 @@ else {
 
                     <div class="box-footer">
 
-                        <a  class="btn btn-primary pull-left" onclick="javascript:history.go(-1)">Volver</a>
+                        <a  class="btn btn-primary pull-left" href="./users.php">Volver</a>
 
                         <span class="margin-2 pull-right">
                             <a class="btn btn-primary " href="./editUser.php?id=

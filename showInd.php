@@ -232,9 +232,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         if ($indicator_type == '1' and !isset($_GET['userId'])){?>
                                            <div class="pull-right">
                                                <label for="chartSummaryType"> Calcular por: </label>
-                                               <select id="chartSummaryType" onchange="loadChart()">
-                                                   <option value="global" selected>Global</option>
-                                                   <option value="ciclo">Ciclo</option>
+                                               <select id="chartSummaryType" >
+                                                   <option value="global" selected >Global</option>
+                                                   <option value="ciclo" >Ciclo</option>
                                                    <option value="jornada">Jornada</option>
                                                </select>
                                            </div>
@@ -248,7 +248,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             <div class="box-body">
 
                                 <div class="row">
-                                    <div class="chart">
+                                    <div class="chart" id="chart-container">
                                         <canvas id="canvas" height="250" width="400"></canvas>
                                     </div>
                                 </div>
@@ -509,6 +509,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $(document).ready(function() {
 
             loadChart();
+            $( "#chartSummaryType" ).change(function() {
+                loadChart();
+            });
 
 
 
@@ -558,7 +561,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         }
                         if(data.errors.empty_result) {
                             $("#canvas").hide();
-                            $("#warning-message-user").show();
+                            $("#warning-message-global").show();
                         }
                         if(data.errors.db) {
                             $("#canvas").hide();

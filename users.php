@@ -181,7 +181,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <tbody>
 					<?php while($valor = mysql_fetch_assoc($q)){?>
                       <tr>
-                        <td><a target="_blank" class="btn btn-block btn-primary" href="showUser.php?id=
+                        <td><a class="btn btn-block btn-primary" href="showUser.php?id=
                         	<?php echo $valor['id_usuario']; ?>">Ver</a></td>
                         <td><?php echo $valor['area_id']; ?></td>
                         <td><?php echo strtoupper($valor['first_name']); ?></td>

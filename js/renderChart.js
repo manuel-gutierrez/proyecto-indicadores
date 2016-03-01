@@ -40,7 +40,13 @@
 //};
 //-------------------------------------------------------------------------------------
 
-// Load Data from php.
+var myAreaChart = null;
+var myLineChart = null;
+var myDoughnutChart = null;
+var myBarChart = null;
+
+
+
 
 function renderChart(data) {
 
@@ -105,7 +111,7 @@ var barChartOptions = {
         scaleGridLineColor : "rgba(0,0,0,.05)",
 
         //Number - Width of the grid lines
-        scaleGridLineWidth : 1,
+        scaleGridLineWidth : 2,
 
         //Boolean - Whether to show horizontal lines (except X axis)
         scaleShowHorizontalLines: true,
@@ -190,10 +196,10 @@ doughnutChart = data.values;
 // Bar Chart
 
 barChartData = {
-    fillColor: "#3E606F",
-    strokeColor: "rgba(62,96,111,0.8)",
-    highlightFill: "rgba(220,220,220,0.75)",
-    highlightStroke: "rgba(220,220,220,1)",
+    fillColor: "#FFD34E",
+    strokeColor: "#FFD34E",
+    highlightFill: "rgba(16,91,99,0.75)",
+    highlightStroke: "rgba(16,91,99,1)",
     data: data.values
 };
 
@@ -213,27 +219,34 @@ barChart = {
 
     var ctx; // chart variable.
     ctx = document.getElementById("canvas").getContext("2d"); // get the context
+
     var chart_type = data.chartType; // case parse.
 
     switch (chart_type) {
 
         // Area Chart
         case("1"):
-            var myAreaChart =new Chart(ctx).Line(areaChart, areaChartOptions);
+
+            if (myAreaChart){myAreaChart.destroy();}
+              myAreaChart =new Chart(ctx).Line(areaChart, areaChartOptions);
             break;
 
         // Doughnut Chart
-        case("2"):
-            new Chart(ctx).Doughnut(doughnutChart, doughnutChartOptions);
+        case("3"):
+            if (myDoughnutChart){myDoughnutChart.destroy();}
+             myDoughnutChart = new Chart(ctx).Doughnut(doughnutChart, doughnutChartOptions);
             break;
         // Bar Chart.
-        case("3"):
+        case("4"):
+            if (myBarChart){myBarChart.destroy();}
+             myBarChart = new Chart(ctx).Bar(barChart,barChartOptions);
 
-            var myBarChart = new Chart(ctx).Bar(barChart,barChartOptions);
             break;
         // Line Chart
-        case("4"):
-            new Chart(ctx).Line(lineChart, lineChartOptions);
+        case("2"):
+
+            if (myLineChart){myLineChart.destroy();}
+             myLineChart = new Chart(ctx).Line(lineChart, lineChartOptions);
             break;
 
 
