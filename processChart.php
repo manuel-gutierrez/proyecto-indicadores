@@ -49,190 +49,159 @@ if ( !empty($errors)) {
     switch ($indicator_type) {
         case 0:  // Global indicator
 
-            $q = 'SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id`= ' . $indicator_id . ' ORDER BY value_id DESC LIMIT 4';
-            $result = mysql_query($q, $link);
+            $q1= 'SELECT EXTRACT(YEAR FROM value_date) AS s_year FROM indicatorvalues WHERE `indicator_id` = '.$indicator_id.' ORDER BY value_date DESC LIMIT 1 ';
+
+            $result = mysql_query($q1, $link);
             if ($result) {
-                // fetch data
-                $index = 0;
-                $pointLabels = array();
-                $pointValues = array();
+                $year_to_search = mysql_fetch_array($result, MYSQL_ASSOC);
+                $q2= 'SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id` = '.$indicator_id.' and value_date LIKE "%' .trim($year_to_search["s_year"], " ") . '%" ORDER BY value_id DESC LIMIT 4';
+                $result = mysql_query($q2, $link);
 
-                while ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
+                if ($result) {
+                    // fetch data
+                    $index = 0;
+                    $pointLabels = array();
+                    $pointValues = array();
 
-                    $pointLabels[$index] = $result_data['value_date'];
-                    $pointValues[$index] = $result_data['value_ind'];
-                    $index++;
-                }
+                    while ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
 
-                $indicator_data = array('pointLabels' => $pointLabels, 'values' => $pointValues, 'yLabel' => 'Tendencia del Indicador', 'chartType' => $chart_type);
-                // if the result of the query is empty.
-                if (empty($indicator_data)) {
-                    $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                        $pointLabels[$index] = $result_data['value_date'];
+                        $pointValues[$index] = $result_data['value_ind'];
+                        $index++;
+                    }
+
+                    $indicator_data = array('pointLabels' => $pointLabels, 'values' => $pointValues, 'yLabel' => 'Tendencia del Indicador', 'chartType' => $chart_type);
+                    // if the result of the query is empty.
+                    if (empty($indicator_data)) {
+                        $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                        $data['success'] = false;
+                        $data['errors'] = $errors;
+                    } else {
+                        // format data
+                        // Create success array.
+                        $data['success'] = true;
+                        $data['message'] = $indicator_data;
+                    }
+                } else {
+                    // DB exception
+                    $errors['db'] = 'No hay acceso a la base de datos por lo tanto no es posible consultar la información';
                     $data['success'] = false;
                     $data['errors'] = $errors;
-                } else {
-                    // format data
-                    // Create success array.
-                    $data['success'] = true;
-                    $data['message'] = $indicator_data;
                 }
+
             } else {
-                // DB exception
-                $errors['db'] = 'No hay acceso a la base de datos por lo tanto no es posible consultar la información';
+                $errors['empty_result'] = "Aún no hay resultados para este indicador";
                 $data['success'] = false;
                 $data['errors'] = $errors;
             }
+
+
+
             break;
         case 1:  // Individual indicator
 
             switch($summaryType) {
                 case "global":
+
+                    /*
+                    * Logic:
+                    *
+                    *  - Search last entry and fetch the year.
+                    *  - For each user linked to this indicator  fetch the  last entry of the user for the resulting year
+                    *  - Average the results
+                    */
                     $pointLabels = array();
                     $pointValues = array();
 
+                    $q1= 'SELECT EXTRACT(YEAR FROM value_date) AS s_year FROM indicatorvalues WHERE `indicator_id` = '.$indicator_id.' ORDER BY value_date DESC LIMIT 1 ';
+                    $result = mysql_query($q1, $link);
 
-                    foreach ($chart_data_users as $k => $v) {
+                    if ($result) {
+                        $year_to_search = mysql_fetch_array($result, MYSQL_ASSOC);
 
-                        $q = 'SELECT value_ind from indicatorvalues where user_id in (' . $v . ') and `indicator_id`= ' . $indicator_id . ' order by  value_date DESC limit 4';
+                        foreach ($chart_data_users as $k => $v) {
 
-                        $result = mysql_query($q, $link);
-                        $result_data = mysql_fetch_array($result, MYSQL_ASSOC);
-                        if ($result_data) {
-                            $data_sum = 0;
-                            while ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)){
-                                $data_sum = $result_data['value_ind'] + $data_sum ;
-                            }
-                            $result_avg = $data_sum / 4;
-                            $pointValues[$k] = $result_avg;
-                        }
-                    }
-
-                    // if the result of the query is empty.
-                    if (empty($pointValues)) {
-                        $errors['empty_result'] = "Aún no hay resultados para este indicador";
-                        $data['success'] = false;
-                        $data['errors'] = $errors;
-                    } else {
-                        // format data
-                        $pointLabels[0] = " Media global de las ulitmas 4 mediciones";
-                        $avg[0] = array_sum($pointValues) / count($pointValues);
-                        // Create success array.
-                        $indicator_data = array('pointLabels' => $pointLabels, 'values' => $avg , 'yLabel' => 'Tendencia del Indicador', 'chartType' => $chart_type);                            $data['success'] = true;
-                        $data['message'] = $indicator_data;
-                    }
-                    break;
-
-                case "ciclo":
-                    $pointLabels = array();
-                    $pointValues = array();
-                    $result_array = array();
-                    $avg = array();
-
-
-
-                    foreach ($chart_data_cycle as $k => $v) {
-                        $index = 0;
-                        $q = 'SELECT value_ind from indicatorvalues where user_id in (' . $chart_data_users[$k] . ') and `indicator_id`= ' . $indicator_id . ' order by  value_date DESC limit 4';
-                        $result = mysql_query($q, $link);
-
-                        if ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                            $data_sum = 0;
-                            $data_sum = $result_data['value_ind'];
-                            $index = $index+1;
-                            while ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)){
-                               $data_sum = $result_data['value_ind'] + $data_sum ;
-                                $index = $index+1;
-                            }
-
-                            $result_avg = $data_sum / $index ;
-
-
-                            if (!isset($result_array[$v])){
-                                $result_array[$v][$index] = $result_avg;
-                            } else {
-                                $offset = count($result_array[$v]);
-                                $index = $index + $offset;
-                                $result_array[$v][$index] = $result_avg;
-
-                            }
-                        }
-                    }
-
-
-                    // if the result of the query
-                    // is empty.
-                    if (empty($result_array)) {
-                        $errors['empty_result'] = "Aún no hay resultados para este indicador";
-                        $data['success'] = false;
-                        $data['errors'] = $errors;
-                    } else {
-                        // format data
-                        $index = 0;
-                        foreach ($result_array as $cycle => $users_avg) {
-                            $pointValues[$index] =array_sum($users_avg) / count($users_avg);
-                            $pointLabels[$index] = 'Ciclo : '.$cycle;
-                            $index++;
-                        }
-
-                        // Create success array.
-                        $indicator_data = array('pointLabels' => $pointLabels, 'values' => $pointValues, 'yLabel' => 'Tendencia del Indicador', 'chartType' => $chart_type);
-                        $data['success'] = true;
-                        $data['message'] = $indicator_data;
-                    }
-
-                       break;
-
-                    case "jornada":
-
-                        $pointLabels = array();
-                        $pointValues = array();
-                        $result_array = array();
-                        $avg = array();
-
-
-
-                        foreach ($chart_data_jornada as $k => $v) {
-                            $index = 0;
-                            $q = 'SELECT value_ind from indicatorvalues where user_id in (' . $chart_data_users[$k] . ') and `indicator_id`= ' . $indicator_id . ' order by  value_date DESC limit 4';
+                            $q = 'SELECT value_ind from indicatorvalues where user_id in (' . $v . ') and `indicator_id`= ' . $indicator_id . ' and value_date LIKE "%' .trim($year_to_search["s_year"], " ") . '%" order by  value_date DESC limit 1';
                             $result = mysql_query($q, $link);
+                            $result_data = mysql_fetch_array($result, MYSQL_ASSOC);
 
-                            if ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                                $data_sum = 0;
-                                $data_sum = $result_data['value_ind'];
-                                $index = $index+1;
-                                while ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)){
-                                    $data_sum = $result_data['value_ind'] + $data_sum ;
-                                    $index = $index+1;
-                                }
-
-                                $result_avg = $data_sum / $index ;
-
-
-                                if (!isset($result_array[$v])){
-                                    $result_array[$v][$index] = $result_avg;
-                                } else {
-                                    $offset = count($result_array[$v]);
-                                    $index = $index + $offset;
-                                    $result_array[$v][$index] = $result_avg;
-
-                                }
+                            if ($result_data) {
+                                $pointValues[$k] = $result_data["value_ind"];
                             }
+
                         }
 
-
-                        // if the result of the query
-                        // is empty.
-                        if (empty($result_array)) {
+                        // if the result of the query is empty.
+                        if (empty($pointValues)) {
                             $errors['empty_result'] = "Aún no hay resultados para este indicador";
                             $data['success'] = false;
                             $data['errors'] = $errors;
                         } else {
                             // format data
-                            $index = 0;
-                            foreach ($result_array as $jornada => $users_avg) {
-                                $pointValues[$index] =array_sum($users_avg) / count($users_avg);
-                                $pointLabels[$index] = 'Jornada : '.$jornada;
-                                $index++;
+                            $pointLabels[0] = "Promedio del indicador para el ultimo año";
+                            $avg[0] = array_sum($pointValues) / count($pointValues);
+                            // Create success array.
+                            $indicator_data = array('pointLabels' => $pointLabels, 'values' => $avg, 'yLabel' => 'Tendencia del Indicador', 'chartType' => $chart_type);
+                            $data['success'] = true;
+                            $data['message'] = $indicator_data;
+                        }
+                    }
+                    else {
+
+                            $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                            $data['success'] = false;
+                            $data['errors'] = $errors;
+                    }
+
+
+                    break;
+
+                case "ciclo":
+
+                    /*
+                    * Logic:
+                    *
+                    *  - Search last entry and fetch the year.
+                    *  - For each cycle and user linked to this indicator  fetch the  last entry of the user for the resulting year
+                    *  - Average the results
+                    */
+
+                    $pointLabels = array();
+                    $pointValues = array();
+                    $cycle_data = array();
+
+
+                    $q1= 'SELECT EXTRACT(YEAR FROM value_date) AS s_year FROM indicatorvalues WHERE `indicator_id` = '.$indicator_id.' ORDER BY value_date DESC LIMIT 1 ';
+                    $result = mysql_query($q1, $link);
+                    $year_to_search = mysql_fetch_array($result, MYSQL_ASSOC);
+                    if ($result) {
+                        foreach ($chart_data_cycle as $k => $v) {
+
+
+
+                            $q = 'SELECT value_ind from indicatorvalues where user_id =' . $chart_data_users[$k] . ' and `indicator_id`= ' . $indicator_id . '  and value_date LIKE "%' .trim($year_to_search["s_year"], " ") . '%" order by  value_date DESC limit 1';
+                            $result = mysql_query($q, $link);
+
+                            if ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
+
+                                // array format [cycle_name][key] = user in this cycle last indicator value.
+                                $cycle_data[$v][$k] = $result_data['value_ind'];
+
+                            }
+                        }
+
+                        // if there is no data
+                        if (empty($cycle_data)) {
+                            $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                            $data['success'] = false;
+                            $data['errors'] = $errors;
+                        } else {
+                            // parse data.
+                            $i = 0;
+                            foreach ( $cycle_data as $k => $v) {
+                                $pointValues[$i] = array_sum ($cycle_data[$k] ) / count($cycle_data[$k]);
+                                $pointLabels[$i] = 'Ciclo : '.$k;
+                                $i = $i +1;
                             }
 
                             // Create success array.
@@ -240,7 +209,84 @@ if ( !empty($errors)) {
                             $data['success'] = true;
                             $data['message'] = $indicator_data;
                         }
-                        break;
+
+
+                    } else {
+                        // no year data.
+                        $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                        $data['success'] = false;
+                        $data['errors'] = $errors;
+                    }
+
+
+
+                       break;
+
+                case "jornada":
+
+                    /*
+                    * Logic:
+                    *
+                    *  - Search last entry and fetch the year.
+                    *  - For each "jornada" and user linked to this indicator  fetch the  last entry of the user for the resulting year
+                    *  - Average the results
+                    */
+
+                    $pointLabels = array();
+                    $pointValues = array();
+                    $jornada_data = array();
+
+
+                    $q1= 'SELECT EXTRACT(YEAR FROM value_date) AS s_year FROM indicatorvalues WHERE `indicator_id` = '.$indicator_id.' ORDER BY value_date DESC LIMIT 1 ';
+                    $result = mysql_query($q1, $link);
+                    $year_to_search = mysql_fetch_array($result, MYSQL_ASSOC);
+                    if ($result) {
+                        foreach ($chart_data_jornada as $k => $v) {
+
+
+
+                            $q = 'SELECT value_ind from indicatorvalues where user_id =' . $chart_data_users[$k] . ' and `indicator_id`= ' . $indicator_id . '  and value_date LIKE "%' .trim($year_to_search["s_year"], " ") . '%" order by  value_date DESC limit 1';
+                            $result = mysql_query($q, $link);
+
+                            if ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
+
+                                // array format [cycle_name][key] = user in this cycle last indicator value.
+                                $jornada_data[$v][$k] = $result_data['value_ind'];
+
+                            }
+                        }
+
+                        // if there is no data
+                        if (empty($jornada_data)) {
+                            $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                            $data['success'] = false;
+                            $data['errors'] = $errors;
+                        } else {
+                            // parse data.
+                            $i = 0;
+                            foreach ( $jornada_data as $k => $v) {
+                                $pointValues[$i] = array_sum ($jornada_data[$k] ) / count($jornada_data[$k]);
+                                $pointLabels[$i] = 'Jornada : '.$k;
+                                $i = $i +1;
+                            }
+
+                            // Create success array.
+                            $indicator_data = array('pointLabels' => $pointLabels, 'values' => $pointValues, 'yLabel' => 'Tendencia del Indicador', 'chartType' => $chart_type);
+                            $data['success'] = true;
+                            $data['message'] = $indicator_data;
+                        }
+
+
+                    } else {
+                        // no year data.
+                        $errors['empty_result'] = "Aún no hay resultados para este indicador";
+                        $data['success'] = false;
+                        $data['errors'] = $errors;
+                    }
+
+
+
+                    break;
 
                     case "0":
                         $q = 'SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id`= ' . $indicator_id . ' and `user_id`='.$user_id.' ORDER BY value_id DESC LIMIT 4';

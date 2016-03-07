@@ -6,7 +6,7 @@ include 'php/functions.php';
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
     header("Location: index.php"); //Redirige al login.php
 } else {
-
+    if (isset($_GET['userId'])){$userId = $_GET['userId'];}else { $userId = NULL ;}  // Catch User ID
     ?>
     <!DOCTYPE html>
     <html>
@@ -174,7 +174,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
             <!-- Main content -->
             <section class="content">
-
                 <div class="box">
                     <div class="box-header">
                         <row class="col-lg-12">
@@ -215,322 +214,399 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         </row>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="formula" class="col-md-2 ">Método de Ingreso </label>
-                                <div class="col-md-6" >
-                                    <span class="col-md-6"> <input  type="radio"   name="toggle" value="totalValue" checked> Valor Total</span>
-                                    <span class="col-md-6"> <input  type="radio"   name="toggle" value="formula"> Formula</span>
+                        <!--  Select type of input Section     -->
+                        <section>
+
+                            <div class="row col-lg-12" style=" font-size: medium;">
+                                <div class="form-group ">
+                                    <label for="formula" class="col-md-12 col-md-offset-1 inline" >Método de Ingreso </label>
+                                    <div class="col-md-4 inline" >
+                                        <span class="col-md-4 inline"> <input  type="radio"   name="toggle" value="totalValue" checked> Valor Total</span>
+                                        <span class="col-md-4 inline"> <input  type="radio"   name="toggle" value="formula"> Formula</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- form start -->
-                        <form class="form-horizontal" action="processIndicatorValue.php" method="post" id="totalValueSection">
-                            <div class="col-md-10">
 
-                                <!--  Add indicator as a total Value-->
-                                <div >
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="date" class="col-md-2 ">Fecha</label>
-                                            <div class="col-md-8">
-                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
-                                                echo date('Y-m-d H:i:s');
-                                                ?>" class="form-control"/>
+                        </section>
+
+                        <!--  Total  Value  Form Section     -->
+                        <section class="section-container" id="totalValueSection">
+                            <div class="col-md-12 box box-primary form-container"  >
+                                <form class="form-horizontal" action="processIndicatorValue.php" method="post" >
+                                    <div >
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="date" class="col-md-2 ">Fecha</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                    echo date('Y-m-d H:i:s');
+                                                    ?>" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="value" class="col-md-2 ">Valor</label>
+                                                <div class="col-md-8">
+                                                    <input type="number" class="form-control" name="value" id="value" placeholder="Ingrese un valor">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="value" class="col-md-2 ">Valor</label>
-                                            <div class="col-md-8">
-                                                <input type="number" class="form-control" name="value" id="value" placeholder="Ingrese un valor">
-                                            </div>
-                                        </div>
+                                    <div class="row col-md-10">
+                                        <a href="showInd.php?id=<?php echo $query_id; ?>" class="btn btn-default">Cancelar</a>
+                                        <button type="submit" class="btn btn-info pull-right">Agregar</button>
                                     </div>
-                                </div>
-                                <div class="row col-md-10">
-                                    <a href="showInd.php?id=<?php echo $query_id; ?>" class="btn btn-default">Cancelar</a>
-                                    <button type="submit" class="btn btn-info pull-right">Agregar</button>
-                                </div>
+                                </form>
                             </div>
-                        </form>
+                        </section>
+                        <!--  Dynamic  Value  Form Section     -->
+                        <section id="formulaSection" class="section-container" hidden>
+                            <div class="col-md-12  box box-primary form-container">
+                                <form class="form-horizontal" action="processIndicatorValue.php" method="post"  id="formulaForm" >
 
 
-                        <form class="form-horizontal" action="processIndicatorValue.php" method="post" id="formulaSection" hidden>
-                            <div class="col-md-10">
+                                    <!-- Add indicator by formula-->
+                                    <div >
+                                        <?php
+                                        // Verify Parameter.
 
-                                <!-- Add indicator by formula-->
-                                <div >
-                                    <?php
-                                    // Verify Parameter.
-
-                                    if (!isset($_GET['formulaId'])){ echo('<div id = "warning-message" class="message-pading col-lg-12 ">
-                                    <div class="box box-solid box-warning" >
-                                        <div class="box-header" >
-                                            <h3 class="box-title" > Advertencia. </h3 >
-                                            </div ><!-- /.box - header-->
-                                            <div class="box-body" >
-                                                Este indicador no tiene ninguna formula asociada
-                                            </div ><!-- /.box - body-->
-                                        </div >');
-                                    }else{
-                                        //All ok, then render form.
-                                        $formulaId=$_GET['formulaId'];
-                                        ?>
-                                        <?php if ($formulaId=="1"){?>
-
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="date" class="col-md-12 ">Fecha :</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
-                                                            echo date('Y-m-d H:i:s');
-                                                            ?>" class="form-control"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n" class="col-md-12 ">Numero de consultados:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n" value="" class="form-control" placeholder="numero de consultados">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="numero-de-excelentes" class="col-md-12 ">Numero de exelentes: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_e" value="" class="form-control" placeholder="numero de exelentes">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="numero-de-buenos" class="col-md-12 ">Numero de buenos: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_b" value="" class="form-control" placeholder="numero de buenos">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n_r" class="col-md-12 ">Numero de regulares: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_r" value="" class="form-control" placeholder="numero de regulares">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n_m" class="col-md-12 ">Numero de malos: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_m" value="" class="form-control" placeholder="numero de malos">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n_mm" class="col-md-12 ">Numero de exelentes: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_mm" value="" class="form-control" placeholder="numero de muy malos">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-
-                                                        <div class="col-md-12">
-                                                            <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        <?php }?>
-                                        <?php if ($formulaId=="2"){
-                                            // Calculo de Eficiencia
+                                        if (!isset($_GET['formulaId'])){ echo('<div id = "warning-message" class="message-pading col-lg-12 ">
+                <div class="box box-solid box-warning" >
+<div class="box-header" >
+    <h3 class="box-title" > Advertencia. </h3 >
+    </div ><!-- /.box - header-->
+    <div class="box-body" >
+        Este indicador no tiene ninguna formula asociada
+    </div ><!-- /.box - body-->
+</div >');
+                                        }else{
+//All ok, then render form.
+                                            $formulaId=$_GET['formulaId'];
                                             ?>
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="date" class="col-md-12 ">Fecha :</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
-                                                            echo date('Y-m-d H:i:s');
-                                                            ?>" class="form-control"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="numero-actividades-realizadas" class="col-md-12 ">Numero de Actividades Realizadas:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="numero-actividades-realizadas" value="" class="form-control" placeholder="numero-actividades-realizadas">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="numero-actividades-programadas" class="col-md-12 ">Numero de Actividades Programadas: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="numero-actividades-programadas" value="" class="form-control" placeholder="numero-actividades-programadas">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
+                                            <?php if ($formulaId=="1"){?>
 
-                                                        <div class="col-md-12">
-                                                            <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="date" class="col-md-12 ">Fecha :</label>
+                                                            <div class="col-md-12">
+                                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                                echo date('Y-m-d H:i:s');
+                                                                ?>" class="form-control"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="numero-de-excelentes" class="col-md-12 ">Numero de exelentes: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_e" value="" class="form-control" placeholder="numero de exelentes">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="numero-de-buenos" class="col-md-12 ">Numero de buenos: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_b" value="" class="form-control" placeholder="numero de buenos">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="n_r" class="col-md-12 ">Numero de regulares: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_r" value="" class="form-control" placeholder="numero de regulares">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="n_m" class="col-md-12 ">Numero de malos: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_m" value="" class="form-control" placeholder="numero de malos">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="n_mm" class="col-md-12 ">Numero de exelentes: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_mm" value="" class="form-control" placeholder="numero de muy malos">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+
+                                                            <div class="col-md-12">
+                                                                <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        <?php }?>
-                                        <?php if ($formulaId=="3"){
-                                            //Escala visual analógica
-                                            ?>
-                                            <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <label for="date" class="col-md-12 ">Fecha :</label>
-                                                    <div class="col-md-12">
-                                                        <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
-                                                        echo date('Y-m-d H:i:s');
-                                                        ?>" class="form-control"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2 form-group" style="left: 50px; top: 50px;">
-                                                    <i class="fa fa-frown-o fa-3x"></i>
-                                                </div>
-                                                <div class="col-md-8 form-group">
-                                                    <label for="satisfactionScale">Escala de Satisfacción</label>
 
-                                                    <input type="range" name="satisfacionScale" id="satisfacionScale" min="0" max="100" value="50"  step="10"  oninput="outputUpdate(value)">
-                                                    <datalist id="satisfactionSettings">
-                                                            <option>0</option>
-                                                            <option>10</option>
-                                                            <option>20</option>
-                                                            <option>30</option>
-                                                            <option>40</option>
-                                                            <option>50</option>
-                                                            <option>60</option>
-                                                            <option>70</option>
-                                                            <option>80</option>
-                                                            <option>90</option>
-                                                            <option>100</option>
-                                                    </datalist>
-                                                </div>
-                                                <div class="col-md-2 form-group" style="right: 90px; top: 50px;">
-                                                    <i class="fa fa-smile-o fa-3x"></i>
-                                                </div>
-                                            </div>
-                                        </div>
                                             <?php }?>
-                                        <?php if ($formulaId=="4"){
-                                            //Cálculo de calidad
-                                            ?>
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="date" class="col-md-12 ">Fecha :</label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
-                                                            echo date('Y-m-d H:i:s');
-                                                            ?>" class="form-control"/>
+                                            <?php if ($formulaId=="2"){
+                                                // Calculo de Eficiencia
+                                                ?>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="date" class="col-md-12 ">Fecha :</label>
+                                                            <div class="col-md-12">
+                                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                                echo date('Y-m-d H:i:s');
+                                                                ?>" class="form-control"/>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n_o" class="col-md-12 ">Número  Oportunidad:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_o" value="" class="form-control" placeholder="numero oportunidad ">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="numero-actividades-realizadas" class="col-md-12 ">Numero de Actividades Realizadas:</label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="numero-actividades-realizadas" value="" class="form-control" placeholder="numero-actividades-realizadas">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="t_o" class="col-md-12 ">Total  Oportunidad:</label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="t_o" value="" class="form-control" placeholder="total oportunidad ">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="numero-actividades-programadas" class="col-md-12 ">Numero de Actividades Programadas: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="numero-actividades-programadas" value="" class="form-control" placeholder="numero-actividades-programadas">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n_p" class="col-md-12 ">Número  Presentacion: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_p" value="" class="form-control" placeholder="numero presentacion">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="t_p" class="col-md-12 ">Total Presentacion: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="t_p" value="" class="form-control" placeholder="total presentacion">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="n_c" class="col-md-12 ">Número  completitud: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="n_c" value="" class="form-control" placeholder="numero completitud">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <label for="t_c" class="col-md-12 ">Total  completitud: </label>
-                                                        <div class="col-md-12">
-                                                            <input type="number" name="t_c" value="" class="form-control" placeholder="total completitud">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="form-group">
 
-                                                        <div class="col-md-12">
-                                                            <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            <div class="col-md-12">
+                                                                <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        <?php }?>
-                                        <?php if ($formulaId=="5"){
-                                            //Promedio de calificaciones
-                                            ?>
+                                            <?php }?>
+                                            <?php if ($formulaId=="3"){
+                                                //Escala visual analógica
+                                                ?>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="date" class="col-md-12 ">Fecha :</label>
+                                                            <div class="col-md-12">
+                                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                                echo date('Y-m-d H:i:s');
+                                                                ?>" class="form-control"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-12">
+                                                                <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2 form-group" style="left: 50px; top: 50px;">
+                                                            <i class="fa fa-frown-o fa-3x"></i>
+                                                        </div>
+                                                        <div class="col-md-8 form-group">
+                                                            <label for="satisfactionScale">Escala de Satisfacción</label>
 
+                                                            <input type="range" name="satisfacionScale" id="satisfacionScale" min="0" max="100" value="50"  step="10"  oninput="outputUpdate(value)">
+                                                            <datalist id="satisfactionSettings">
+                                                                <option>0</option>
+                                                                <option>10</option>
+                                                                <option>20</option>
+                                                                <option>30</option>
+                                                                <option>40</option>
+                                                                <option>50</option>
+                                                                <option>60</option>
+                                                                <option>70</option>
+                                                                <option>80</option>
+                                                                <option>90</option>
+                                                                <option>100</option>
+                                                            </datalist>
+                                                        </div>
+                                                        <div class="col-md-2 form-group" style="right: 60px; top: 50px;">
+                                                            <i class="fa fa-smile-o fa-3x"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                            <?php if ($formulaId=="4"){
+                                                //Cálculo de calidad
+                                                ?>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="date" class="col-md-12 ">Fecha :</label>
+                                                            <div class="col-md-12">
+                                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                                echo date('Y-m-d H:i:s');
+                                                                ?>" class="form-control"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="n_o" class="col-md-12 ">Número  Oportunidad:</label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_o" value="" class="form-control" placeholder="numero oportunidad ">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="t_o" class="col-md-12 ">Total  Oportunidad:</label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="t_o" value="" class="form-control" placeholder="total oportunidad ">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="n_p" class="col-md-12 ">Número  Presentacion: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_p" value="" class="form-control" placeholder="numero presentacion">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="t_p" class="col-md-12 ">Total Presentacion: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="t_p" value="" class="form-control" placeholder="total presentacion">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="n_c" class="col-md-12 ">Número  completitud: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="n_c" value="" class="form-control" placeholder="numero completitud">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="t_c" class="col-md-12 ">Total  completitud: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="t_c" value="" class="form-control" placeholder="total completitud">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+
+                                                            <div class="col-md-12">
+                                                                <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                            <?php if ($formulaId=="5"){
+
+                                                ?>
+                                                <div class="col-md-12" id ='form-5-div'>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="date" class="col-md-12 ">Fecha :</label>
+                                                            <div class="col-md-12">
+                                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                                echo date('Y-m-d H:i:s');
+                                                                ?>" class="form-control"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <h4 class="callout">Por favor, ingrese el número de estudiantes calificados y haga click en aceptar.</h4>
+
+                                                            <div class="col-md-12">
+                                                                <span class="col-md-8 inline"><input type="number" min="0" id="number-of-inputs" name="n_e" value="" class="form-control" placeholder="Numero de estudiantes"></span>
+                                                                <span class="col-md-4 inline"><a class="btn btn-info pull-right" id="add-input-button" >Aceptar</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 box" id="marks-section-form-5" style="padding-left: 0">
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+
+                                                            <div class="col-md-12">
+                                                                <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            <?php }?>
+                                            <?php if ($formulaId=="6"){
+                                                // Calculo de Eficiencia
+                                                ?>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="date" class="col-md-12 ">Fecha :</label>
+                                                            <div class="col-md-12">
+                                                                <input type="text" name="date" value="<?php setlocale(LC_TIME, 'es_CO');
+                                                                echo date('Y-m-d H:i:s');
+                                                                ?>" class="form-control"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="inventarios-disponibles-actualizados" class="col-md-12 ">Inventarios disponibles actualizados:</label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="inventarios-disponibles-actualizados" value="" class="form-control" placeholder="Inventarios dsiponibles actualizados">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="total-inventarios" class="col-md-12 ">Total Inventarios: </label>
+                                                            <div class="col-md-12">
+                                                                <input type="number" name="total-inventarios" value="" class="form-control" placeholder="total Inventarios">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+
+                                                            <div class="col-md-12">
+                                                                <input type="hidden" name="formulaId" value="<?php echo $_GET['formulaId']?>" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
                                         <?php }?>
-                                    <?php }?>
-                                </div>
-                                <div class="row col-md-10">
-                                    <a href="showInd.php?id=<?php echo $query_id; ?>" class="btn btn-default">Cancelar</a>
-                                    <button type="submit" class="btn btn-info pull-right">Agregar</button>
-                                </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <a href="showInd.php?id=<?php echo $query_id; ?>" class="btn btn-default">Cancelar</a>
+                                        <button type="submit" class="btn btn-info pull-right">Agregar</button>
+
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </section>
 
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->
-        <!-- Main Footer -->
 
+
+        <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right
             <div class="pull-right hidden-xs">
@@ -549,19 +625,20 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- DATA TABES SCRIPT -->
     <script src="plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-    <!-- SlimScroll -->
-<!--    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>-->
-    <!-- FastClick -->
-<!--    <script src="plugins/fastclick/fastclick.min.js" type="text/javascript"></script>-->
     <!-- AdminLTE App -->
     <script src="php/dist/js/app.min.js" type="text/javascript"></script>
     <!-- Date picker   -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script type="text/javascript" src="./addValue.js"></script>
     <!-- page script -->
     <script type="text/javascript">
         $(document).ready(function() {
-
+            $("#add-input-button").click(function () {
+                var n = $("#number-of-inputs").val();
+                $('#marks-section-form-5').children().remove();
+                createFormInputs(n);
+            });
             //  Toggle content on radio buttons selection.
 
             $("input[name$='toggle']").click(function () {
@@ -596,8 +673,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                 startDate: output
             });
 
-
-
             // process form
             $('#totalValueSection').submit(function(event) {
 
@@ -607,101 +682,100 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     'id': '<?php echo $_GET['id']?>',
                     'date': $('input[name=date]').val(),
                     'value': $('input[name=value]').val(),
-                    'userId' : <?php echo $_GET['userId']?>,
+                    'userId' : '<?php if (isset($_GET['userId'])){echo $_GET['userId'];}else { echo null ;}?>',
                     'action': 'add'
                 };
                 storeValueRequest(formData);
             });
 
             // Case user choose formula
-            $('#formulaSection').submit(function(event) {
+            $('#formulaForm').submit(function(event) {
+
+
 
                 event.preventDefault();
-
-
                 // Calculate Value
-
-                 var formValues = $( this ).serializeArray();
-
-                 calculateValue (formValues);
-
-//                // Store Data
-//                  storeValueRequest(value);
-
+                var formData = $(this).serializeArray();
+                calculateValue (formData);
 
             });
-            function storeValueRequest(values){
-                $.ajax({
-                    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-                    url         : 'processIndicatorValue.php', // the url where we want to POST
-                    data        : values,
-                    dataType    : 'json',
-                    encode      : true
-                })
-                    // using the done promise callback
-                    .done(function(data) {
 
-                        // Handle Error
 
-                        if ( ! data.success) {
-                            if (data.errors.Invalid_parameters){
-                                $("#warning-message").show();
-                                $("#success-message").hide();
-                                $("#errror-message").hide();
-                            }else{
-                                $("#errror-message").show();
-                                $("#warning-message").hide();
-                                $("#success-message").hide();
-                            }
-                        } else {
-                            $("#success-message").show();
-                            $("#errror-message").hide();
-                            $("#warning-message").hide();
-                            //all good show success.
-                            console.log(data.success);
-                        }
-                    });
-
-            }
-            function  calculateValue(formData){
-                $.ajax({
-                    type        : 'POST',
-                    url         : 'processEquation.php',
-                    data        : formData,
-                    dataType    : 'json',
-                    encode      : true
-                })
-                    // using the done promise callback
-                    .done(function(data) {
-                        console.log(data);
-                        // Handle Error
-                        if ( data.success == false) {
-
-                            if (data.errors.data_error){
-                                $("#warning-message").show();
-                                $("#success-message").hide();
-                                $("#errror-message").hide();
-                            }else{
-                                $("#errror-message").show();
-                                $("#warning-message").hide();
-                                $("#success-message").hide();
-                            }
-                        } else {
-
-                            //all good , now store the data.
-
-                            var formData = {
-                                'id': '<?php echo $_GET['id']?>',
-                                'date': data.message[0]['date'],
-                                'value': data.message[0]['value'],
-                                'userId' : <?php echo $_GET['userId']?>,
-                                'action': 'add'
-                            };
-                            storeValueRequest(formData);
-                        }
-                    });
-            }
         });
+
+        function storeValueRequest(values){
+            $.ajax({
+                type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url         : 'processIndicatorValue.php', // the url where we want to POST
+                data        : values,
+                dataType    : 'json',
+                encode      : true
+            })
+                // using the done promise callback
+                .done(function(data) {
+
+                    // Handle Error
+
+                    if ( ! data.success) {
+                        if (data.errors.Invalid_parameters){
+                            $("#warning-message").show();
+                            $("#success-message").hide();
+                            $("#errror-message").hide();
+                        }else{
+                            $("#errror-message").show();
+                            $("#warning-message").hide();
+                            $("#success-message").hide();
+                        }
+                    } else {
+                        $("#success-message").show();
+                        $("#errror-message").hide();
+                        $("#warning-message").hide();
+                        //all good show success.
+                        console.log(data.success);
+                    }
+                });
+
+        }
+        function calculateValue(formData){
+
+            $.ajax({
+                type        : 'POST',
+                url         : 'processEquation.php',
+                data        : formData,
+                dataType    : 'json',
+                encode      : true
+            })
+                // using the done promise callback
+                .done(function(data) {
+                    console.log(data);
+                    // Handle Error
+                    if ( data.success == false) {
+
+                        if (data.errors.data_error){
+                            $("#warning-message").show();
+                            $("#success-message").hide();
+                            $("#errror-message").hide();
+                        }else{
+                            $("#errror-message").show();
+                            $("#warning-message").hide();
+                            $("#success-message").hide();
+                        }
+                    } else {
+                        console.log(data);
+                        //all good , now store the data.
+
+                        var formData = {
+                            'id': '<?php echo $_GET['id']?>',
+                            'date': data.message[0]['date'],
+                            'value': data.message[0]['value'],
+                            'userId' : '<?php echo  $userId; ?>',
+                            'action': 'add'
+                        };
+
+                        storeValueRequest(formData);
+                    }
+                });
+        }
 
     </script>
     </body>

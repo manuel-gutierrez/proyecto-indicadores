@@ -253,6 +253,7 @@ else {
                                     <p><?php echo $correo;?> </p>
                                     <h3>Documento de identidad:</h3>
                                     <p> <?php echo "cc:".$documento; ?> </p>
+
                                     <h3>Indicadores Asociados :</h3>
                                     <p> <?php
                                         if (empty ($indicadores)){echo 'Este usuario no tiene indicadores asociados';}else {echo $indicadores;}

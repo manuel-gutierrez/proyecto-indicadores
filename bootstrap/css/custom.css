@@ -104,3 +104,13 @@ input[type='range']:focus {
     outline: none;
     box-shadow: 0 0 0.25em #b2b2b5;
 }
+
+.section-container{
+    padding: 5%
+}
+.form-container{
+ padding: 5%;
+}
+.row-margin{
+ margin: 1%;
+}

@@ -409,6 +409,8 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         <label>Correo electrónico:</label>
                                         <input type="email" name="email" value="<?php echo $correo ?>" class="form-control" placeholder="" required/>
                                     </div>
+
+                                    <?php if ($login_usertype == 0){ ?>
                                     <div class="form-group">
 
                                         <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
@@ -605,7 +607,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     </div>
 
 
-
+                                    <?php }?>
                                 </div>
 
                             </div>
