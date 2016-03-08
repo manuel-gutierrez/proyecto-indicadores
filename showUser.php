@@ -326,7 +326,7 @@ else {
                                 </div>
                             </div>
                             <!-- Message Delete User Modal  -->
-                        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="message delete user modal">
+                            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="message delete user modal">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -390,7 +390,7 @@ else {
     <script language="javascript" type="text/javascript">
         $(document).ready(function() {
 
-            // process the form
+            // Delete User Script.
             $('form').submit(function(event) {
 
                 // get the form data

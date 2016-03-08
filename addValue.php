@@ -138,21 +138,29 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                 <ul class="sidebar-menu">
                     <li class="header"><b>MENÚ PRINCIPAL</b></li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a>
+                    </li>
+                    <?php if ($login_usertype == 0) { ?>
                         <li>
-                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li>
-                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                    <?php } else { ?>
+                        <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i>
+                                <span>Mi Perfil</span></a></li>
                     <?php } ?>
-                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a>
+                    </li>
+                    <?php if ($login_usertype == 0) { ?>
                         <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
                     <?php } ?>
-                </ul><!-- /.sidebar-menu -->
+                </ul>
+                <!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -254,7 +262,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         </div>
                                     </div>
                                     <div class="row col-md-10">
-                                        <a href="showInd.php?id=<?php echo $query_id; ?>" class="btn btn-default">Cancelar</a>
+                                        <a href="tablero.php" class="btn btn-default">Cancelar</a>
                                         <button type="submit" class="btn btn-info pull-right">Agregar</button>
                                     </div>
                                 </form>

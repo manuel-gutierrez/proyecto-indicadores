@@ -144,8 +144,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             <!-- Optionally, you can add icons to the links -->
                             <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
                             <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-                            <li><a href="showUser.php?id=
-                        	<?php echo $id_user?>"><i class="fa fa-user"></i> <span>Mi Perfil</span></a></li>
+                            <li><a href="showUser.php?id=<?php echo $id_user?>"><i class="fa fa-user"></i> <span>Mi Perfil</span></a></li>
                         </ul><!-- /.sidebar-menu -->
                     </section>
                     <!-- /.sidebar -->

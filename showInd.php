@@ -136,26 +136,34 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
                     </div>
                 </div>
-
-                <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li class="header"><b>MENÚ PRINCIPAL</b></li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a>
+                    </li>
+                    <?php if ($login_usertype == 0) { ?>
                         <li>
-                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li>
-                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                    <?php } else { ?>
+                        <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i>
+                                <span>Mi Perfil</span></a></li>
                     <?php } ?>
-                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a>
+                    </li>
+                    <?php if ($login_usertype == 0) { ?>
                         <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
                     <?php } ?>
-                </ul><!-- /.sidebar-menu -->
+                </ul>
+                <!-- /.sidebar-menu -->
+                <!-- Sidebar Menu -->
+
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -382,7 +390,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     <th>Fecha</th>
                                                     <th>Valor</th>
                                                     <?php	if ($login_usertype == 0) {?>
-                                                        <th>Editar valor</th> <?php } ?>
+                                                        <th>Eliminar valor</th> <?php } ?>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -393,9 +401,18 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                         <td><?php echo $v['value_date']; ?></td>
                                                         <td><?php echo $v['value_ind']; ?></td>
                                                         <?php	if ($login_usertype == 0) {?>
-                                                            <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?valueId=<?php echo $v['value_id']; ?>&indicatorType=<?php echo $indicator_type ; ?>&indicatorId=<?php echo $_GET['id']; ?>&formulaId=<?php echo $_GET['id']; ?>" style="width: 100px">Editar</a></td>
-                                                        <?php } $i++;
-                                                        ?>
+                                                        <td>
+                                                            <button class="btn btn-md btn-primary delete-button"
+                                                                    data-toggle="modal"
+                                                                    data-id="<?php echo $v['value_id']; ?>"
+                                                                    data-value="<?php echo $v['value_ind']; ?>"
+                                                                    >
+                                                                <i class="fa fa-trash-o"> Eliminar</i>
+                                                            </button>
+                                                        </td>
+                                                            <?php }
+                                                            $i++;
+                                                            ?>
                                                     </tr>
                                                 <?php } ?>
                                                 </tbody>
@@ -405,7 +422,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     <th>Fecha</th>
                                                     <th>Valor</th>
                                                     <?php	if ($login_usertype == 0) {?>
-                                                        <th>Editar valor</th> <?php } ?>
+                                                        <th>Eliminar</th> <?php } ?>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -421,7 +438,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                 <th>Fecha</th>
                                                 <th>Valor</th>
                                                 <?php	if ($login_usertype == 0) {?>
-                                                    <th>Editar valor</th> <?php } ?>
+                                                    <th>Eliminar valor</th> <?php } ?>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -431,7 +448,14 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     <td><?php echo $v['value_date']; ?></td>
                                                     <td><?php echo $v['value_ind']; ?></td>
                                                     <?php	if ($login_usertype == 0) {?>
-                                                        <td><a target="_blank" class="btn btn-block btn-primary" href="editValue.php?valueId=<?php echo $v['value_id']; ?>&indicatorType=<?php echo $indicator_type; ?>&indicatorId=<?php echo $_GET['id']; ?>&formulaId=<?php echo $_GET['id']; ?>" style="width: 100px">Editar</a></td>
+                                                        <td>
+                                                            <button class="btn btn-md btn-primary delete-button"
+                                                                    data-id="<?php echo $v['value_id']; ?>"
+                                                                    data-value="<?php echo $v['value_ind']; ?>"
+                                                                    >
+                                                                <i class="fa fa-trash-o"> Eliminar</i>
+                                                            </button>
+                                                        </td>
                                                     <?php } $i++;
                                                     ?>
                                                 </tr>
@@ -443,7 +467,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                 <th>Fecha</th>
                                                 <th>Valor</th>
                                                 <?php	if ($login_usertype == 0) {?>
-                                                    <th>Editar valor</th> <?php } ?>
+                                                    <th>Eliminar valor</th> <?php } ?>
                                             </tr>
                                             </tfoot>
                                         </table>
@@ -451,6 +475,76 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                 }else { ?>
                                     <h3 class="box-title">No hay valores para este indicador.</h3>
                                 <?php } ?>
+
+                                   <!--Indicator deletion Modal -->
+                                <!--   Delete User Modal -->
+                                <!-- Delete user confirmation Modal -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="deleteusermodal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Eliminar Valor </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h2> ¿ Desea eliminar esta entrada con valor : <b id="indicator-value">   </b>  del sistema
+                                                    ?</h2>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default pull-right margin-2"
+                                                        data-dismiss="modal">Cancelar
+                                                </button>
+                                                <button type="submit" id="modal-accept-button" class="btn btn-warning pull-right margin-2">
+                                                        confirmar
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Message Delete User Modal  -->
+                                <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="message delete user modal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Eliminar Usuario</h4>
+                                            </div>
+                                            <div class="modal-body" id="success-message" hidden>
+                                                <div class="alert alert-success alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                            aria-hidden="true">×
+                                                    </button>
+                                                    <h4><i class="icon fa fa-check"></i></h4>
+                                                    El Indicador se ha eliminado correctamente
+                                                </div>
+                                            </div>
+                                            <div class="modal-body" id="error-message" hidden>
+                                                <div class="alert alert-warning alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                            aria-hidden="true">×
+                                                    </button>
+                                                    <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                                                    Hubo un problema al borrar el valor asociado a este indicador. Por favor comuniquese con el
+                                                    equipo de TI.
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="close" data-dismiss="alert">
+                                                        Aceptar
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div><!-- /.box-body -->
                         </div><!-- /.box -->
                     </div><!-- /.column -->
@@ -459,7 +553,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         </div><!-- /.content-wrapper -->
         <!-- Main Footer -->
         <footer class="main-footer">
-
 
             <!-- To the right
             <div class="pull-right hidden-xs">
@@ -509,13 +602,21 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $(document).ready(function() {
 
             loadChart();
-            $( "#chartSummaryType" ).change(function() {
+            $("#chartSummaryType").change(function () {
                 loadChart();
             });
+            $(".delete-button").on("click", function () {
+                var id = $(this).data('id');
+                var value = $(this).data('value');
+                $("#indicator-value").append(value);
+                $("#modal-accept-button").attr("onclick", "deleteIndicatorValue("+id+")");
+                $("#deleteModal").modal("show");
 
 
+            });
 
         });
+       // Render Chart function.
         function loadChart(){
             var indicatorType = <?php  echo $indicator_type;?>;
 
@@ -574,6 +675,48 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                 });
         }
 
+        // Delete an Indicator Value.
+        function deleteIndicatorValue(idValue) {
+            console.log(idValue);
+            var data = { id : idValue };
+            // process the form
+            $.ajax({
+                type: 'POST',
+                url: 'deleteIndicatorValue.php',
+                data: data,
+                dataType: 'json',
+                encode: true
+            })
+
+                .done(function (data) {
+
+
+                    console.log(data);
+
+
+                    if (!data.success) {
+
+                        if (data.errors.id) {
+                            $('#deleteModal').modal('hide');
+                            $('#messageModal').modal('show');
+                            $('#error-message').show();
+                        }
+
+                    } else {
+
+                        //all good.
+
+                        $('#deleteModal').modal('hide');
+                        $('#messageModal').modal('show');
+                        $('#success-message').show();
+
+                    }
+
+                });
+
+
+
+    }
     </script>
 
     </body>
