@@ -286,43 +286,42 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                                 //Data Validation
-                                if(
-                                    !empty($_POST['fn'])
-                                    && !empty($_POST['ln'])
-                                    && !empty($_POST['email'])
-                                    && !empty($_POST['academic_field'])
-                                    && !empty($_POST['areaId'])
-                                    && ($_POST['user_type']!= "blank")
-                                )
-                                {
+                                if ($login_usertype == 0) {
+
+                                    $post_check = !empty($_POST['fn'])
+                                        && !empty($_POST['ln'])
+                                        && !empty($_POST['email'])
+                                        && !empty($_POST['academic_field'])
+                                        && !empty($_POST['areaId'])
+                                        && ($_POST['user_type'] != "blank");
+                                } else {
+                                        $post_check = !empty($_POST['fn'])
+                                        && !empty($_POST['ln'])
+                                        && !empty($_POST['document_number'])
+                                        && !empty($_POST['email']);
+
+                                }
+                                if($post_check ) {
                                     // Parse data
-                                    $userId = trim($_GET["id"]," ");
-                                    $updated_fn = $_POST['fn'];
-                                    $updated_ln = $_POST['ln'];
-                                    $updated_email = $_POST['email'];
-                                    $updated_occup = $_POST['occupation'];
-                                    $updated_area = $_POST['areaId'];
-                                    $updated_ut = $_POST['user_type'];
-                                    $updated_academic_field = $_POST['academic_field'];
-                                    $updated_cycle = $_POST['cycle'];
-                                    $updated_labour_time  = $_POST['labour_time'];
-                                    $updated_document_number  = $_POST['document_number'];
-                                    $updated_indicators  = $_POST['indicators'];
+                                    // case administrator
+                                    if ($login_usertype == 0) {
 
-                                    $sql = "
-                            SELECT id_usuario, email FROM usuarios WHERE email='$updated_email';
-                            ";
+                                        // Fetch Data
+                                        $userId = trim($_GET["id"], " ");
+                                        $updated_fn = $_POST['fn'];
+                                        $updated_ln = $_POST['ln'];
+                                        $updated_email = $_POST['email'];
+                                        $updated_occup = $_POST['occupation'];
+                                        $updated_area = $_POST['areaId'];
+                                        $updated_ut = $_POST['user_type'];
+                                        $updated_academic_field = $_POST['academic_field'];
+                                        $updated_cycle = $_POST['cycle'];
+                                        $updated_labour_time = $_POST['labour_time'];
+                                        $updated_document_number = $_POST['document_number'];
+                                        $updated_indicators = $_POST['indicators'];
 
-                                    $mail_errror = false;
-                                    $q = mysql_query($sql);
-                                    $row = mysql_fetch_assoc($q);
+                                        // Update Data
 
-                                    if ($row ){
-                                        if ($row['id_usuario']!= $userId){
-                                            $mail_errror = true;
-                                        }
-                                    }
-                                    if (!$mail_errror) {
                                         $sql = "";
                                         $sql = "UPDATE `usuarios`
                                                 SET
@@ -338,11 +337,32 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                 `academic_field` = '$updated_academic_field',
                                                 `linked_indicators` = '$updated_indicators'
                                                 WHERE `id_usuario` = '$userId'";
+                                    } else {
+
+                                            // Case empleado and recopilador
+                                            // Fetch Data
+                                            $userId = trim($_GET["id"], " ");
+                                            $updated_fn = $_POST['fn'];
+                                            $updated_ln = $_POST['ln'];
+                                            $updated_email = $_POST['email'];
+                                            $updated_document_number = $_POST['document_number'];
+
+                                            // Update data.
+                                            $sql = "";
+                                            $sql = "UPDATE `usuarios`
+                                            SET
+                                            `first_name` = '$updated_fn',
+                                            `last_name` = '$updated_ln',
+                                            `email` = '$updated_email',
+                                            `document_number` = '$updated_document_number'
+                                            WHERE `id_usuario` = '$userId'";
+                                    }
 
                                         if (mysql_query($sql)) {
+                                            $location = "location.replace('showUser.php?id=".trim($_GET["id"])."')";
                                             // Success Message
                                             echo '
-                                        <!-- Success Message            -->
+                                                <!-- Success Message            -->
                                             <div id = "success-message" class="message-pading col-lg-12 " >
                                                 <div class="box box-solid box-success" >
                                                 <div class="box-header" >
@@ -350,9 +370,13 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                         </div ><!-- /.box - header-->
                                                         <div class="box-body" >
                                                          El usuario ha sido modificado .
+
+                                                         <button class="btn btn-sm btn-primary pull-right" onclick="'.$location.'"  />Volver
                                                         </div ><!-- /.box - body-->
-                                                </div >
+
+                                               </div >
                                             </div >
+
                                             ';
                                             // Log in Database
                                             reportes_action(
@@ -386,22 +410,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     2 => "Ocurrio un error al editar el usuario : ".$userId." con el siguiente error:". mysql_error,
                                                 ]);
                                         }
-                                    }
-                                    else{
-                                        // Warning Message.
-                                        echo '<!-- Warning  Message      -->
-                                <div id="warning-message" class="message-pading col-md-12 " >
-                                    <div class="box box-solid box-warning">
-                                        <div class="box-header">
-                                            <h3 class="box-title">Error.  </h3>
-                                        </div><!-- /.box-header -->
-                                        <div class="box-body">
-                                           El correo ingresado, ya eiste en el sistema por favor utilice otro correo.
-                                        </div><!-- /.box-body -->
-                                    </div>
-                                </div>
-                              ';
-                                    }
                                 }
                                 else{
                                     // Warning Message.
@@ -418,7 +426,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                 </div>
                               ';
                                 }
-
 
                             }
                             ?>
