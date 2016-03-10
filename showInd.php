@@ -311,7 +311,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             <?php } ?>
 
                             <div class="box-body">
-                                <?php if($num>0) {
+                                <?php
                                     if($indicator_type == "1"){
                                      // Indicator type 1, general view
                                     // fetch all the users for this indicator and show them in a table.
@@ -475,14 +475,11 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             </tr>
                                             </tfoot>
                                         </table>
-                                   <?php }
-                                }else { ?>
-                                    <h3 class="box-title">No hay valores para este indicador.</h3>
-                                <?php } ?>
+                                   <?php }  ?>
 
-                                   <!--Indicator deletion Modal -->
-                                <!--   Delete User Modal -->
-                                <!-- Delete user confirmation Modal -->
+                                <!--
+                                Indicator deletion Modal
+                                 -->
                                 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                                      aria-labelledby="deleteusermodal">
                                     <div class="modal-dialog" role="document">
@@ -509,7 +506,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Message Delete User Modal  -->
                                 <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
                                      aria-labelledby="message delete user modal">
                                     <div class="modal-dialog" role="document">
