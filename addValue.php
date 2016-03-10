@@ -315,7 +315,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="numero-de-excelentes" class="col-md-12 ">Numero de exelentes: </label>
+                                                            <label for="numero-de-excelentes" class="col-md-12 ">Número de excelentes: </label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="n_e" value="" class="form-control" placeholder="numero de exelentes">
                                                             </div>
@@ -323,7 +323,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="numero-de-buenos" class="col-md-12 ">Numero de buenos: </label>
+                                                            <label for="numero-de-buenos" class="col-md-12 ">Número de buenos: </label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="n_b" value="" class="form-control" placeholder="numero de buenos">
                                                             </div>
@@ -331,7 +331,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="n_r" class="col-md-12 ">Numero de regulares: </label>
+                                                            <label for="n_r" class="col-md-12 ">Número de regulares: </label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="n_r" value="" class="form-control" placeholder="numero de regulares">
                                                             </div>
@@ -339,7 +339,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="n_m" class="col-md-12 ">Numero de malos: </label>
+                                                            <label for="n_m" class="col-md-12 ">Número de malos: </label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="n_m" value="" class="form-control" placeholder="numero de malos">
                                                             </div>
@@ -347,7 +347,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="n_mm" class="col-md-12 ">Numero de exelentes: </label>
+                                                            <label for="n_mm" class="col-md-12 ">Número de muy malos: </label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="n_mm" value="" class="form-control" placeholder="numero de muy malos">
                                                             </div>
@@ -380,7 +380,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="numero-actividades-realizadas" class="col-md-12 ">Numero de Actividades Realizadas:</label>
+                                                            <label for="numero-actividades-realizadas" class="col-md-12 ">Número de Actividades Realizadas:</label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="numero-actividades-realizadas" value="" class="form-control" placeholder="numero-actividades-realizadas">
                                                             </div>
@@ -388,7 +388,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group">
-                                                            <label for="numero-actividades-programadas" class="col-md-12 ">Numero de Actividades Programadas: </label>
+                                                            <label for="numero-actividades-programadas" class="col-md-12 ">Número de Actividades Programadas: </label>
                                                             <div class="col-md-12">
                                                                 <input type="number" name="numero-actividades-programadas" value="" class="form-control" placeholder="numero-actividades-programadas">
                                                             </div>
@@ -544,7 +544,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                             <h4 class="callout">Por favor, ingrese el número de estudiantes calificados y haga click en aceptar.</h4>
 
                                                             <div class="col-md-12">
-                                                                <span class="col-md-8 inline"><input type="number" min="0" id="number-of-inputs" name="n_e" value="" class="form-control" placeholder="Numero de estudiantes"></span>
+                                                                <span class="col-md-8 inline"><input type="number" min="0" id="number-of-inputs" name="n_e" value="" class="form-control" placeholder="Número de estudiantes"></span>
                                                                 <span class="col-md-4 inline"><a class="btn btn-info pull-right" id="add-input-button" >Aceptar</a></span>
                                                             </div>
                                                         </div>
