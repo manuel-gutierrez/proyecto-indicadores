@@ -462,7 +462,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
                                     <?php if ($login_usertype == 0){ ?>
                                     <div class="form-group">
-                                         <?php if ($tipo_de_usuario =! 0 ){
+                                         <?php if ($tipo_de_usuario != 0 ){
                                          $value = trim($userIndicators,'[]');
                                          $value = str_replace("\"","", $value);
                                          }?>
@@ -508,28 +508,28 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
                                     <div class="form-group">
                                         <label for="user_type"> Tipo de Usuario: </label>
+
                                         <select id="cmbType" name="user_type" class="form-control">
 
-                                            <?php if ($tipo_de_usuario == "0"){ ?>
-                                                <?php if($login_usertype == "0" ){ echo"<option value='0' >Administrador</option> ";}?>
+                                            <?php if ($tipo_de_usuario == 0){ ?>
+                                                <?php if($login_usertype == 0 ){ echo"
+                                                <option value='0' selected>Administrador</option> ";}?>
                                                 <option value="1" >Recopilador</option>
-                                                <option value="2">Empleado</option>
+                                                <option value="2" >Empleado</option>
                                             <?php  }
-                                            elseif ($tipo_de_usuario == "1"){ ?>
-                                                <?php if($login_usertype == "0" ){ echo"<option value='0' >Administrador</option> ";}?>
+                                            elseif ($tipo_de_usuario == 1){ ?>
+                                                <?php if($login_usertype == 0 ){ echo"
+                                                <option value='0' >Administrador</option> ";}?>
                                                 <option value="1" selected>Recopilador</option>
                                                 <option value="2">Empleado</option>
                                             <?php  }
-                                            elseif ($tipo_de_usuario == "2"){ ?>
-                                                <?php if($login_usertype == "0" ){ echo"<option value='0' >Administrador</option> ";}?>
-                                                <?php if($login_usertype == "1" || $login_usertype == "0" ){ echo"<option value='1' >Recopilador</option> ";}?>
+                                            elseif ($tipo_de_usuario == 2){?>
+                                                <?php if($login_usertype == 0 ){ echo"
+                                                    <option value='0' >Administrador</option> ";}?>
+                                                <?php if($login_usertype == "1" || $login_usertype == "0" ){ echo"
+                                                <option value='1' >Recopilador</option> ";}?>
                                                 <option value="2" selected>Empleado</option>
-                                            <?php  }
-                                            else { ?>
-                                                <?php if($login_usertype == "0" ){ echo"<option value='0' >Administrador</option> ";}?>
-                                                <?php if($login_usertype == "1" || $login_usertype == "0" ){ echo"<option value='1' >Recopilador</option> ";}?>
-                                                <option value="2" >Empleado</option>
-                                            <?php } ?>
+                                            <?php  }?>
 
                                         </select>
                                     </div>

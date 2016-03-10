@@ -316,7 +316,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                      // Indicator type 1, general view
                                     // fetch all the users for this indicator and show them in a table.
                                         if(!isset($_GET['userId'])){
-                                            $query = 'SELECT * FROM usuarios WHERE linked_indicators like "'.$valores['indicator_cod'].'%"';
+                                            $query = 'SELECT * FROM usuarios WHERE linked_indicators like "%'.$valores['indicator_cod'].'%"';
                                             $result = mysql_query($query , $link);
                                             if ($result) { ?>
                                                 <table id="tablaInd" class="table table-bordered table-striped">

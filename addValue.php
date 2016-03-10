@@ -269,7 +269,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         </div>
                                     </div>
                                     <div class="row col-md-10">
-                                        <a href="tablero.php" class="btn btn-default">Cancelar</a>
+                                        <a href="tablero.php" class="btn btn-default">Volver al tablero</a>
                                         <button type="submit" class="btn btn-info pull-right">Agregar</button>
                                     </div>
                                 </form>
