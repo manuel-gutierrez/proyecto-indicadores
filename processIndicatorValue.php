@@ -16,7 +16,7 @@ $data           = array();      // array to pass back data
 /*
  *  validate request.
  */
-if (!isset($_POST['id']) || empty($_POST['date']) || empty($_POST['value']) || empty($_POST['action']) ){
+if (!isset($_POST['id']) || !isset($_POST['date']) || !isset($_POST['value']) || !isset($_POST['action']) ){
 
     $errors['Invalid_parameters'] = 'At least one of the parameters is empty.';
 }
