@@ -25,10 +25,10 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- DATA TABLES -->
     <link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="php/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="php/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,51 +56,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         </a>
 
         <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-          </a>
-          <!-- Navbar Right Menu -->
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              <!-- User Account Menu -->
-              <li class="dropdown user user-menu">
-                <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <!-- The user image in the navbar-->
-                  <img src="dist/img/unknown.gif" class="user-image" alt="User Image" />
-                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- The user image in the menu -->
-                  <li class="user-header">
-                    <img src="dist/img/unknown.gif" class="img-circle" alt="User Image" />
-                    <p>
-                      <?php echo $login_fn . " " . $login_ln; ?>
-                      Cargo: <?php echo "$login_occupation"; ?>
-                      <small><?php
-						if ($login_usertype == 0) {echo "Administrador";
-						} else {echo "";
-						}
-					?></small>
-                    </p>
-                  </li>
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                    </div>
-                    <div class="pull-right">
-                      <a href="php/logout.php" class="btn btn-default btn-flat">Salir</a>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        <nav class="navbar navbar-static-top" role="navigation"> </nav>
       </header>
       
       <!-- Left side column. contains the logo and sidebar -->
@@ -112,7 +68,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/unknown.gif" class="img-circle" alt="User Image" />
+              <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p><?php echo $login_fn; ?></p>
@@ -220,9 +176,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>
+    <script src="php/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js" type="text/javascript"></script>
+    <script src="php/dist/js/demo.js" type="text/javascript"></script>
     <!-- page script -->
     <script type="text/javascript">
 		$(function() {

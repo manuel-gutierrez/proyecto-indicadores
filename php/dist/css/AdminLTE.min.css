@@ -3497,9 +3497,10 @@ table.text-center, table.text-center td, table.text-center th {
 .chart {
 	position: relative;
 	overflow: hidden;
-	width: 100%
+	width: 90%;
+    margin-left:5%;
 }
-.chart svg, .chart canvas {
+.chart svg, .chart canvas{
 	width: 100% !important
 }
 @media print {

@@ -5,7 +5,6 @@ include ('php/importInd.php');
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
     header("Location: index.php"); //Redirige al login.php
 } else {
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,10 +24,10 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- DATA TABLES -->
     <link href="plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="php/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="php/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -69,14 +68,14 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="dist/img/unknown.gif" class="user-image" alt="User Image" />
+                  <img src="php/dist/img/unknown.gif" class="user-image" alt="User Image" />
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class="hidden-xs"><?php echo $login_fn . " " . $login_ln; ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <img src="dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                    <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
                     <p>
                       <?php echo $login_fn . " " . $login_ln; ?>
                       Cargo: <?php echo "$login_occupation"; ?>
@@ -112,7 +111,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/unknown.gif" class="img-circle" alt="User Image" />
+              <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p><?php echo $login_fn; ?></p>
@@ -126,7 +125,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             <li class="header"><b>MENÚ PRINCIPAL</b></li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-			<?php if ($login_usertype==0) {?>
+			<?php if ($login_usertype==0)  {?>
             <li>
               <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
             </li>
@@ -134,8 +133,10 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
               <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
             </li>
             <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
-			<?php } ?>
-            <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
+			<?php } else { ?>
+              <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i> <span>Mi Perfil</span></a></li>
+            <?php } ?>
+              <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
 			<?php if ($login_usertype==0) {?>
             <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>            
 			<?php } ?>
@@ -179,13 +180,13 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <tbody>
 					<?php while($valor = mysql_fetch_assoc($q)){?>
                       <tr>
-                        <td><a target="_blank" class="btn btn-block btn-primary" href="showInd.php?id=
-                        	<?php echo $valor['indicator_id']; ?>">Ver</a></td>
+                        <td><a class="btn btn-block btn-primary" href="showInd.php?id=<?php echo trim($valor['indicator_id']," "); ?>&&indicatorType=<?php echo trim($valor['indicator_type']," ");?>&&chartType=<?php echo trim($valor['chart_type']," ");?>&indicatorGoal=<?php echo trim($valor['indicator_goal']," ");?>&formulaId=<?php echo trim($valor['equation_id']," ");?>">Ver</a></td>
                         <td><?php echo $valor['indicator_cod']; ?></td>
                         <td><?php echo $valor['area_id']; ?></td>
                         <td><?php echo $valor['objective_id']; ?></td>
                         <td><?php echo $valor['indicator_name']; ?></td>
                         <td><?php echo $valor['indicator_goal']; ?></td>
+
                       </tr> <?php } ?>
                     </tbody>
                     <tfoot>
@@ -201,8 +202,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                   </table>
                       <?php } else { ?>
             				<h3 class="box-title">No hay indicadores creados en el momento.</h3>
-                      	
-                      <?php } ?>   
+                  <?php } ?>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
         </section><!-- /.content -->
@@ -231,20 +231,33 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>
+    <script src="php/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js" type="text/javascript"></script>
+    <script src="php/dist/js/demo.js" type="text/javascript"></script>
     <!-- page script -->
     <script type="text/javascript">
 		$(function() {
-			$("#example1").DataTable();
-			$('#example2').DataTable({
+
+			$('#example1').DataTable({
 				"paging" : true,
-				"lengthChange" : false,
+				"lengthChange" : true,
 				"searching" : false,
 				"ordering" : true,
 				"info" : true,
-				"autoWidth" : false
+				"autoWidth" : false,
+                "searching" : true,
+                "language": {
+                    "search": "Buscar :",
+                    "lengthMenu": "Mostrar  _MENU_  registros",
+                    "paginate": {
+                        "first": "Primera Página",
+                        "last": "Última Página",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+
+                    }
+                }
+
 			});
 		});
     </script>
