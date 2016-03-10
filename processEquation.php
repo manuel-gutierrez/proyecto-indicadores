@@ -147,7 +147,7 @@ if ( ! empty($errors)) {
                 break;
             case 6:
                 // Calculo de eficiencia inventarios
-                if (empty($_POST['numero-actividades-realizadas']) or empty($_POST['numero-actividades-programadas'])){
+                if (!isset($_POST['inventarios-disponibles-actualizados']) || !isset($_POST['total-inventarios'])){
                     $errors['data_error'] = 'Formula data is empty';
                     $data['success'] = false;
                     $data['errors']  = $errors;
