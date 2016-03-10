@@ -3,6 +3,7 @@ require ('php/connDB.php');
 include ('php/session.php');
 include ('php/importVal.php');
 include 'php/functions.php';
+
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
     header("Location: index.php"); //Redirige al login.php
 } else {
@@ -518,26 +519,24 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             </div>
                                             <div class="modal-body" id="success-message" hidden>
                                                 <div class="alert alert-success alert-dismissible">
-                                                    <button type="button" class="close" data-dismiss="alert"
-                                                            aria-hidden="true">×
-                                                    </button>
+
                                                     <h4><i class="icon fa fa-check"></i></h4>
                                                     El Indicador se ha eliminado correctamente
+
                                                 </div>
                                             </div>
                                             <div class="modal-body" id="error-message" hidden>
                                                 <div class="alert alert-warning alert-dismissible">
-                                                    <button type="button" class="close" data-dismiss="alert"
-                                                            aria-hidden="true">×
-                                                    </button>
+
                                                     <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                                     Hubo un problema al borrar el valor asociado a este indicador. Por favor comuniquese con el
                                                     equipo de TI.
+
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="close" data-dismiss="alert">
-                                                        Aceptar
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                        aria-hidden="true" onclick="location.reload(true)">Cerrrar
                                                 </button>
 
                                             </div>
@@ -619,6 +618,11 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
        // Render Chart function.
         function loadChart(){
             var indicatorType = <?php  echo $indicator_type;?>;
+            if (typeof $("#chartSummaryType").val()  != "undefined"){
+                var summaryType = $("#chartSummaryType").val();
+            }else {
+                var summaryType = "individual";
+            }
 
             if (indicatorType == 0){
                 var param = {
@@ -634,7 +638,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     'indicatorType' : indicatorType,
                     'chartType' :"<?php echo $_GET['chartType'];?>",
                     'userId' :"<?php echo $userId;?>",
-                    'summaryType': $("#chartSummaryType").val(),
+                    'summaryType': summaryType,
                     'chartData_users':"<?php echo $users_chart_data['user_id'] ;?>",
                     'chartData_cycle':"<?php echo $users_chart_data['cycle'] ;?>",
                     'chartData_jornada':"<?php echo  $users_chart_data['jornada'] ;?>"

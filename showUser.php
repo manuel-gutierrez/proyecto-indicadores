@@ -348,8 +348,9 @@ else {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-right margin-2" onclick="javascript:window.close();" >Aceptar</button>
-
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                aria-hidden="true" onclick="location.reload(true)">Cerrrar
+                                        </button>
                                     </div>
                                 </div>
                             </div>

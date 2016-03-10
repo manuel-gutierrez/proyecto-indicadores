@@ -12,11 +12,11 @@ if ($userType==0) {
         . "INNER JOIN indicators\n"
         . "USING (id_ao)", $link);
 } else {
+
     $q = mysql_query("SELECT indicator_id, indicator_cod, equation_id, area_id, objective_id, indicator_name, indicator_goal , indicator_type, chart_type \n"
         . "FROM (SELECT id_ao, objective_id, area_id FROM areas_objectives WHERE area_id=$userArea) AS id_ao\n"
         . "INNER JOIN indicators\n"
         . "USING (id_ao)", $link);
-//	$q = mysql_query("SELECT * FROM indicadores")
 }
 $num=mysql_numrows($q);
 ?>

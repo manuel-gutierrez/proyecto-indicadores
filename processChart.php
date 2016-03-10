@@ -103,9 +103,10 @@ if ( !empty($errors)) {
             switch($summaryType) {
                 case "global":
 
-                    /*
-                    * Logic:
+                    /*@Description:
+                    * Return the the averge for the last year of all the users associated to this indicator".
                     *
+                    * @Logic:
                     *  - Search last entry and fetch the year.
                     *  - For each user linked to this indicator  fetch the  last entry of the user for the resulting year
                     *  - Average the results
@@ -158,9 +159,9 @@ if ( !empty($errors)) {
 
                 case "ciclo":
 
-                    /*
-                    * Logic:
-                    *
+                    /*@Description:
+                    * Return the the averge for the last year discriminated by "ciclo".
+                    * @Logic:
                     *  - Search last entry and fetch the year.
                     *  - For each cycle and user linked to this indicator  fetch the  last entry of the user for the resulting year
                     *  - Average the results
@@ -224,8 +225,10 @@ if ( !empty($errors)) {
 
                 case "jornada":
 
-                    /*
-                    * Logic:
+                    /*@Description:
+                    * Return the the averge for the last year discriminated by "Jornada".
+                    *
+                    * @Logic:
                     *
                     *  - Search last entry and fetch the year.
                     *  - For each "jornada" and user linked to this indicator  fetch the  last entry of the user for the resulting year
@@ -288,19 +291,29 @@ if ( !empty($errors)) {
 
                     break;
 
-                    case "0":
+                    /*
+                     * @Description:
+                     * Return the last 4 entries of an indicator of a particular user.
+                     *
+                     * @Logic:
+                     * -Search for the last 4 entries filtering by user id and indicator id.
+                     * -Return the last 4 entries.
+                     *
+                     */
+                    case "individual":
+
                         $q = 'SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id`= ' . $indicator_id . ' and `user_id`='.$user_id.' ORDER BY value_id DESC LIMIT 4';
+
                         $result = mysql_query($q, $link);
                         if ($result) {
                             // fetch data
                             $index = 0;
                             $pointLabels = array();
                             $pointValues = array();
-                            $result_data = mysql_fetch_array($result, MYSQL_ASSOC);
 
-                            while ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                                $pointLabels[$index] = $result_data['value_date'];
-                                $pointValues[$index] = $result_data['value_ind'];
+                            while ($result_data[$index] = mysql_fetch_array($result, MYSQL_ASSOC)) {
+                                $pointLabels[$index] = $result_data[$index]['value_date'];
+                                $pointValues[$index] = $result_data[$index]['value_ind'];
                                 $index++;
                             }
 

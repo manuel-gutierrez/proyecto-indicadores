@@ -10,6 +10,31 @@ $ses_sql=mysql_query("SELECT * FROM areas", $link);
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
     header("Location: index.php"); //Redirige al login.php
 } else {
+    /*
+     * Fetch all the the indicators names, for the indicators auto complete.
+     */
+    // -----------------------Indicators ----------------------------------------------
+
+
+    $q = mysql_query("SELECT indicator_cod FROM indicators", $link);
+
+    // If there is some results.
+    if ($q) {
+        $result = mysql_fetch_array($q);
+
+        $index = 0;
+        while ($result = mysql_fetch_array($q)) {
+            $assoc_indicators[$index] = $result['indicator_cod'];
+            $index++;
+        }
+        $userIndicators = json_encode($assoc_indicators);
+    } // Set the user indicators empty.
+    else {
+        $userIndicators = "";
+    }
+
+
+
     ?>
 
     <!--
@@ -336,7 +361,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         </div>
                                         <div class="form-group">
                                             <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
-                                            <input type="text" name="indicators" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
+                                            <input type="text" name="indicators" id="indicators" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
                                             <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
                                             <script>
                                                 function openHelpTable(){
@@ -440,7 +465,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             <a href="javascript:javascript:history.go(-1)"class="btn btn-default">Cancelar</a>
                             <button type="submit" class="btn btn-info pull-right">Agregar</button>
                         </div><!-- /.box-footer -->
-                        </form>
+                    </div>
 
                 </section>
                 <!-- /.content -->
@@ -463,11 +488,55 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         <!--  End of wrapper -->
 
         <!--  SCRIPTS -->
-
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
-            function alerta_datos() {
-                alert("I am an alert box!");
-            }
+            $(document).ready(function () {
+                $(function () {
+                    var availableTags = <?php echo $userIndicators; ?>
+
+                        function split(val) {
+                            return val.split(/,\s*/);
+                        }
+
+                    function extractLast(term) {
+                        return split(term).pop();
+                    }
+
+                    $("#indicators")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                    availableTags, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+                });
+            });
         </script>
     </body>
     </html>

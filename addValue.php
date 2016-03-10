@@ -6,8 +6,13 @@ include 'php/functions.php';
 if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}') {
     header("Location: index.php"); //Redirige al login.php
 } else {
-    if (isset($_GET['userId'])){$userId = $_GET['userId'];}else { $userId = NULL ;}  // Catch User ID
-    ?>
+    if (isset($_GET['userId'])) {
+        $userId = $_GET['userId'];
+    } else {
+        $userId = NULL;
+    }  // Catch User ID
+    {
+    }?>
     <!DOCTYPE html>
     <html>
     <head>
@@ -230,7 +235,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     <label for="formula" class="col-md-12 col-md-offset-1 inline" >Método de Ingreso </label>
                                     <div class="col-md-4 inline" >
                                         <span class="col-md-4 inline"> <input  type="radio"   name="toggle" value="totalValue" checked> Valor Total</span>
+                                       <?php if ($_GET['formulaId'] !=0 ) {?>
                                         <span class="col-md-4 inline"> <input  type="radio"   name="toggle" value="formula"> Formula</span>
+                                       <?php }?>
                                     </div>
                                 </div>
                             </div>

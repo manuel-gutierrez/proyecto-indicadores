@@ -1,6 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
  * User: Manuel
  * Date: 2/18/2016
  * Time: 8:57 PM
@@ -8,8 +7,10 @@
  */
 
 require ('php/connDB.php');
-include ('php/session.php');
 include ('php/functions.php');
+include ('php/session.php');
+include ('php/importVal.php');
+
 
 
 
@@ -23,7 +24,15 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     if( $_GET["id"] ) {
         $query_id = $_GET["id"];
 
-        // Fetch Data.
+        /*
+         *  Fetch Data.
+         * - fetch stored user information.
+         * - fetch the associated indicators for the user. from ImportInd.php
+         *
+         */
+
+
+        // User Data/
         $q = mysql_query("SELECT * FROM usuarios WHERE id_usuario=$query_id",$link);
 
         $valores = mysql_fetch_assoc($q);
@@ -37,9 +46,14 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $documento = $valores['document_number'];
         $tipo_de_usuario = $valores['user_type'];
         $indicators = $valores['linked_indicators'];
+        $area_id = $valores['area_id'];
 
-        //  academic field data
+        //  Area Academica.
         $academic_field_id = $valores['academic_field'];
+
+
+
+
         if(!empty($academic_field_id)){
             $q2 = mysql_query("SELECT * FROM academic_fields WHERE academic_field_id=".$academic_field_id,$link);
             $q2_value = mysql_fetch_assoc($q2);
@@ -61,6 +75,35 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             $area_clave = "No aplica";
             $area_clave_id = "0";
         }
+
+        // -----------------------Indicators ----------------------------------------------
+
+
+            $q = mysql_query("SELECT indicator_id, indicator_cod, equation_id, area_id, objective_id, indicator_name, indicator_goal , indicator_type, chart_type \n"
+                . "FROM (SELECT id_ao, objective_id, area_id FROM areas_objectives WHERE area_id=$area_id) AS id_ao\n"
+                . "INNER JOIN indicators\n"
+                . "USING (id_ao)", $link);
+
+
+        // If there is some results.
+        if ($q){
+            $result = mysql_fetch_array($q);
+
+            $index = 0;
+            while ($result = mysql_fetch_array($q)) {
+                $assoc_indicators[$index] = $result['indicator_cod'];
+                $index++;
+            }
+
+            $userIndicators = json_encode($assoc_indicators);
+        }
+        // Set the user indicators empty.
+        else{
+            $userIndicators ="";
+        }
+
+
+
     }
     else {
         echo "Error: Parametro id en peticion GET vacio. ";
@@ -412,9 +455,12 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
                                     <?php if ($login_usertype == 0){ ?>
                                     <div class="form-group">
-
+                                         <?php if ($tipo_de_usuario =! 0 ){
+                                         $value = trim($userIndicators,'[]');
+                                         $value = str_replace("\"","", $value);
+                                         }?>
                                         <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
-                                        <input type="text" name="indicators" value="<?php echo $indicators; ?>" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
+                                        <input type="text" id="indicators" name="indicators" value="<?php echo $value; ?>" class="form-control" placeholder="Escriba el nombre del indicador" required/>
                                         <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
                                         <script>
                                             function openHelpTable(){
@@ -643,6 +689,57 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
     </div><!-- ./wrapper -->
     </body>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(function () {
+                    var availableTags = <?php echo $userIndicators; ?>
+
+                    function split(val) {
+                        return val.split(/,\s*/);
+                    }
+
+                    function extractLast(term) {
+                        return split(term).pop();
+                    }
+
+                    $("#indicators")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                    availableTags, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+                });
+            });
+
+        </script>
     </html>
     <!-- End of content   -->
 
