@@ -139,7 +139,7 @@ if ( ! empty($errors)) {
                     $index = "e_".$i;
                     $sum = $sum + $_POST[$index];
                 }
-                $output = ($sum/$n_e) * 100 ;
+                $output = ($sum/$n_e) * 10 ;
                 $value=array(['date' => $date, 'value' => $output]);
                 $data['success'] = true;
                 $data['message'] = $value;

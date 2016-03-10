@@ -37,15 +37,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="processIndicatorValue.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/processIndicatorValue.php">
+      <file leaf-file-name="processEquation.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/processEquation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36641222" vertical-offset="0" max-vertical-offset="1540">
-              <caret line="18" column="87" selection-start-line="18" selection-start-column="87" selection-end-line="18" selection-end-column="87" />
-              <folding>
-                <marker date="1457647491204" expanded="true" signature="1070:1235" placeholder="INSERT INTO ..." />
-                <marker date="1457647491204" expanded="true" signature="1265:1425" placeholder="INSERT INTO ..." />
-              </folding>
+            <state vertical-scroll-proportion="0.5638629" vertical-offset="2338" max-vertical-offset="3600">
+              <caret line="141" column="42" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -69,7 +66,6 @@
         <option value="$PROJECT_DIR$/users.php" />
         <option value="$PROJECT_DIR$/bootstrap/css/custom.css" />
         <option value="$PROJECT_DIR$/addValue.js" />
-        <option value="$PROJECT_DIR$/processEquation.php" />
         <option value="$PROJECT_DIR$/inicio1.php" />
         <option value="$PROJECT_DIR$/php/functions.php" />
         <option value="$PROJECT_DIR$/php/login.php" />
@@ -85,6 +81,7 @@
         <option value="$PROJECT_DIR$/addValue.php" />
         <option value="$PROJECT_DIR$/showInd.php" />
         <option value="$PROJECT_DIR$/processIndicatorValue.php" />
+        <option value="$PROJECT_DIR$/processEquation.php" />
       </list>
     </option>
   </component>
@@ -1016,13 +1013,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.54198474" vertical-offset="305" max-vertical-offset="1000">
           <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/processEquation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2211838" vertical-offset="2638" max-vertical-offset="3600">
-          <caret line="145" column="16" selection-start-line="145" selection-start-column="16" selection-end-line="145" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -2152,12 +2142,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/processIndicatorValue.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36641222" vertical-offset="0" max-vertical-offset="1540">
-          <caret line="18" column="87" selection-start-line="18" selection-start-column="87" selection-end-line="18" selection-end-column="87" />
+        <state vertical-scroll-proportion="0.8244275" vertical-offset="0" max-vertical-offset="1540">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
           <folding>
-            <marker date="1457647491204" expanded="true" signature="1070:1235" placeholder="INSERT INTO ..." />
-            <marker date="1457647491204" expanded="true" signature="1265:1425" placeholder="INSERT INTO ..." />
+            <marker date="1457647491204" expanded="false" signature="-1:-1" placeholder=" User: Manuel ..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1457647491204" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processEquation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5638629" vertical-offset="2338" max-vertical-offset="3600">
+          <caret line="141" column="42" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
