@@ -1,6 +1,6 @@
 <?php
 
-if( $_GET["id"] ) {
+if( isset($_GET["id"])) {
 
 	$query_id = $_GET["id"]; 
 //	echo "$query_id";

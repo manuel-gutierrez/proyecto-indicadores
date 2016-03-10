@@ -152,11 +152,15 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                            <span>Tablero de Indicadores</span></a>
                     <?php } else { ?>
+                        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                                <span>Tablero de Indicadores</span></a>
                         <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i>
                                 <span>Mi Perfil</span></a></li>
                     <?php } ?>
-                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a>
+
                     </li>
                     <?php if ($login_usertype == 0) { ?>
                         <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
@@ -353,11 +357,10 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                             <td><?php echo $i; ?></td>
                                                             <td><?php echo $linked_users['first_name']." ".$linked_users['last_name']; ?></td>
                                                             <td><?php echo $linked_users['occupation']; ?></td>
-                                                            <?php	if ($login_usertype == 0)
+                                                            <?php	if ($login_usertype != 2 ){
                                                                 $qs=$_SERVER['QUERY_STRING'];
-                                                            $qs =  $qs.'&userId='.$linked_users['id_usuario'];
-                                                            {?>
-
+                                                                $qs =  $qs.'&userId='.$linked_users['id_usuario'];
+                                                            ?>
                                                                 <td><a target="_blank" class="btn  btn-primary" href="./showInd.php?<?php echo $qs; ?>"> Ver Usuario</a></td>
                                                             <?php } $i++;
                                                             ?>

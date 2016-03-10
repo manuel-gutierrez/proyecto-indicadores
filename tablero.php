@@ -133,10 +133,12 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
               <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
             </li>
             <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
-			<?php } else { ?>
+                <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
+            <?php } else { ?>
+                <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
               <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i> <span>Mi Perfil</span></a></li>
             <?php } ?>
-              <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
+
 			<?php if ($login_usertype==0) {?>
             <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>            
 			<?php } ?>
@@ -180,7 +182,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <tbody>
 					<?php while($valor = mysql_fetch_assoc($q)){?>
                       <tr>
-                        <td><a class="btn btn-block btn-primary" href="showInd.php?id=<?php echo trim($valor['indicator_id']," "); ?>&&indicatorType=<?php echo trim($valor['indicator_type']," ");?>&&chartType=<?php echo trim($valor['chart_type']," ");?>&indicatorGoal=<?php echo trim($valor['indicator_goal']," ");?>&formulaId=<?php echo trim($valor['equation_id']," ");?>">Ver</a></td>
+                        <td><a class="btn btn-block btn-primary" href="showInd.php?id=<?php echo trim($valor['indicator_id']," "); ?>&indicatorType=<?php echo trim($valor['indicator_type']," ");?>&chartType=<?php echo trim($valor['chart_type']," ");?>&indicatorGoal=<?php echo trim($valor['indicator_goal']," ");?>&formulaId=<?php echo trim($valor['equation_id']," ");?>">Ver</a></td>
                         <td><?php echo $valor['indicator_cod']; ?></td>
                         <td><?php echo $valor['area_id']; ?></td>
                         <td><?php echo $valor['objective_id']; ?></td>
