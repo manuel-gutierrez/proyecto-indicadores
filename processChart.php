@@ -189,7 +189,7 @@ if ( !empty($errors)) {
                             if ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
 
                                 // array format [cycle_name][key] = user in this cycle last indicator value.
-                                $cycle_data[$v][$k] = $result_data['value_ind'];
+                                $cycle_data[trim($v)][$k] = $result_data['value_ind'];
 
                             }
                         }
@@ -246,18 +246,19 @@ if ( !empty($errors)) {
                     $q1= 'SELECT EXTRACT(YEAR FROM value_date) AS s_year FROM indicatorvalues WHERE `indicator_id` = '.$indicator_id.' ORDER BY value_date DESC LIMIT 1 ';
                     $result = mysql_query($q1, $link);
                     $year_to_search = mysql_fetch_array($result, MYSQL_ASSOC);
+
+
+
                     if ($result) {
                         foreach ($chart_data_jornada as $k => $v) {
-
-
 
                             $q = 'SELECT value_ind from indicatorvalues where user_id =' . $chart_data_users[$k] . ' and `indicator_id`= ' . $indicator_id . '  and value_date LIKE "%' .trim($year_to_search["s_year"], " ") . '%" order by  value_date DESC limit 1';
                             $result = mysql_query($q, $link);
 
                             if ($result_data = mysql_fetch_array($result, MYSQL_ASSOC)) {
 
-                                // array format [cycle_name][key] = user in this cycle last indicator value.
-                                $jornada_data[$v][$k] = $result_data['value_ind'];
+                                // array format [cycle_name][key] => user in this cycle last indicator value.
+                                $jornada_data[trim($v)][$k] = $result_data['value_ind'];
 
                             }
                         }
@@ -269,8 +270,10 @@ if ( !empty($errors)) {
                             $data['errors'] = $errors;
                         } else {
                             // parse data.
+
                             $i = 0;
                             foreach ( $jornada_data as $k => $v) {
+
                                 $pointValues[$i] = array_sum ($jornada_data[$k] ) / count($jornada_data[$k]);
                                 $pointLabels[$i] = 'Jornada : '.$k;
                                 $i = $i +1;
