@@ -40,11 +40,14 @@ if ( !empty($errors)) {
     }
 
 
-    /*
+     /*@Description:
+     * Return the the average for the last year of all the values associated to this indicator".
      *
-     * For global indicator indicator Type  = 0
+     * @Logic:
+     *  - Search last entry and fetch the year.
+     *  - Fetch the values of the resulting year.
+     *  - Average the results
      */
-    // Individual indicator
 
     switch ($indicator_type) {
         case 0:  // Global indicator
@@ -104,7 +107,7 @@ if ( !empty($errors)) {
                 case "global":
 
                     /*@Description:
-                    * Return the the averge for the last year of all the users associated to this indicator".
+                    * Return the the average for the last year of all the users associated to this indicator".
                     *
                     * @Logic:
                     *  - Search last entry and fetch the year.

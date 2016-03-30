@@ -366,7 +366,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             <script>
                                                 function openHelpTable(){
                                                     event.preventDefault();
-                                                    window.open("/granC/tablero.php", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=900, left=500, width=600, height=800");
+                                                    window.open("./tablero.php", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=900, left=500, width=600, height=800");
                                                 }
                                             </script>
                                         </div>
