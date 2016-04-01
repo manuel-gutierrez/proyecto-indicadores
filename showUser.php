@@ -340,11 +340,20 @@ else {
                                             El usuario se ha borrado correctamente
                                         </div>
                                     </div>
-                                    <div class="modal-body" id="error-message" hidden>
+                                    <div class="modal-body" id="error-id-message" hidden>
                                         <div class="alert alert-warning alert-dismissible">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                             <h4><i class="icon fa fa-warning"></i> Alert!</h4>
                                             Hubo un problema al borrar el usuario. Por favor comuniquese con el equipo de TI.
+                                        </div>
+                                    </div>
+                                    <div class="modal-body" id="error-data-message" hidden>
+                                        <div class="alert alert-warning alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                                ×
+                                            </button>
+                                            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+                                            Existe informacion asociada a este usuario, por lo cual no puede ser borrado. Para desactivarlo recomendamos cambiar la clave del usuario en el sistema.
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -412,16 +421,20 @@ else {
                     .done(function(data) {
 
                         // log data to the console so we can see
-                        console.log(data);
+
 
                         // here we will handle errors and validation messages
-                        if ( ! data.success) {
+                        if (data.success == false) {
 
-
+                            if (data.errors.associated_data){
+                                $('#deleteModal').modal('hide');
+                                $('#messageModal').modal('show');
+                                $('#error-data-message').show();
+                            }
                             if (data.errors.id) {
                                 $('#deleteModal').modal('hide');
                                 $('#messageModal').modal('show');
-                                $('#error-message').show();
+                                $('#error-id-message').show();
                             }
 
                         } else {

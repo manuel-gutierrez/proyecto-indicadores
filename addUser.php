@@ -209,12 +209,12 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
                                     //Data Validation
                                     if(
-                                        !empty($_POST['fn'])
-                                        && !empty($_POST['ln'])
-                                        && !empty($_POST['email'])
-                                        && !empty($_POST['password'])
-                                        && !empty($_POST['academic_field'])
-                                        && !empty($_POST['areaId'])
+                                        isset($_POST['fn'])
+                                        && isset($_POST['ln'])
+                                        && isset($_POST['email'])
+                                        && isset($_POST['password'])
+                                        && isset($_POST['academic_field'])
+                                        && isset($_POST['areaId'])
                                         && ($_POST['user_type']!= "blank")
                                     )
                                     {

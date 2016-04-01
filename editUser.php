@@ -33,9 +33,13 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
 
         // User Data/
-        $q = mysql_query("SELECT * FROM usuarios WHERE id_usuario=$query_id",$link);
-
+        $q = mysql_query("SELECT * FROM usuarios WHERE id_usuario=$query_id", $link);
+        $empty_values = array();
         $valores = mysql_fetch_assoc($q);
+
+
+
+
         $nombre = $valores['first_name'];
         $apellido = $valores['last_name'];
         $ocupacion = $valores['occupation'];
@@ -52,26 +56,22 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $academic_field_id = $valores['academic_field'];
 
 
-
-
-        if(!empty($academic_field_id)){
-            $q2 = mysql_query("SELECT * FROM academic_fields WHERE academic_field_id=".$academic_field_id,$link);
+        if (!empty($academic_field_id)) {
+            $q2 = mysql_query("SELECT * FROM academic_fields WHERE academic_field_id=" . $academic_field_id, $link);
             $q2_value = mysql_fetch_assoc($q2);
-            $area_academica= $q2_value['name'];
-        }
-        else{
+            $area_academica = $q2_value['name'];
+        } else {
             $area_academica = "0";
         }
 
         // Key Area data
         $area_clave_id = $valores['area_id'];
 
-        if(!empty($academic_field_id)){
-            $q3 = mysql_query("SELECT * FROM areas WHERE area_id=".$area_clave_id,$link);
+        if (!empty($academic_field_id)) {
+            $q3 = mysql_query("SELECT * FROM areas WHERE area_id=" . $area_clave_id, $link);
             $q3_value = mysql_fetch_assoc($q3);
-            $area_clave= $q3_value['area_name'];
-        }
-        else{
+            $area_clave = $q3_value['area_name'];
+        } else {
             $area_clave = "No aplica";
             $area_clave_id = "0";
         }
@@ -79,14 +79,14 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         // -----------------------Indicators ----------------------------------------------
 
 
-            $q = mysql_query("SELECT indicator_id, indicator_cod, equation_id, area_id, objective_id, indicator_name, indicator_goal , indicator_type, chart_type \n"
-                . "FROM (SELECT id_ao, objective_id, area_id FROM areas_objectives WHERE area_id=$area_id) AS id_ao\n"
-                . "INNER JOIN indicators\n"
-                . "USING (id_ao)", $link);
+        $q = mysql_query("SELECT indicator_id, indicator_cod, equation_id, area_id, objective_id, indicator_name, indicator_goal , indicator_type, chart_type \n"
+            . "FROM (SELECT id_ao, objective_id, area_id FROM areas_objectives WHERE area_id=$area_id) AS id_ao\n"
+            . "INNER JOIN indicators\n"
+            . "USING (id_ao)", $link);
 
 
         // If there is some results.
-        if ($q){
+        if ($q) {
             $result = mysql_fetch_array($q);
 
             $index = 0;
@@ -96,10 +96,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             }
 
             $userIndicators = json_encode($assoc_indicators);
-        }
-        // Set the user indicators empty.
-        else{
-            $userIndicators ="";
+        } // Set the user indicators empty.
+        else {
+            $userIndicators = "";
         }
 
 
@@ -277,6 +276,80 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
             <!-- Main content -->
             <section class="content">
+                <?php
+                //  Show a message to the user when a field is empty.
+                foreach ($valores as $k => $v) {
+                    if (empty($v)) {
+
+                        switch ($k) {
+                            case "first_name":
+                                $empty_values[$k] = "nombre";
+                                break;
+                            case "last_name":
+                                $empty_values[$k] = "Apellido";
+                                break;
+                            case "occupation":
+                                $empty_values[$k] = "Ocupación";
+                                break;
+                            case "email":
+                                $empty_values[$k] = "email";
+                                break;
+                            case "cycle":
+                                $empty_values[$k] = "Ciclo";
+                                break;
+                            case "labour_time":
+                                $empty_values[$k] = "Jornada";
+                                break;
+                            case "document_number":
+                                $empty_values[$k] = "Cédula";
+                                break;
+                            case "user_type":
+                                $empty_values[$k] = "Tipo de Usuario";
+                                break;
+                            case "linked_indicators":
+                                $empty_values[$k] = "Indicadores asociados";
+                                break;
+                            case "area_id":
+                                $empty_values[$k] = "Area Académica";
+                                break;
+                        }
+                    }
+                }
+                if ($empty_values) {
+
+                    if (count($empty_values) > 1) {
+                        echo '
+                            <div class="box box-danger">
+
+                           <div class="box-header"><h4 class="box-title"><i class="icon fa fa - warning"></i> Alerta!</h4></div>
+                           <div class="box-body"> Los campos : ';
+                        foreach ($empty_values as $k => $v) {
+                            echo $v . ", ";
+                        };
+                        echo ' se encuentran vacios
+                            </div>
+                             </div>
+                    ';
+                    } else {
+                        echo '
+                            <div class=" box box-solid  box-danger">
+                            <div class="box-header"><h4 class="box-title"><i class="icon fa fa - warning"></i> Alerta!</h4></div>
+
+                           <div class="box-body">El campo : ';
+                        foreach ($empty_values as $k => $v) {
+                            echo $v;
+                        };
+                        echo ' se encuentra vacio.
+                           </div>
+                            </div>
+                    ';
+
+
+                    }
+                }
+
+
+                ?>
                 <div class="box box-default">
                     <div class="box-header with-border">
                         <div class="box-info">
