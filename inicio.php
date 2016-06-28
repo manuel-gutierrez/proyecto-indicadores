@@ -9,6 +9,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
     <!--
     Pagina principal de indicadores del CGC.
     V 1.0 Fecha creación: Septiembre 2015
+    V. 2.0 Junio 2016
     -->
     <html>
         <head>
