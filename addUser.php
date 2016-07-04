@@ -160,26 +160,39 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
                     </div>
                 </div>
-
-                <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li class="header"><b>MENÚ PRINCIPAL</b></li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a>
+                    </li>
                         <li>
-                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li>
-                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
+                    <?php if ($login_usertype == 0) { ?>
+
                         <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                            <span>Tablero de Indicadores</span></a>
+                    <?php } else { ?>
+                        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                                <span>Tablero de Indicadores</span></a>
+                        <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i>
+                                <span>Mi Perfil</span></a></li>
                     <?php } ?>
-                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+
+                    </li>
+                    <?php if ($login_usertype == 0) { ?>
                         <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
                     <?php } ?>
-                </ul><!-- /.sidebar-menu -->
+                </ul>
+                <!-- /.sidebar-menu -->
+                <!-- Sidebar Menu -->
+
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -382,7 +395,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                 <option value="0">No aplica</option>
                                                 <!--  Fetch Areas    -->
                                                 <?php
-                                                while($row = mysql_fetch_assoc($ses_sql)){
+                                                while($row =mysql_fetch_assoc($ses_sql)){
                                                     // $id=$row["id_expense"];
                                                     $idArea = $row["area_id"];
                                                     $nameArea = $row["area_name"];
@@ -407,7 +420,12 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                 <option value="0" selected>Seleccione el tipo de cargo</option>
                                                 <option value="Docente">Docente</option>
                                                 <option value="Orientador" >Orientador</option>
-                                                <option value="Administrativo">Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
                                             </select>
 
 
@@ -431,6 +449,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             <label>Ciclo</label>
                                             <select id="cmbType" name="cycle" class="form-control" required="required">
                                                 <option value="0" selected>Seleccione un Ciclo</option>
+                                                <option value="no-aplica">No Aplica</option>
                                                 <option value="1">Ciclo 1</option>
                                                 <option value="2">Ciclo 2</option>
                                                 <option value="3">Ciclo 3</option>

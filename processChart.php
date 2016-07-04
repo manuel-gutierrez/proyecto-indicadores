@@ -308,7 +308,7 @@ if ( !empty($errors)) {
                      */
                     case "individual":
 
-                        $q = 'SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id`= ' . $indicator_id . ' and `user_id`='.$user_id.' ORDER BY value_id DESC LIMIT 4';
+                        $q = 'SELECT DATE(value_date) AS value_date, value_ind, value_id FROM indicatorvalues WHERE `indicator_id`= ' . $indicator_id . ' and `user_id`='.$user_id.' ORDER BY value_id ASC LIMIT 4';
 
                         $result = mysql_query($q, $link);
                         if ($result) {

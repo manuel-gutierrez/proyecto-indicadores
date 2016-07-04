@@ -142,7 +142,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <!-- Optionally, you can add icons to the links -->
                     <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a>
                     </li>
-                    <?php if ($login_usertype == 0) { ?>
                         <li>
                             <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i
                                     class="fa fa-angle-left pull-right"></i></a>
@@ -151,6 +150,8 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i
                                     class="fa fa-angle-left pull-right"></i></a>
                         </li>
+                    <?php if ($login_usertype == 0) { ?>
+
                         <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
                         <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
                             <span>Tablero de Indicadores</span></a>
@@ -313,11 +314,28 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                             <div class="box-body">
                                 <?php
                                     if($indicator_type == "1"){
-                                     // Indicator type 1, general view
-                                    // fetch all the users for this indicator and show them in a table.
+                                    // Indicator type 1, general view
+                                    // fetch the users for this indicator. If the user is a "coordinador",
+                                    // A filter will be added to show only the users within the cycle of the 
+                                    // "Coordinador"
                                         if(!isset($_GET['userId'])){
-                                            $query = 'SELECT * FROM usuarios WHERE linked_indicators like "%'.$valores['indicator_cod'].'%"';
-                                            $result = mysql_query($query , $link);
+                                            //get the looged id of the user
+                                            
+                                            $query = 'SELECT * FROM usuarios WHERE id_usuario ='.$GLOBALS['id_user'].';';
+                                            $result = mysql_fetch_array(mysql_query($query , $link));
+                                            // Coordinador User.
+                                            
+                                            if ($result['occupation'] == "Coordinador de ciclo" or $result['occupation'] == "Coordinador de articulación" ){
+                                                $query = 'SELECT * FROM usuarios WHERE linked_indicators like "%'.$valores['indicator_cod'].'%" and `cycle`='.$result['cycle'];
+                                                $result = mysql_query($query , $link);
+                                            }else{
+                                                    // All users
+                                                $query = 'SELECT * FROM usuarios WHERE linked_indicators like "%'.$valores['indicator_cod'].'%"';
+                                                $result = mysql_query($query , $link);
+                                            }
+                                        
+                                            
+
                                             if ($result) { ?>
                                                 <table id="tablaInd" class="table table-bordered table-striped">
                                                     <thead>

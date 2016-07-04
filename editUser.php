@@ -37,9 +37,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $empty_values = array();
         $valores = mysql_fetch_assoc($q);
 
-
-
-
         $nombre = $valores['first_name'];
         $apellido = $valores['last_name'];
         $ocupacion = $valores['occupation'];
@@ -51,7 +48,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         $tipo_de_usuario = $valores['user_type'];
         $indicators = $valores['linked_indicators'];
         $area_id = $valores['area_id'];
-
         //  Area Academica.
         $academic_field_id = $valores['academic_field'];
 
@@ -66,8 +62,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
         // Key Area data
         $area_clave_id = $valores['area_id'];
-
+        
         if (!empty($academic_field_id)) {
+            if ($academic_field_id !='')
             $q3 = mysql_query("SELECT * FROM areas WHERE area_id=" . $area_clave_id, $link);
             $q3_value = mysql_fetch_assoc($q3);
             $area_clave = $q3_value['area_name'];
@@ -76,33 +73,32 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             $area_clave_id = "0";
         }
 
-        // -----------------------Indicators ----------------------------------------------
+        // Fetch Inidicators associated to the area for the auto select. //
 
+        if ($area_id != 0) { // If area Id is not "No-aplica", This will disable indicators input. 
+            $q = mysql_query("SELECT indicator_id, indicator_cod, equation_id, area_id, objective_id, indicator_name, indicator_goal , indicator_type, chart_type \n"
+                . "FROM (SELECT id_ao, objective_id, area_id FROM areas_objectives WHERE area_id=$area_id) AS id_ao\n"
+                . "INNER JOIN indicators\n"
+                . "USING (id_ao)", $link);  
+           
+            // If there is some results.
+            if (mysql_fetch_array($q)) {
+                $result = mysql_fetch_array($q);
+                $index = 0;
 
-        $q = mysql_query("SELECT indicator_id, indicator_cod, equation_id, area_id, objective_id, indicator_name, indicator_goal , indicator_type, chart_type \n"
-            . "FROM (SELECT id_ao, objective_id, area_id FROM areas_objectives WHERE area_id=$area_id) AS id_ao\n"
-            . "INNER JOIN indicators\n"
-            . "USING (id_ao)", $link);
-
-
-        // If there is some results.
-        if ($q) {
-            $result = mysql_fetch_array($q);
-
-            $index = 0;
-            while ($result = mysql_fetch_array($q)) {
-                $assoc_indicators[$index] = $result['indicator_cod'];
-                $index++;
+                while ($result = mysql_fetch_array($q)) {
+                    $assoc_indicators[$index] = $result['indicator_cod'];
+                    $index++;
+                }
+                $userIndicators = json_encode($assoc_indicators);
+            } // Set the user indicators empty.
+            else {
+                $userIndicators = "";
             }
-
-            $userIndicators = json_encode($assoc_indicators);
-        } // Set the user indicators empty.
-        else {
-            $userIndicators = "";
         }
-
-
-
+        else {
+            $userIndicators = ""; // This will need a workaround afterwards.
+        }    
     }
     else {
         echo "Error: Parametro id en peticion GET vacio. ";
@@ -211,8 +207,8 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             </nav>
         </header>
 
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
+        <!-- Left side column. contains the logo and sidebar -->       <aside class="main-sidebar">
+
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
 
@@ -227,33 +223,39 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                         <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
                     </div>
                 </div>
-
-                <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li class="header"><b>MENÚ PRINCIPAL</b></li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+                    <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a>
+                    </li>
                         <li>
-                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
                         <li>
-                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i
+                                    class="fa fa-angle-left pull-right"></i></a>
                         </li>
+                    <?php if ($login_usertype == 0) { ?>
+
                         <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                            <span>Tablero de Indicadores</span></a>
+                    <?php } else { ?>
+                        <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                                <span>Tablero de Indicadores</span></a>
+                        <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i>
+                                <span>Mi Perfil</span></a></li>
                     <?php } ?>
-                    <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-                    <?php if ($login_usertype==0) {?>
+
+                    </li>
+                    <?php if ($login_usertype == 0) { ?>
                         <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
                     <?php } ?>
+                </ul>
+                <!-- /.sidebar-menu -->
+                <!-- Sidebar Menu -->
 
-
-                    <?php if ($login_usertype !=0) {?>
-                        <li><a href="showUser.php?id=
-                    <?php echo $id_user?>"><i class="fa fa-user"></i> <span>Mi Perfil</span></a></li>
-                    <?php }?>
-
-                </ul><!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -278,8 +280,10 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
             <section class="content">
                 <?php
                 //  Show a message to the user when a field is empty.
+                
                 foreach ($valores as $k => $v) {
-                    if (empty($v)) {
+                     
+                    if (empty($v) and $v != 0) {
 
                         switch ($k) {
                             case "first_name":
@@ -308,9 +312,6 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                 break;
                             case "linked_indicators":
                                 $empty_values[$k] = "Indicadores asociados";
-                                break;
-                            case "area_id":
-                                $empty_values[$k] = "Area Académica";
                                 break;
                         }
                     }
@@ -532,13 +533,15 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         <label>Correo electrónico:</label>
                                         <input type="email" name="email" value="<?php echo $correo ?>" class="form-control" placeholder="" required/>
                                     </div>
-
+                                    <!-- Role Validation -->
                                     <?php if ($login_usertype == 0){ ?>
+                                    <?php if ($area_id != 0) { ?> // If Area id is not "No Aplica", show indicators.
                                     <div class="form-group">
-                                         <?php if ($tipo_de_usuario != 0 ){
+                                         
+                                         <?php   
                                          $value = trim($userIndicators,'[]');
                                          $value = str_replace("\"","", $value);
-                                         }?>
+                                         ?>                                         
                                         <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
                                         <input type="text" id="indicators" name="indicators" value="<?php echo $value; ?>" class="form-control" placeholder="Escriba el nombre del indicador" required/>
                                         <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
@@ -549,6 +552,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             }
                                         </script>
                                     </div>
+                                    <?php } ?>
                                 </div>
 
 
@@ -558,8 +562,8 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                         <label for="areaId"> Área Clave: </label>
                                         <select id="cmbArea" name="areaId" class="form-control">
                                             <option value="<?php echo $area_clave_id ?>" selected><?php echo $area_clave ?> </option>
-                                            <?php  if ($area_clave_id != "0") {
-                                                ?>  <option value="0">No aplica</option>
+                                            <?php  if ($area_clave_id == "0") {
+                                                ?>  <option value="0" selected>No aplica</option>
                                             <?php } ?>
 
                                             <!--  Fetch Areas    -->
@@ -615,23 +619,118 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             if ($ocupacion == "Docente"){ ?>
                                                 <option value="Docente" selected>Docente</option>
                                                 <option value="Orientador" >Orientador</option>
-                                                <option value="Administrativo">Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
                                             <?php  }
                                             elseif ($ocupacion == "Orientador"){ ?>
                                                 <option value="Docente" >Docente</option>
                                                 <option value="Orientador" selected>Orientador</option>
                                                 <option value="Administrativo">Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
                                             <?php  }
                                             elseif($ocupacion == "Administrativo"){ ?>
 
                                                 <option value="Docente" >Docente</option>
                                                 <option value="Orientador" >Orientador</option>
                                                 <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
+                                            <?php  }
+                                             elseif($ocupacion == "Coordinador de ciclo"){ ?>
+
+                                                <option value="Docente" >Docente</option>
+                                                <option value="Orientador" >Orientador</option>
+                                                <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
+                                            <?php  }
+                                             elseif($ocupacion == "Coordinador de articulación"){ ?>
+
+                                                <option value="Docente" >Docente</option>
+                                                <option value="Orientador" >Orientador</option>
+                                                <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
+                                            <?php  }
+                                            elseif($ocupacion == "Bibliotecario"){ ?>
+
+                                                <option value="Docente" >Docente</option>
+                                                <option value="Orientador" >Orientador</option>
+                                                <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
+                                            <?php  }
+                                            elseif($ocupacion == "Docente de Enlace"){ ?>
+
+                                                <option value="Docente" >Docente</option>
+                                                <option value="Orientador" >Orientador</option>
+                                                <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
+                                            <?php  }
+                                            elseif($ocupacion == "Auxiliar financiera"){ ?>
+
+                                                <option value="Docente" >Docente</option>
+                                                <option value="Orientador" >Orientador</option>
+                                                <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
+                                            <?php  }
+                                            elseif($ocupacion == "Almacenista"){ ?>
+
+                                                <option value="Docente" >Docente</option>
+                                                <option value="Orientador" >Orientador</option>
+                                                <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
                                             <?php  }
                                             else {?>
                                                 <option value="Docente" >Docente</option>
                                                 <option value="Orientador" >Orientador</option>
                                                 <option value="Administrativo" selected>Administrativo</option>
+                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                <option value="Bibliotecario">Bibliotecario</option>
+                                                <option value="Docente de Enlace">Docente de Enlace</option>
+                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                <option value="Almacenista">Almacenista</option>
                                             <?php  };?>
 
 
@@ -655,45 +754,44 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                             while($rows=mysql_fetch_assoc($ac_fields)){
                                                 if ($academic_field_id == $rows['academic_field_id']){continue;}
                                                 ?>
-
                                                 <option value= "<?php echo $rows['academic_field_id'] ?>" > <?php echo $rows['name'] ?> </option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Ciclo</label>
-
-
                                         <?php
-                                        $cycle_values = array
-                                        (
-                                            array("1","Ciclo 1"),
-                                            array("2","Ciclo 2"),
-                                            array("3","Ciclo 3"),
-                                            array("4","Ciclo 4"),
-                                            array("5","Ciclo 5"),
-                                            array("40x40","40x40"),
-                                            array("ARTI","ARTI"),
-                                            array("SDL","SDL"),
-                                            array("SDC","SDC"),
-                                            array("Inicial","Inicial"),
-
-                                        );
+                                        // Create an array with the cycles names. 
+                                        $cycle_values = array();
+                                        $cycle_values["no-aplica"] ="No Aplica";
+                                        $cycle_values["1"] = "Ciclo 1";
+                                        $cycle_values["2"] ="Ciclo 2";
+                                        $cycle_values["3"] ="Ciclo 3";
+                                        $cycle_values["4"] ="Ciclo 4";
+                                        $cycle_values["5"] ="Ciclo 5";
+                                        $cycle_values["40x40"]="40x40";
+                                        $cycle_values["ARTI"]="ARTI";
+                                        $cycle_values["SDL"]="SDL";
+                                        $cycle_values["SDC"]="SDC";
+                                        $cycle_values["Inicial"]="Inicial";
+                                        
+                                        // catch error
                                         if (empty($ciclo)) {
-                                            $ciclo = "No Aplica";
+                                            $ciclo = "Error";
                                         }
-
+                                        // Match the value of the cycle, with the name  
+                                        $selected_cycle=$cycle_values[$ciclo];                       
                                         ?>
                                         <select id="cmbType" name="cycle" class="form-control" required="required">
-                                            <option value="<?php echo $ciclo; ?>" selected><?php echo $ciclo;?></option>
+                                            <option value="<?php echo $ciclo; ?>" selected><?php echo $selected_cycle;?></option>
 
                                             <?php
-                                            foreach ($cycle_values as $v) {
-                                                if ($v[0] == $ciclo) {
+                                            foreach ($cycle_values as $key => $value) {
+                                                if ($key == $ciclo) {
                                                     continue;
                                                 }
                                                 else{
-                                                    echo "<option value=".$v[0].">".$v[1]."</option>";
+                                                    echo "<option value=".$key.">".$value."</option>";
                                                 }
 
                                             }?>

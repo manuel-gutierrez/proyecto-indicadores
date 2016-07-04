@@ -31,10 +31,12 @@ if (isset($_POST['submit'])) {
             $_SESSION["uid"] = "$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5tc/][as{A}";
             // Initializing Session
             if ($GLOBALS ['usertype'] == 0) {
-                header("location: ../granC/inicio.php");
+                //header("location: ../granC/inicio1.php");
+                header("location: ../proyecto-indicadores/inicio.php");
                 reportes_action([0 => 'login', 1 => 'acceso', 2 => 'El usuario accedio correctamente al sistema.']);
             } else {
-                header("location: ../granC/inicio1.php");
+                //header("location: ../granC/inicio1.php"); // replace this to publish. 
+                 header("location: ../proyecto-indicadores/inicio.php");
                 reportes_action([0 => 'login', 1 => 'acceso', 2 => 'El usuario accedio correctamente al sistema.']);
             }
             // Redirecting To Other Page

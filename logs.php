@@ -62,42 +62,55 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
 
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+          <!-- sidebar: style can be found in sidebar.less -->
+          <section class="sidebar">
 
-          <!-- Sidebar user panel (optional) -->
-          <div class="user-panel">
-            <div class="pull-left image">
-              <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
-            </div>
-            <div class="pull-left info">
-              <p><?php echo $login_fn; ?></p>
-              <!-- Status -->
-              <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
-            </div>
-          </div>
+              <!-- Sidebar user panel (optional) -->
+              <div class="user-panel">
+                  <div class="pull-left image">
+                      <img src="php/dist/img/unknown.gif" class="img-circle" alt="User Image" />
+                  </div>
+                  <div class="pull-left info">
+                      <p><?php echo $login_fn; ?></p>
+                      <!-- Status -->
+                      <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
+                  </div>
+              </div>
+              <ul class="sidebar-menu">
+                  <li class="header"><b>MENÚ PRINCIPAL</b></li>
+                  <!-- Optionally, you can add icons to the links -->
+                  <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a>
+                  </li>
+                      <li>
+                          <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i
+                                  class="fa fa-angle-left pull-right"></i></a>
+                      </li>
+                      <li>
+                          <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i
+                                  class="fa fa-angle-left pull-right"></i></a>
+                      </li>
+                  <?php if ($login_usertype == 0) { ?>
 
-          <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
-            <li class="header"><b>MENÚ PRINCIPAL</b></li>
-            <!-- Optionally, you can add icons to the links -->
-            <li><a href="procesos.php"><i class="fa fa-line-chart"></i> <span>Planeación Estratégica</span></a></li>
-			<?php if ($login_usertype==0) {?>
-            <li>
-              <a href="areas.php"><i class="fa fa-sitemap"></i> <span>Áreas clave </span> <i class="fa fa-angle-left pull-right"></i></a>
-            </li>
-            <li>
-              <a href="objetivos.php"><i class="fa fa-server"></i> <span>Objetivos Estratégicos </span> <i class="fa fa-angle-left pull-right"></i></a>
-            </li>
-            <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
-			<?php } ?>
-            <li><a href="tablero.php"><i class="fa fa-bar-chart"></i> <span>Tablero de Indicadores</span></a></li>
-			<?php if ($login_usertype==0) {?>
-            <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>            
-			<?php } ?>
-          </ul><!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
+                      <li><a href="users.php"><i class="fa fa-user"></i> <span>Usuarios</span></a></li>
+                      <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                          <span>Tablero de Indicadores</span></a>
+                  <?php } else { ?>
+                      <li><a href="tablero.php"><i class="fa fa-bar-chart"></i>
+                              <span>Tablero de Indicadores</span></a>
+                      <li><a href="showUser.php?id=<?php echo $id_user ?>"><i class="fa fa-user"></i>
+                              <span>Mi Perfil</span></a></li>
+                  <?php } ?>
+
+                  </li>
+                  <?php if ($login_usertype == 0) { ?>
+                      <li><a href="logs.php"><i class="fa fa-shield"></i> <span>Reportes de actividad</span></a></li>
+                  <?php } ?>
+              </ul>
+              <!-- /.sidebar-menu -->
+              <!-- Sidebar Menu -->
+
+          </section>
+          <!-- /.sidebar -->
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
