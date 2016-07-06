@@ -217,7 +217,9 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                     <div class="box">
                         <div class="box-header with-border">
                             <div class="row">
+                                
                                 <?php
+                                // Post request validation. 
                                 if($_SERVER['REQUEST_METHOD']=='POST'){
 
                                     //Data Validation
@@ -342,56 +344,18 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
 
                         <!-- form start -->
                         <div class="box-body">
+                            
+
                             <form role="form" action="addUser.php" method="post">
-
+                                <!-- STEP 1 : SELECT "AREA CLAVE" -->
                                 <div class="row">
-                                    <!--  Col  1    -->
-                                    <div class="col-md-6">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label>Nombres:</label>
-                                            <input type="text" name="fn" class="form-control" placeholder="" required/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Apellidos:</label>
-                                            <input type="text" name="ln"class="form-control" placeholder="" required/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label> Número de documento:</label>
-                                            <input type="text" name="document_number" class="form-control" placeholder="" />
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Correo electrónico:</label>
-                                            <input type="email" name="email" class="form-control" placeholder="" required/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Contraseña:</label>
-                                            <input type="password" name="password" class="form-control" placeholder="" required/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> Ingrese el código de los indicadores asociados a esta persona separados por comas.</label>
-                                            <input type="text" name="indicators" id="indicators" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
-                                            <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
-                                            <script>
-                                                function openHelpTable(){
-                                                    event.preventDefault();
-                                                    window.open("./tablero.php", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=900, left=500, width=600, height=800");
-                                                }
-                                            </script>
-                                        </div>
-                                    </div>
-
-
-                                    <!--  Col   2    -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="area"> Área Clave: </label>
-                                            <select id="cmbArea" name="areaId" class="form-control">
-                                                <option value="blank" selected>Seleccione un Área Clave</option>
+                                <div class="col-md-12" id="step-1">
+                                    <h3 class="center"> Seleccione un área clave </h3>
+                                        <div class="form-group padding_10_2">
+                                            <label for="area">  Área Clave: </label>
+                                            <select id="cmbArea" name="areaId" class="form-control" onChange="getState(this.value);">
+                                                <option value="blank" selected>Seleccione un Área Clave
+                                                </option>
                                                 <option value="0">No aplica</option>
                                                 <!--  Fetch Areas    -->
                                                 <?php
@@ -405,76 +369,135 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="user_type"> Tipo de Usuario: </label>
-                                            <select id="cmbType" name="user_type" class="form-control">
-                                                <option value="blank" selected>Seleccione el tipo de usuario</option>
-                                                <option value="0">Administrador</option>
-                                                <option value="1" >Recopilador</option>
-                                                <option value="2">Empleado</option>
-                                            </select>
+                                </div>
+                                <!--  STEP 2 INDICATORS ASSOCIATED TO THE AREA  -->
+                                <div class="col-md-12" id = "step-2" style="display:none">
+                                      <h3 class="center"> Indicadores asociados </h3>
+                                      <div class="form-group padding_10_2">
+                                            <p> Estos son los indicadores asociados al area seleccionada.  Puede añadir más indicadores escribiendo su código y separandolos por comas. </p>
+
+                                            <label for="inidicators"> Indicadores asociados</label>
+                                            
+                                            <input type="text" name="indicators" id="indicators" class="form-control" placeholder="ejemplo : SII-EG-2,SII-CC-2,SII-CC-4" required/>
+                                            <a href="./tablero.php" target="" onclick="openHelpTable()" >Ver lista de Indicadores</a>
+                                            <script>
+                                                function openHelpTable(){
+                                                    event.preventDefault();
+                                                    window.open("./tablero.php", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=900, left=500, width=600, height=800");
+                                                }
+                                            </script>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Cargo:</label>
-                                            <select id="cmbType" name="occupation" class="form-control">
-                                                <option value="0" selected>Seleccione el tipo de cargo</option>
-                                                <option value="Docente">Docente</option>
-                                                <option value="Orientador" >Orientador</option>
-                                                <option value="Coordinador de ciclo">Coordinador de ciclo</option>
-                                                <option value="Coordinador de articulación">Coordinador de articulación</option>
-                                                <option value="Bibliotecario">Bibliotecario</option>
-                                                <option value="Docente de Enlace">Docente de Enlace</option>
-                                                <option value="Auxiliar financiera">Auxiliar financiera</option>
-                                                <option value="Almacenista">Almacenista</option>
-                                            </select>
+                                </div>
 
+                                <!-- STEP 3 FILL THE INFORMATION  -->
+                                    
+                                    <div class="col-md-12" id="step-3" style="display:none">
+                                    <h3 class="center"> Ingrese los datos del usuario </h3>
+                                        <!--  Col  1    -->
+                                        <div class="col-md-6">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>Nombres:</label>
+                                                <input type="text" name="fn" class="form-control" placeholder="" required/>
+                                            </div>
 
-                                        </div>
+                                            <div class="form-group">
+                                                <label>Apellidos:</label>
+                                                <input type="text" name="ln"class="form-control" placeholder="" required/>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label>Área académica</label>
-                                            <select id="cmbType" name="academic_field" class="form-control">
-                                                <option value="0" selected>Seleccione un Área Academica</option>
-                                                <!-- Fetch data -->
-                                                <?php
-                                                $ac_fields=mysql_query("SELECT * FROM academic_fields", $link);
-                                                while($rows=mysql_fetch_assoc($ac_fields)){
-                                                    ?>
+                                            <div class="form-group">
+                                                <label> Número de documento:</label>
+                                                <input type="text" name="document_number" class="form-control" placeholder="" />
+                                            </div>
 
-                                                    <option value= "<?php echo $rows['academic_field_id'] ?>" > <?php echo $rows['name'] ?> </option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Ciclo</label>
-                                            <select id="cmbType" name="cycle" class="form-control" required="required">
-                                                <option value="0" selected>Seleccione un Ciclo</option>
-                                                <option value="no-aplica">No Aplica</option>
-                                                <option value="1">Ciclo 1</option>
-                                                <option value="2">Ciclo 2</option>
-                                                <option value="3">Ciclo 3</option>
-                                                <option value="4">Ciclo 4</option>
-                                                <option value="5">Ciclo 5</option>
-                                                <option value="40x40">40x40</option>
-                                                <option value="ARTI">ARTI</option>
-                                                <option value="SDL">SDL</option>
-                                                <option value="SDC">SDC</option>
-                                                <option value="Inicial">Inicial</option>
-                                            </select>
-                                        </div>
+                                            <div class="form-group">
+                                                <label>Correo electrónico:</label>
+                                                <input type="email" name="email" class="form-control" placeholder="" required/>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label>Jornada</label>
-                                            <select id="cmbType" name="labour_time" class="form-control" required>
-                                                <option value="0" selected>Seleccione una jornada</option>
-                                                <option value="manana">Mañana</option>
-                                                <option value="tarde">Tarde</option>
-                                                <option value="completa">Completa</option>
-                                            </select>
+                                            <div class="form-group">
+                                                <label>Contraseña:</label>
+                                                <input type="password" name="password" class="form-control" placeholder="" required/>
+                                            </div>
+                                          
                                         </div>
 
 
+                                        <!--  Col   2    -->
+                                        <div class="col-md-6">
+                                         
+                                            <div class="form-group">
+                                                <label for="user_type"> Tipo de Usuario: </label>
+                                                <select id="cmbType" name="user_type" class="form-control">
+                                                    <option value="blank" selected>Seleccione el tipo de usuario</option>
+                                                    <option value="0">Administrador</option>
+                                                    <option value="1" >Recopilador</option>
+                                                    <option value="2">Empleado</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cargo:</label>
+                                                <select id="cmbType" name="occupation" class="form-control">
+                                                    <option value="0" selected>Seleccione el tipo de cargo</option>
+                                                    <option value="Docente">Docente</option>
+                                                    <option value="Orientador" >Orientador</option>
+                                                    <option value="Coordinador de ciclo">Coordinador de ciclo</option>
+                                                    <option value="Coordinador de articulación">Coordinador de articulación</option>
+                                                    <option value="Bibliotecario">Bibliotecario</option>
+                                                    <option value="Docente de Enlace">Docente de Enlace</option>
+                                                    <option value="Auxiliar financiera">Auxiliar financiera</option>
+                                                    <option value="Almacenista">Almacenista</option>
+                                                </select>
 
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Área académica</label>
+                                                <select id="cmbType" name="academic_field" class="form-control">
+                                                    <option value="0" selected>Seleccione un Área Academica</option>
+                                                    <!-- Fetch data -->
+                                                    <?php
+                                                    $ac_fields=mysql_query("SELECT * FROM academic_fields", $link);
+                                                    while($rows=mysql_fetch_assoc($ac_fields)){
+                                                        ?>
+
+                                                        <option value= "<?php echo $rows['academic_field_id'] ?>" > <?php echo $rows['name'] ?> </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ciclo</label>
+                                                <select id="cmbType" name="cycle" class="form-control" required="required">
+                                                    <option value="0" selected>Seleccione un Ciclo</option>
+                                                    <option value="no-aplica">No Aplica</option>
+                                                    <option value="1">Ciclo 1</option>
+                                                    <option value="2">Ciclo 2</option>
+                                                    <option value="3">Ciclo 3</option>
+                                                    <option value="4">Ciclo 4</option>
+                                                    <option value="5">Ciclo 5</option>
+                                                    <option value="40x40">40x40</option>
+                                                    <option value="ARTI">ARTI</option>
+                                                    <option value="SDL">SDL</option>
+                                                    <option value="SDC">SDC</option>
+                                                    <option value="Inicial">Inicial</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Jornada</label>
+                                                <select id="cmbType" name="labour_time" class="form-control" required>
+                                                    <option value="0" selected>Seleccione una jornada</option>
+                                                    <option value="manana">Mañana</option>
+                                                    <option value="tarde">Tarde</option>
+                                                    <option value="completa">Completa</option>
+                                                </select>
+                                            </div>
+
+
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -512,6 +535,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
             $(document).ready(function () {
+
                 $(function () {
                     var availableTags = <?php echo $userIndicators; ?>
 
@@ -554,8 +578,37 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                 return false;
                             }
                         });
-                });
+                });            
             });
+            //  Function to fetch the indicators values.
+                function getState(val) {
+                    $.ajax({
+                    type: "POST",
+                    url: "getIndicators.php",
+                    data:'area_id='+val,
+                    success: function(data){
+                         var results = jQuery.parseJSON(data);
+                         $("#step-2").show();
+                         $("#step-3").show();
+
+                         if (results.success == true){
+                         // if success add values to the input 
+                          var indicators = "";
+                          $.each( results.values, function( key, value ) {  
+                            indicators = indicators+value+",";
+                         });
+                         $("#indicators").val(indicators);    
+                         } else {
+                            // If error leave blank
+                            $("#step-2").show();
+                            $("#step-3").show();
+                            $("#indicators").val(" "); ; 
+                         }
+
+                         
+                    }
+                    });
+                }
         </script>
     </body>
     </html>

@@ -1,5 +1,5 @@
 /**
- * Created by Manuel
+ * Created by Manuel Gutierrez
  * V1
  * @param chartType, data
  * When an indicator data is fetched from the query, this script render the chart specified and rendered with the fetche.

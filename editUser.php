@@ -535,7 +535,7 @@ if ($_SESSION["uid"] != '$%&yfddf0=893298I&?n]*d_i#c$#a)(d)!o%&r%&3e42s3d5a4srd5
                                     </div>
                                     <!-- Role Validation -->
                                     <?php if ($login_usertype == 0){ ?>
-                                    <?php if ($area_id != 0) { ?> // If Area id is not "No Aplica", show indicators.
+                                    <?php if ($area_id != 0) { ?> 
                                     <div class="form-group">
                                          
                                          <?php   
